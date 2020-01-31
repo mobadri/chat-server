@@ -1,0 +1,8 @@
+/home/lts/Documents/iti/Project/chat-server/chat-server/repository-server/src/main/java/com/chat/server/repository/server/user/UserRepository.java
+/home/lts/Documents/iti/Project/chat-server/chat-server/repository-server/src/main/java/com/chat/server/repository/server/chat/impl/ChatGroupRepositoryImpl.java
+/home/lts/Documents/iti/Project/chat-server/chat-server/repository-server/src/main/java/com/chat/server/repository/server/factory/RepositoryServerFactory.java
+/home/lts/Documents/iti/Project/chat-server/chat-server/repository-server/src/main/java/module-info.java
+/home/lts/Documents/iti/Project/chat-server/chat-server/repository-server/src/main/java/com/chat/server/repository/server/chat/ChatGroupRepository.java
+/home/lts/Documents/iti/Project/chat-server/chat-server/repository-server/src/main/java/com/chat/server/repository/server/adapters/ModelAdapter.java
+/home/lts/Documents/iti/Project/chat-server/chat-server/repository-server/src/main/java/com/chat/server/repository/server/user/impl/UserRepositoryImpl.java
+/home/lts/Documents/iti/Project/chat-server/chat-server/repository-server/src/main/java/com/chat/server/repository/server/package-info.java
