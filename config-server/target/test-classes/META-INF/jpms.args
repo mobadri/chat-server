@@ -1,4 +1,0 @@
---patch-module
-config.server=_
---add-reads
-config.server=ALL-UNNAMED
