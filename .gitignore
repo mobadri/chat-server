@@ -23,9 +23,15 @@
 hs_err_pid*
 .idea
 chat-server.iml
+/controller-server/controller-server.iml
 /controller-server/target/
 /model/target/
+/model/model.iml
 /network-server/target/
+/network-server/network-server.iml
 /repository-server/target/
+/repository-server/repository-server.iml
 /service-server/target/
+/service-server/service-server.iml
 /view-server/target/
+/view-server/view-server.iml
