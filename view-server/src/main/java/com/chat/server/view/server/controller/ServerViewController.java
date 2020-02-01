@@ -38,7 +38,7 @@ public class ServerViewController implements Initializable {
     @FXML
     private void showMaintainUsers(ActionEvent actionEvent) throws IOException {
         System.out.println("showMaintainUsers");
-        Parent root = FXMLLoader.load(this.getClass().getResource("/templates/chat-view.fxml"));
+        Parent root = FXMLLoader.load(this.getClass().getResource("/templates/maintain-user-view.fxml"));
         Stage stage = new Stage();
         stage.setResizable(false);
         stage.setTitle("Maintain Users");
