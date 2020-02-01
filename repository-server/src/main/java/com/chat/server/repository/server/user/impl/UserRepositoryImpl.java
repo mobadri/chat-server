@@ -44,13 +44,16 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findById(Long id) {
-        User user = new User();
+        User user = null;
         try {
             preparedStatement = connection.prepareStatement(UserRepository.SELECT_BY_ID);
             preparedStatement.setLong(1, id);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
+
+                user = new User();
+                user.setId(Math.toIntExact(id));
                 user = ModelAdapter.mapResultSetToUser(resultSet,
                         findAllUserFriends(user),
                         chatGroupRepository.getAllChatGroupsForUser(user));
@@ -59,21 +62,14 @@ public class UserRepositoryImpl implements UserRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                preparedStatement.close();
-                resultSet.close();
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return user;
-
     }
 
     @Override
     public User findByPhoneAndPassword(String phone, String password) {
-        User user = new User();
+        User user = null;
         try {
             preparedStatement = connection.prepareStatement(UserRepository.SELECT_BY_PHONE_PASSWORD);
             preparedStatement.setString(1, phone);
@@ -104,8 +100,6 @@ public class UserRepositoryImpl implements UserRepository {
             return users;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return users;
     }
@@ -115,7 +109,7 @@ public class UserRepositoryImpl implements UserRepository {
         int id = -1;
         try {
             preparedStatement = connection.prepareStatement(UserRepository.INSERT_USER, Statement.RETURN_GENERATED_KEYS);
-            ModelAdapter.mapUsertoPreparedStatement(preparedStatement, user);
+            ModelAdapter.mapUserToPreparedStatement(preparedStatement, user);
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -138,7 +132,7 @@ public class UserRepositoryImpl implements UserRepository {
     public int updateUser(User user) {
         try {
             preparedStatement = connection.prepareStatement(UserRepository.UPDATE_USER);
-            ModelAdapter.mapUsertoPreparedStatement(preparedStatement, user);
+            ModelAdapter.mapUserToPreparedStatement(preparedStatement, user);
             preparedStatement.setLong(12, user.getId());
             return preparedStatement.executeUpdate();
 

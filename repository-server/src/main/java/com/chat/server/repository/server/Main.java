@@ -21,16 +21,22 @@ public class Main {
         System.out.println(all.size());
         all.forEach(System.out::println);
 
-        User user ;/*= userRepository.findById(2L);
+        User user = userRepository.findById(2L);
         System.out.println("phone number of user's id  = 2");
-        System.out.println(user.getPhone());*/
+        if(user != null)
+            System.out.println(user);
+        else
+            System.out.println("not found");
 
         user = userRepository.findById(91L);
-        System.out.println("\nphone number of user's id  = 91");
-        System.out.println(user.getPhone());
+        System.out.print("\nphone number of user's id  = 91 : ");
+        if(user != null)
+            System.out.println(user.getPhone() + user.getFriends().size());
+        else
+            System.out.println("not found");
 
         all = userRepository.findAllUserFriends(user);
-        System.out.println("friends for user's id = 91");
+        System.out.println("friends for user's id = 91 : " + all.size());
         all.forEach(System.out::println);
 
         user = userRepository.findByPhone("011111111");
@@ -45,6 +51,8 @@ public class Main {
         User newUser = new User();
         newUser.setFirstName("ahmed");
         newUser.setLastName("adel");
+        newUser.setPassword("2345");
+        newUser.setPhone("01111");
         newUser.setEmail("a");
         newUser.setCountry("egypt");
         newUser.setGender(Gender.MALE);
@@ -55,39 +63,31 @@ public class Main {
         System.out.println("\ntest insert");
         int id = userRepository.insertUser(newUser);
         if (id == -1) {
-            System.out.println("done");
-        } else {
             System.out.println("error");
+        } else {
+            System.out.println("done");
+            newUser.setId(id);
         }
 
         System.out.println("\ntest update");
-        user.setFirstName("7mada");
-        int updated = userRepository.updateUser(user);
-        if (updated == 0) {
+        newUser.setFirstName("7mada");
+        int updated = userRepository.updateUser(newUser);
+        if (updated != 0) {
             System.out.println("done");
         } else {
             System.out.println("error");
         }
 
-        // wait to min to check the database
-        try {
-            Thread.sleep(120000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("\ntest update");
-        int deleted = userRepository.delete(92);
-        if (deleted == 0) {
+        System.out.println("\ntest delete");
+        int deleted = userRepository.delete(97);
+        if (deleted != 0) {
             System.out.println("done");
         } else {
-            System.out.println("error");
+            System.out.println("not found");
         }
 
         //-------------------------------
         //@shaheen
         //todo test all chat repo methods
-
-
     }
 }
