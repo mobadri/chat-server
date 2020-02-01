@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 
 import java.net.URL;
 import java.util.List;
@@ -55,7 +56,7 @@ public class MaintainUserViewController implements Initializable {
         firstNameCol.setCellValueFactory(new PropertyValueFactory("firstName"));
         lastNameCol.setCellValueFactory(new PropertyValueFactory("lastName"));
         phoneCol.setCellValueFactory(new PropertyValueFactory("phone"));
-        mailCol.setCellValueFactory(new PropertyValueFactory("mail"));
+        mailCol.setCellValueFactory(new PropertyValueFactory("email"));
         countryCol.setCellValueFactory(new PropertyValueFactory("country"));
         genderCol.setCellValueFactory(new PropertyValueFactory("gender"));
         dobCol.setCellValueFactory(new PropertyValueFactory("dateOfBirth"));
@@ -68,6 +69,11 @@ public class MaintainUserViewController implements Initializable {
     }
 
     private void loadAllUsers() {
+
+    }
+
+    @FXML
+    private void searchForUser(KeyEvent keyEvent) {
 
     }
 }
