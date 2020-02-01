@@ -102,10 +102,41 @@ public class ModelAdapter {
         }
     }
 
+    /**
+     * map resultset to a ChatGroup object
+     * @param resultSet query resultset
+     * @return chatGroup object
+     */
+    public static final ChatGroup mapResultSetToChatGroup(ResultSet resultSet){
+        ChatGroup chatGroup = new ChatGroup();
+        try {
+            chatGroup.setId(resultSet.getInt("ID"));
+            chatGroup.setName(resultSet.getString("GROUP_NAME"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return chatGroup;
+    }
+    /**
+     * map ChatGroup fields to preparedStatement parameters as following
+     * 1- GROUP_NAME
+     * @param preparedStatement that required to be map in
+     * @param chatGroup map its fields to preparedStatement parameters
+     */
+    public static final void mapChatGrouptoPreparedStatement(PreparedStatement preparedStatement, ChatGroup chatGroup){
+        try {
+            preparedStatement.setString(1,chatGroup.getName());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static final Date mapDateToSqlDate(java.util.Date date){
+
         return new Date(date.getTime());
     }
     public static final java.util.Date mapDateFromSqlDate(Date date){
+
         return new java.util.Date(date.getTime());
     }
 }

@@ -20,6 +20,7 @@ public class UserRepositoryImpl implements UserRepository {
     private ChatGroupRepository chatGroupRepository = RepositoryServerFactory.creatChatRepository();
 
     public UserRepositoryImpl() {
+
         connection = ConnectToDBFactory.creatConnectionManualy();
     }
 

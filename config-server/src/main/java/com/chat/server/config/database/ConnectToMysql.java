@@ -9,8 +9,8 @@ public class ConnectToMysql {
     private static ConnectToMysql instance;
     private Connection connection;
     private String url = "jdbc:mysql://localhost:3306/chatDB";
-    private String username = "admin";
-    private String password = "password";
+    private String username = "root";
+    private String password = "root";
 
     private ConnectToMysql() {
         try {
