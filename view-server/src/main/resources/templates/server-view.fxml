@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <AnchorPane id="root" prefHeight="662.0" prefWidth="1017.0" stylesheets="@../static/css/style.css"
@@ -44,15 +45,47 @@
                     </rowConstraints>
                     <children>
                         <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="160.0" prefWidth="268.0"
-                                text="Add User"/>
+                                text="Add User">
+                            <graphic>
+                                <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../static/images/adduser.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
                         <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="160.0" prefWidth="268.0"
-                                text="Send Announcement" GridPane.columnIndex="1"/>
+                                text="Send Announcement" GridPane.columnIndex="1">
+                            <graphic>
+                                <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../static/images/icons8-popup-80.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
                         <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#showStatistics"
-                                prefHeight="160.0" prefWidth="268.0" text="Statistics" GridPane.columnIndex="2"/>
+                                prefHeight="160.0" prefWidth="268.0" text="Statistics" GridPane.columnIndex="2">
+                            <graphic>
+                                <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../static/images/icons8-combo-chart-80.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
                         <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#showMaintainUsers"
-                                prefHeight="160.0" prefWidth="268.0" text="Maintain Users" GridPane.rowIndex="1"/>
+                                prefHeight="160.0" prefWidth="268.0" text="Maintain Users" GridPane.rowIndex="1">
+                            <graphic>
+                                <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true"/>
+                            </graphic>
+                        </Button>
                         <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="160.0" prefWidth="268.0"
-                                text="Settings" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                text="Settings" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <graphic>
+                                <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true"/>
+                            </graphic>
+                        </Button>
                     </children>
                 </GridPane>
             </children>
