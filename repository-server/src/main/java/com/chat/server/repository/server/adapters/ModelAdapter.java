@@ -85,10 +85,10 @@ public class ModelAdapter {
             preparedStatement.setString(5, user.getEmail());
             preparedStatement.setString(6, user.getCountry());
             preparedStatement.setInt(7, user.getGender().ordinal());
-            preparedStatement.setDate(9, ModelAdapter.mapDateToSqlDate(user.getDateOfBirth()));
-            preparedStatement.setString(10, user.getBIO());
-            preparedStatement.setBoolean(11, user.isOnline());
-            preparedStatement.setInt(12, user.getMode().ordinal());
+            preparedStatement.setDate(8, ModelAdapter.mapDateToSqlDate(user.getDateOfBirth()));
+            preparedStatement.setString(9, user.getBIO());
+            preparedStatement.setBoolean(10, user.isOnline());
+            preparedStatement.setInt(11, user.getMode().ordinal());
         } catch (SQLException e) {
             e.printStackTrace();
         }
