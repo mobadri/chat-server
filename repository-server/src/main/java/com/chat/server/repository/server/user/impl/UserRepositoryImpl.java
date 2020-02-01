@@ -60,13 +60,7 @@ public class UserRepositoryImpl implements UserRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                preparedStatement.close();
-                resultSet.close();
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return user;
 

@@ -29,9 +29,9 @@
         </Pane>
         <AnchorPane layoutY="158.0" prefHeight="505.0" prefWidth="1017.0" AnchorPane.bottomAnchor="0.0"
                     AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="158.0">
-            <TableView fx:id="usersTable" layoutX="10.0" layoutY="10.0" prefHeight="396.0" prefWidth="1013.0"
+            <TableView fx:id="usersTable" layoutX="10.0" layoutY="50.0" prefHeight="354.0" prefWidth="1017.0"
                        AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                       AnchorPane.topAnchor="0.0">
+                       AnchorPane.topAnchor="50.0">
                 <columns>
                     <TableColumn fx:id="firstNameCol" prefWidth="105.0" text="First Name"/>
                     <TableColumn fx:id="lastNameCol" prefWidth="108.0" text="Last Name"/>
@@ -77,6 +77,10 @@
                     </Button>
                 </children>
             </GridPane>
+            <TextField fx:id="searchText" layoutX="70.0" layoutY="14.0" prefHeight="26.0" prefWidth="308.0"
+                       promptText="name , country Or phone" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="14.0"/>
+            <Label layoutX="14.0" layoutY="19.0" text="Search" AnchorPane.leftAnchor="14.0"
+                   AnchorPane.topAnchor="19.0"/>
         </AnchorPane>
     </children>
 </AnchorPane>
