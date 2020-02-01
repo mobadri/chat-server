@@ -1,12 +1,17 @@
 package com.chat.server.service.server.user.impl;
 
 import com.chat.server.model.user.User;
+import com.chat.server.repository.server.factory.RepositoryServerFactory;
+import com.chat.server.repository.server.user.UserRepository;
 import com.chat.server.service.server.user.UserService;
 
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
+    UserRepository userRepository = RepositoryServerFactory.creatUserRepository();
+
     @Override
+
     public List<User> getAllUsers() {
         return null;
     }
@@ -44,5 +49,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public int deleteUser(int id) {
         return 0;
+    }
+
+    @Override
+    public List<User> getOnlineUsers(boolean online) {
+        return userRepository.findIfOnline(online);
     }
 }

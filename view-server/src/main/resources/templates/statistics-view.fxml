@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane prefHeight="662.0" prefWidth="1017.0" stylesheets="@../static/css/style.css"
+            xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.chat.server.view.server.controller.StatisticsViewController">
+    <children>
+        <Pane id="title-pane" prefHeight="158.0" prefWidth="1017.0" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label layoutX="155.0" layoutY="54.0" text="JETS Caht Server" textFill="WHITE">
+                    <font>
+                        <Font size="42.0"/>
+                    </font>
+                </Label>
+                <Label layoutX="155.0" layoutY="114.0" text="Keep connecting" textFill="WHITE">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Label>
+                <Label layoutX="777.0" layoutY="80.0" text="Statistics" textFill="WHITE">
+                    <font>
+                        <Font size="38.0"/>
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <AnchorPane layoutY="158.0" prefHeight="509.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="158.0">
+            <children>
+                <HBox layoutX="163.0" layoutY="41.0" prefHeight="100.0" prefWidth="759.0" spacing="20.0">
+                    <children>
+                        <Pane id="available" prefHeight="200.0" prefWidth="200.0">
+                            <children>
+                                <Label layoutX="54.0" layoutY="65.0" lineSpacing="20.0" text="Avilable"
+                                       textFill="WHITE">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="availableUsersLabel" alignment="CENTER" layoutX="56.0" layoutY="14.0"
+                                       lineSpacing="20.0" prefHeight="44.0" prefWidth="71.0" text="14" textFill="WHITE">
+                                    <font>
+                                        <Font name="System Bold" size="36.0"/>
+                                    </font>
+                                </Label>
+                            </children>
+                        </Pane>
+                        <Pane id="busy" prefHeight="200.0" prefWidth="200.0">
+                            <children>
+                                <Label layoutX="67.0" layoutY="65.0" lineSpacing="20.0" text="Busy" textFill="WHITE">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="busyUsersLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="56.0"
+                                       layoutY="14.0" lineSpacing="20.0" prefHeight="44.0" prefWidth="59.0" text="3"
+                                       textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+                                    <font>
+                                        <Font name="System Bold" size="36.0"/>
+                                    </font>
+                                </Label>
+                            </children>
+                        </Pane>
+                        <Pane id="away" prefHeight="200.0" prefWidth="200.0">
+                            <children>
+                                <Label layoutX="66.0" layoutY="65.0" lineSpacing="20.0" text="Away" textFill="WHITE">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="awayUsersLabel" alignment="CENTER" layoutX="58.0" layoutY="14.0"
+                                       lineSpacing="20.0" prefHeight="44.0" prefWidth="59.0" text="0" textFill="WHITE">
+                                    <font>
+                                        <Font name="System Bold" size="36.0"/>
+                                    </font>
+                                </Label>
+                            </children>
+                        </Pane>
+                        <Pane id="offline" prefHeight="200.0" prefWidth="200.0">
+                            <children>
+                                <Label layoutX="60.0" layoutY="65.0" lineSpacing="20.0" text="Offlne" textFill="WHITE">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="offlineUsersLabel" alignment="CENTER" layoutX="58.0" layoutY="14.0"
+                                       lineSpacing="20.0" prefHeight="44.0" prefWidth="59.0" text="0" textFill="WHITE">
+                                    <font>
+                                        <Font name="System Bold" size="36.0"/>
+                                    </font>
+                                </Label>
+                            </children>
+                        </Pane>
+                    </children>
+                </HBox>
+                <AnchorPane layoutX="-7.0" layoutY="152.0" prefHeight="345.0" prefWidth="1028.0"
+                            AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                            AnchorPane.topAnchor="152.0">
+                    <children>
+                        <PieChart id="genderChart" fx:id="genderChart" layoutX="166.0" layoutY="50.0" prefHeight="350.0"
+                                  prefWidth="350.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="166.0"
+                                  AnchorPane.topAnchor="50.0"/>
+
+                        <PieChart id="countryChart" fx:id="countryChart" layoutX="627.0" layoutY="50.0"
+                                  prefHeight="350.0" prefWidth="350.0" AnchorPane.bottomAnchor="50.0"
+                                  AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="50.0"/>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

@@ -19,9 +19,10 @@ public class UserRepositoryImpl implements UserRepository {
     private ResultSet resultSet = null;
     private ChatGroupRepository chatGroupRepository = RepositoryServerFactory.creatChatRepository();
 
-    public UserRepositoryImpl(){
+    public UserRepositoryImpl() {
         connection = ConnectToDBFactory.creatConnectionManualy();
     }
+
     @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
@@ -36,7 +37,7 @@ public class UserRepositoryImpl implements UserRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-           closeResultSetAndPreparedStatement(resultSet,preparedStatement);
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return users;
     }
@@ -51,7 +52,7 @@ public class UserRepositoryImpl implements UserRepository {
 
             while (resultSet.next()) {
                 user = ModelAdapter.mapResultSetToUser(resultSet,
-                        findAllUserFriends(user) ,
+                        findAllUserFriends(user),
                         chatGroupRepository.getAllChatGroupsForUser(user));
             }
             return user;
@@ -85,7 +86,7 @@ public class UserRepositoryImpl implements UserRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            closeResultSetAndPreparedStatement(resultSet,preparedStatement);
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return user;
     }
@@ -95,32 +96,32 @@ public class UserRepositoryImpl implements UserRepository {
         List<User> users = new ArrayList<>();
         try {
             preparedStatement = connection.prepareStatement(UserRepository.SELECT_ALL_USER_FRIENDS);
-            preparedStatement.setInt(1,user.getId());
+            preparedStatement.setInt(1, user.getId());
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                users.add( ModelAdapter.mapResultSetToUser(resultSet,null,null));
+                users.add(ModelAdapter.mapResultSetToUser(resultSet, null, null));
             }
             return users;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            closeResultSetAndPreparedStatement(resultSet,preparedStatement);
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return users;
     }
 
     @Override
     public int insertUser(User user) {
-        int id = -1 ;
+        int id = -1;
         try {
             preparedStatement = connection.prepareStatement(UserRepository.INSERT_USER, Statement.RETURN_GENERATED_KEYS);
             ModelAdapter.mapUsertoPreparedStatement(preparedStatement, user);
-             preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()){
-                id =resultSet.getInt(1);
+            if (resultSet.next()) {
+                id = resultSet.getInt(1);
             }
-        return id ;
+            return id;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -186,9 +187,30 @@ public class UserRepositoryImpl implements UserRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-           closeResultSetAndPreparedStatement(resultSet,preparedStatement);
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return user;
+
+    }
+
+    @Override
+    public List<User> findIfOnline(boolean online) {
+        List<User> users = new ArrayList<>();
+        try {
+            preparedStatement = connection.prepareStatement(UserRepository.SELECT_IF_ONLINE);
+            preparedStatement.setBoolean(1, online);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                User user = ModelAdapter.mapResultSetToUser(resultSet);
+                users.add(user);
+            }
+            return users;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
+        }
+        return users;
 
     }
 
