@@ -3,7 +3,7 @@ module view.server {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
-    requires model;
+    requires model.server;
     requires controller.server;
     opens com.chat.server.view.server.controller;
     opens com.chat.server.view.server;
