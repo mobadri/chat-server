@@ -1,8 +1,8 @@
 package com.chat.server.repository.server;
 
+import com.chat.server.model.chat.ChatGroup;
 import com.chat.server.model.user.Gender;
 import com.chat.server.model.user.Mode;
-import com.chat.server.model.chat.ChatGroup;
 import com.chat.server.model.user.User;
 import com.chat.server.repository.server.chat.ChatGroupRepository;
 import com.chat.server.repository.server.factory.RepositoryServerFactory;
@@ -25,14 +25,14 @@ public class Main {
 
         User user = userRepository.findById(2L);
         System.out.println("phone number of user's id  = 2");
-        if(user != null)
+        if (user != null)
             System.out.println(user);
         else
             System.out.println("not found");
 
         user = userRepository.findById(91L);
         System.out.print("\nphone number of user's id  = 91 : ");
-        if(user != null)
+        if (user != null)
             System.out.println(user.getPhone() + user.getFriends().size());
         else
             System.out.println("not found");
@@ -96,8 +96,8 @@ public class Main {
         chatGroup.setName("First Group");
         chatGroupRepository.insertChatGroup(chatGroup);*/
         List<ChatGroup> allChatGroups = chatGroupRepository.getAllChatGroups();
-        for (ChatGroup group: allChatGroups){
-            System.out.println(group.getId()+" "+group.getName());
+        for (ChatGroup group : allChatGroups) {
+            System.out.println(group.getId() + " " + group.getName());
         }
         System.out.println(chatGroupRepository.getChatGroupByID(1).getName());
 

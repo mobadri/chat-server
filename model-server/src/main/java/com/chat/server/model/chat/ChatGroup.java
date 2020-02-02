@@ -10,6 +10,8 @@ public class ChatGroup {
     private String name;
     private List<User> users = new ArrayList<>();
 
+    private List<Message> messages = new ArrayList<>();
+
     public ChatGroup() {
 
     }
@@ -40,5 +42,13 @@ public class ChatGroup {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
     }
 }

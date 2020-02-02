@@ -47,9 +47,9 @@ public class UserRepositoryImpl implements UserRepository {
     public User findById(Long id) {
         User user = new User();
         try {
-            preparedStatement = connection.prepareStatement(UserRepository.SELECT_BY_ID);
+            PreparedStatement preparedStatement = connection.prepareStatement(UserRepository.SELECT_BY_ID);
             preparedStatement.setLong(1, id);
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 user = ModelAdapter.mapResultSetToUser(resultSet,
