@@ -10,12 +10,16 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -73,15 +77,12 @@ public class MaintainUserViewController implements Initializable {
                         return true;
                     }
                     String lowerCaseFilter = newValue.toLowerCase();
-                    if (Member.getFirstName().toLowerCase().contains(lowerCaseFilter)) {
-                        return true;
-                    } else if (Member.getPhone().contains(lowerCaseFilter)) {
-                        return true;
-                    } else if (Member.getCountry() != null
-                            && Member.getCountry().toLowerCase().contains(lowerCaseFilter)) {
-                        return true;
-                    } else if (Member.getLastName() != null
-                            && Member.getLastName().toLowerCase().contains(lowerCaseFilter)) {
+                    if (Member.getFirstName().toLowerCase().contains(lowerCaseFilter)
+                            || Member.getPhone().contains(lowerCaseFilter)
+                            || (Member.getCountry() != null
+                            && Member.getCountry().toLowerCase().contains(lowerCaseFilter))
+                            || (Member.getLastName() != null
+                            && Member.getLastName().toLowerCase().contains(lowerCaseFilter))) {
                         return true;
                     }
                     return false;
@@ -96,9 +97,28 @@ public class MaintainUserViewController implements Initializable {
         mailCol.setCellValueFactory(new PropertyValueFactory("email"));
         countryCol.setCellValueFactory(new PropertyValueFactory("country"));
         genderCol.setCellValueFactory(new PropertyValueFactory("gender"));
-        //todo cell factory for date
         dobCol.setCellValueFactory(new PropertyValueFactory("dateOfBirth"));
+        formatDataOnDobCol();
         BIOCol.setCellValueFactory(new PropertyValueFactory("BIO"));
+    }
+
+    private void formatDataOnDobCol() {
+        Format formatter = new SimpleDateFormat("dd-MM-yyyy");
+        dobCol.setCellFactory(column -> {
+            return new TableCell<User, Date>() {
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        // Format date.
+                        setText(formatter.format(item));
+                    }
+                }
+            };
+        });
     }
 
     private void loadAllUsers() {

@@ -13,17 +13,18 @@ import java.util.List;
 
 public class ModelAdapter {
 
-    public ModelAdapter(){
+    public ModelAdapter() {
     }
 
 
     /**
      * map resultset to a user object with list of chat group  And list of friends
+     *
      * @param resultSet query resultset
      * @return user object
      */
-    public static final User mapResultSetToUser(ResultSet resultSet,List<User> friends ,
-                                   List<ChatGroup> chatGroups){
+    public static User mapResultSetToUser(ResultSet resultSet, List<User> friends,
+                                          List<ChatGroup> chatGroups) {
         User user = new User();
         mapResultSetToUser(resultSet);
         user.setFriends(friends);
@@ -34,10 +35,11 @@ public class ModelAdapter {
 
     /**
      * map resultset to a user object without list of chat group  Or list of friends
+     *
      * @param resultSet query resultset
      * @return user object
      */
-    public static final User mapResultSetToUser(ResultSet resultSet){
+    public static User mapResultSetToUser(ResultSet resultSet) {
         User user = new User();
         try {
             user.setId(resultSet.getInt("ID"));
@@ -48,13 +50,16 @@ public class ModelAdapter {
             user.setEmail(resultSet.getString("EMAIL"));
             user.setCountry(resultSet.getString("COUNTRY"));
             user.setGender(Gender.values()[resultSet.getInt("GENDER")]);
+            user.setDateOfBirth(mapDateFromSqlDate(resultSet.getDate("DATE_OF_BIRTH")));
             user.setOnline(resultSet.getBoolean("ONLINE"));
             user.setMode(Mode.values()[resultSet.getInt("MODE")]);
+            user.setBIO(resultSet.getString("BIO"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return user;
     }
+
     /**
      * map user fields to preparedStatement parameters as following
      * 1- FIRST_NAME ,
@@ -68,10 +73,11 @@ public class ModelAdapter {
      * 9- BIO,
      * 10- ONLINE,
      * 11- MODE
+     *
      * @param preparedStatement that required to be map in
-     * @param user map its fields to preparedStatement parameters
+     * @param user              map its fields to preparedStatement parameters
      */
-    public static final void mapUsertoPreparedStatement(PreparedStatement preparedStatement
+    public static void mapUsertoPreparedStatement(PreparedStatement preparedStatement
             , User user) {
         try {
             preparedStatement.setString(1, user.getFirstName());
@@ -80,11 +86,11 @@ public class ModelAdapter {
             preparedStatement.setString(4, user.getPassword());
             preparedStatement.setString(5, user.getEmail());
             preparedStatement.setString(6, user.getCountry());
-            preparedStatement.setInt(7,user.getGender().ordinal());
-            preparedStatement.setDate(8,ModelAdapter.mapDateToSqlDate(user.getDateOfBirth()));
-            preparedStatement.setString(9,user.getBIO());
+            preparedStatement.setInt(7, user.getGender().ordinal());
+            preparedStatement.setDate(8, ModelAdapter.mapDateToSqlDate(user.getDateOfBirth()));
+            preparedStatement.setString(9, user.getBIO());
             preparedStatement.setBoolean(10, user.isOnline());
-            preparedStatement.setInt(11,user.getMode().ordinal());
+            preparedStatement.setInt(11, user.getMode().ordinal());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -92,10 +98,11 @@ public class ModelAdapter {
 
     /**
      * map resultset to a ChatGroup object
+     *
      * @param resultSet query resultset
      * @return chatGroup object
      */
-    public static final ChatGroup mapResultSetToChatGroup(ResultSet resultSet){
+    public static ChatGroup mapResultSetToChatGroup(ResultSet resultSet) {
         ChatGroup chatGroup = new ChatGroup();
         try {
             chatGroup.setId(resultSet.getInt("ID"));
@@ -105,25 +112,28 @@ public class ModelAdapter {
         }
         return chatGroup;
     }
+
     /**
      * map ChatGroup fields to preparedStatement parameters as following
      * 1- GROUP_NAME
+     *
      * @param preparedStatement that required to be map in
-     * @param chatGroup map its fields to preparedStatement parameters
+     * @param chatGroup         map its fields to preparedStatement parameters
      */
-    public static final void mapChatGrouptoPreparedStatement(PreparedStatement preparedStatement, ChatGroup chatGroup){
+    public static void mapChatGrouptoPreparedStatement(PreparedStatement preparedStatement, ChatGroup chatGroup) {
         try {
-            preparedStatement.setString(1,chatGroup.getName());
+            preparedStatement.setString(1, chatGroup.getName());
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public static final Date mapDateToSqlDate(java.util.Date date){
+    public static Date mapDateToSqlDate(java.util.Date date) {
 
         return new Date(date.getTime());
     }
-    public static final java.util.Date mapDateFromSqlDate(Date date){
+
+    public static java.util.Date mapDateFromSqlDate(Date date) {
 
         return new java.util.Date(date.getTime());
     }
