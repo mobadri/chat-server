@@ -5,10 +5,15 @@ import com.chat.server.repository.server.factory.RepositoryServerFactory;
 import com.chat.server.repository.server.user.UserRepository;
 import com.chat.server.service.server.user.UserService;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends UnicastRemoteObject implements UserService {
     UserRepository userRepository = RepositoryServerFactory.creatUserRepository();
+
+    protected UserServiceImpl() throws RemoteException {
+    }
 
     @Override
 
