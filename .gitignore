@@ -48,3 +48,4 @@ chat-server.iml
 *.iml
 *.properties
 *.lst
+pom.properties

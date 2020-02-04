@@ -12,52 +12,60 @@ import java.util.List;
 public class UserServiceImpl extends UnicastRemoteObject implements UserService {
     UserRepository userRepository = RepositoryServerFactory.creatUserRepository();
 
-    protected UserServiceImpl() throws RemoteException {
+    public UserServiceImpl() throws RemoteException {
     }
 
     @Override
 
     public List<User> getAllUsers() {
+
         return userRepository.findAll();
     }
 
     @Override
     public User getUserById(int id) {
-        return null;
+
+        return userRepository.findById(id);
     }
 
     @Override
     public User getByPhoneAndPassword(String phone, String password) {
-        return null;
+
+        return userRepository.findByPhoneAndPassword(phone, password);
     }
 
     @Override
     public User getByPhone(String phone) {
-        return null;
+
+        return userRepository.findByPhone(phone);
     }
 
     @Override
     public List<User> getUserFriends(User user) {
-        return null;
+
+        return userRepository.findAllUserFriends(user);
     }
 
     @Override
     public int insertUser(User user) {
-        return 0;
+
+        return userRepository.insertUser(user);
     }
 
     @Override
     public int updateUser(User user) {
-        return 0;
+        return userRepository.updateUser(user);
     }
 
     @Override
     public int deleteUser(int id) {
-        return 0;
+
+        return userRepository.delete(id);
     }
 
     @Override
     public List<User> getOnlineUsers(boolean online) {
+
         return userRepository.findIfOnline(online);
     }
 }
