@@ -70,6 +70,9 @@ public class MaintainUserViewController implements Initializable {
 
     }
 
+    public MaintainUserViewController() {
+    }
+
     private void searchTextListner(FilteredList<User> filteredData) {
         searchText.textProperty().addListener((observable, oldValue, newValue) ->
                 filteredData.setPredicate(Member -> {

@@ -1,5 +1,7 @@
 package com.chat.server.service.server.chatgroup;
 
-public interface ChatGroupService {
+import java.rmi.Remote;
+
+public interface ChatGroupService extends Remote {
 
 }

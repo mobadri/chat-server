@@ -2,11 +2,12 @@ package com.chat.server.model.user;
 
 import com.chat.server.model.chat.ChatGroup;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
     private int id;
     private String firstName;
     private String lastName;

@@ -1,6 +1,8 @@
 package com.chat.server.model.chat;
 
-public enum NotificationType {
+import java.io.Serializable;
+
+public enum NotificationType implements Serializable {
     MESSAGE_RECEIVED,
     MESSAGE_SENT,
     FRIEND_REQUEST,

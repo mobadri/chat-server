@@ -1,5 +1,7 @@
 package com.chat.server.model.user;
 
-public enum Gender {
+import java.io.Serializable;
+
+public enum Gender implements Serializable {
     MALE, FEMALE
 }
