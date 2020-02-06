@@ -1,0 +1,8 @@
+com\chat\server\model\user\Mode.class
+module-info.class
+com\chat\server\model\chat\ChatGroup.class
+com\chat\server\model\chat\Message.class
+com\chat\server\model\user\User.class
+com\chat\server\model\chat\NotificationType.class
+com\chat\server\model\chat\Notification.class
+com\chat\server\model\user\Gender.class

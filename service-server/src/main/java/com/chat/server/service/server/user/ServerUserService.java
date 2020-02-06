@@ -12,6 +12,7 @@ public interface ServerUserService extends Remote {
      * get all users register on the system
      *
      * @return list of register users
+     * @throws RemoteException
      */
     public List<User> getAllUsers() throws RemoteException;
 
@@ -20,6 +21,7 @@ public interface ServerUserService extends Remote {
      *
      * @param id user id
      * @return user if founded or null of not founded
+     * @throws RemoteException
      */
     public User getUserById(int id) throws RemoteException;
 
@@ -29,6 +31,7 @@ public interface ServerUserService extends Remote {
      * @param phone    user phone
      * @param password user password
      * @return user if founded Or null if not founded
+     * @throws RemoteException
      */
     public User getByPhoneAndPassword(String phone, String password) throws RemoteException;
 
