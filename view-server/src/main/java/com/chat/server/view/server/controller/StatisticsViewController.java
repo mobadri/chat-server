@@ -10,6 +10,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.*;
 
 public class StatisticsViewController implements Initializable {
@@ -39,6 +40,9 @@ public class StatisticsViewController implements Initializable {
     private Map<String, Double> countries = new HashMap<>();
 
     UserController controller = new UserController();
+
+    public StatisticsViewController() throws RemoteException {
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

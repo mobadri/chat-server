@@ -7,7 +7,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-public interface ChatGroupService extends Remote {
+public interface ServerChatGroupService extends Remote {
 
     /**
      *  get all groups from the database

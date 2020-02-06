@@ -3,16 +3,18 @@ package com.chat.server.service.server.user.impl;
 import com.chat.server.model.user.User;
 import com.chat.server.repository.server.factory.RepositoryServerFactory;
 import com.chat.server.repository.server.user.UserRepository;
-import com.chat.server.service.server.user.UserService;
+import com.chat.server.service.server.user.ServerUserService;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
+import java.util.Vector;
 
-public class UserServiceImpl extends UnicastRemoteObject implements UserService {
+public class ServerUserServiceImpl extends UnicastRemoteObject implements ServerUserService {
+
     UserRepository userRepository = RepositoryServerFactory.creatUserRepository();
 
-    public UserServiceImpl() throws RemoteException {
+    public ServerUserServiceImpl() throws RemoteException {
     }
 
     @Override

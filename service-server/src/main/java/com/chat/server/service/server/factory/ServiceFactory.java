@@ -1,13 +1,31 @@
 package com.chat.server.service.server.factory;
 
-import com.chat.server.service.server.user.UserService;
-import com.chat.server.service.server.user.impl.UserServiceImpl;
+import com.chat.server.service.server.chatgroup.ServerChatGroupService;
+import com.chat.server.service.server.chatgroup.impl.ServerChatGroupServiceImpl;
+import com.chat.server.service.server.message.ServerMessageService;
+import com.chat.server.service.server.message.impl.ServerMessageServiceImpl;
+import com.chat.server.service.server.notification.ServerNotificationService;
+import com.chat.server.service.server.notification.impl.ServerNotificationServiceImpl;
+import com.chat.server.service.server.user.ServerUserService;
+import com.chat.server.service.server.user.impl.ServerUserServiceImpl;
 
 import java.rmi.RemoteException;
 
 public class ServiceFactory {
-    public static UserService creatUserService() throws RemoteException {
 
-        return new UserServiceImpl();
+    public static ServerUserService createServerUserService() throws RemoteException {
+        return new ServerUserServiceImpl();
+    }
+
+    public static ServerMessageService createServerMessageService() throws RemoteException {
+        return new ServerMessageServiceImpl();
+    }
+
+    public static ServerNotificationService createServerNotificationService() throws RemoteException {
+        return new ServerNotificationServiceImpl();
+    }
+
+    public static ServerChatGroupService createServerChatGroupService() throws RemoteException {
+        return new ServerChatGroupServiceImpl();
     }
 }

@@ -7,7 +7,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-public interface UserService extends Remote {
+public interface ServerUserService extends Remote {
     /**
      * get all users register on the system
      *
@@ -79,4 +79,5 @@ public interface UserService extends Remote {
      * @return list of online users
      */
     public List<User> getOnlineUsers(boolean online) throws RemoteException;
+
 }

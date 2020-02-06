@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class MaintainUserViewController implements Initializable {
+
     UserController controller = new UserController();
 
     @FXML
@@ -70,7 +72,7 @@ public class MaintainUserViewController implements Initializable {
 
     }
 
-    public MaintainUserViewController() {
+    public MaintainUserViewController() throws RemoteException {
     }
 
     private void searchTextListner(FilteredList<User> filteredData) {
