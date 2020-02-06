@@ -4,4 +4,7 @@ module service.server {
     requires java.rmi;
     exports com.chat.server.service.server.user;
     exports com.chat.server.service.server.factory;
+    exports com.chat.server.service.server.chatgroup;
+    exports com.chat.server.service.server.message;
+    exports com.chat.server.service.server.notification;
 }

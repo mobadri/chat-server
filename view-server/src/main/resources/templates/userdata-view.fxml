@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="612.0" prefWidth="871.0" stylesheets="@../static/css/style.css"
+            xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.chat.server.view.server.controller.UserDataView">
+    <children>
+        <BorderPane prefHeight="400.0" prefWidth="607.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <top>
+                <AnchorPane id="title-pane" prefHeight="169.0" prefWidth="871.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <Label fx:id="userName" layoutX="231.0" layoutY="63.0" text="FristName LastName"
+                               textFill="WHITE">
+                            <font>
+                                <Font size="36.0"/>
+                            </font>
+                        </Label>
+                        <ImageView id="user-image" fx:id="userImage" fitHeight="150.0" fitWidth="200.0" layoutX="14.0"
+                                   layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0"
+                                   AnchorPane.topAnchor="10.0"/>
+                    </children>
+                </AnchorPane>
+            </top>
+            <left>
+                <AnchorPane prefHeight="127.0" prefWidth="38.0" BorderPane.alignment="CENTER"/>
+            </left>
+            <bottom>
+                <AnchorPane prefHeight="64.0" prefWidth="600.0" BorderPane.alignment="CENTER"/>
+            </bottom>
+            <right>
+                <AnchorPane prefHeight="379.0" prefWidth="45.0" BorderPane.alignment="CENTER"/>
+            </right>
+            <center>
+                <AnchorPane prefHeight="379.0" prefWidth="790.0" BorderPane.alignment="CENTER"/>
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>

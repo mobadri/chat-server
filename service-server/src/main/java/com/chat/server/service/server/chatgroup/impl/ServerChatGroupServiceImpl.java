@@ -2,15 +2,16 @@ package com.chat.server.service.server.chatgroup.impl;
 
 import com.chat.server.model.chat.ChatGroup;
 import com.chat.server.model.user.User;
-import com.chat.server.service.server.chatgroup.ChatGroupService;
+import com.chat.server.service.server.chatgroup.ServerChatGroupService;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
+import java.util.Vector;
 
-public class ChatGroupServiceImpl extends UnicastRemoteObject implements ChatGroupService {
+public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements ServerChatGroupService {
 
-    protected ChatGroupServiceImpl() throws RemoteException {
+    public ServerChatGroupServiceImpl() throws RemoteException {
     }
 
     @Override

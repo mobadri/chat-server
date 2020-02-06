@@ -11,7 +11,7 @@
         <Pane id="title-pane" prefHeight="158.0" prefWidth="1017.0" AnchorPane.leftAnchor="0.0"
               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label layoutX="155.0" layoutY="54.0" text="JETS Caht Server" textFill="WHITE">
+                <Label layoutX="155.0" layoutY="54.0" text="JETS Chat Server" textFill="WHITE">
                     <font>
                         <Font size="42.0"/>
                     </font>

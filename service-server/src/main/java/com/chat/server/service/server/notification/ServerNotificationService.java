@@ -8,7 +8,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-public interface NotificationService extends Remote {
+public interface ServerNotificationService extends Remote {
     /**
      * get user notifications which seen or not seen
      * @param user user to get its notification
@@ -25,4 +25,5 @@ public interface NotificationService extends Remote {
      * @return
      */
     public List<Notification> getUserNotificationByType(User user, boolean seen , NotificationType notificationType) throws RemoteException;
+
 }

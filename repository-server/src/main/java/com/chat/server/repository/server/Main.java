@@ -23,14 +23,14 @@ public class Main {
         System.out.println(all.size());
         all.forEach(System.out::println);
 
-        User user = userRepository.findById(2L);
+        User user = userRepository.findById(2);
         System.out.println("phone number of user's id  = 2");
         if (user != null)
             System.out.println(user);
         else
             System.out.println("not found");
 
-        user = userRepository.findById(91L);
+        user = userRepository.findById(91);
         System.out.print("\nphone number of user's id  = 91 : ");
         if (user != null)
             System.out.println(user.getPhone() + user.getFriends().size());

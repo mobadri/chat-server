@@ -44,7 +44,8 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
-                        <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="160.0" prefWidth="268.0"
+                        <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="160.0"
+                                prefWidth="268.0"
                                 text="Add User">
                             <graphic>
                                 <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">

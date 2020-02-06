@@ -3,15 +3,16 @@ package com.chat.server.service.server.notification.impl;
 import com.chat.server.model.chat.Notification;
 import com.chat.server.model.chat.NotificationType;
 import com.chat.server.model.user.User;
-import com.chat.server.service.server.notification.NotificationService;
+import com.chat.server.service.server.notification.ServerNotificationService;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
+import java.util.Vector;
 
-public class NotificationServiceImpl extends UnicastRemoteObject implements NotificationService {
+public class ServerNotificationServiceImpl extends UnicastRemoteObject implements ServerNotificationService {
 
-    public NotificationServiceImpl() throws RemoteException {
+    public ServerNotificationServiceImpl() throws RemoteException {
     }
 
     @Override
@@ -23,4 +24,5 @@ public class NotificationServiceImpl extends UnicastRemoteObject implements Noti
     public List<Notification> getUserNotificationByType(User user, boolean seen, NotificationType notificationType) {
         return null;
     }
+
 }
