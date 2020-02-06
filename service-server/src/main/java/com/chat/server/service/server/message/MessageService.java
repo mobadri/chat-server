@@ -1,4 +1,6 @@
 package com.chat.server.service.server.message;
 
-public interface MessageService {
+import java.rmi.Remote;
+
+public interface MessageService extends Remote {
 }

@@ -2,7 +2,9 @@ package com.chat.server.model.chat;
 
 import com.chat.server.model.user.User;
 
-public class Message {
+import java.io.Serializable;
+
+public class Message implements Serializable {
 
 
     private int id;

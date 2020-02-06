@@ -1,5 +1,7 @@
 package com.chat.server.model.user;
 
-public enum Mode {
+import java.io.Serializable;
+
+public enum Mode implements Serializable {
     AVAILABLE, BUSY, AWAY
 }

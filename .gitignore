@@ -44,3 +44,8 @@ chat-server.iml
 /config-server/target/*.*
 /config-server/target/*
 /config-server/config-server.iml
+
+*.iml
+*.properties
+*.lst
+pom.properties

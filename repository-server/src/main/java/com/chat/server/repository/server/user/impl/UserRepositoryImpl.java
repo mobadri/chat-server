@@ -44,7 +44,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User findById(Long id) {
+    public User findById(int id) {
         User user = new User();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(UserRepository.SELECT_BY_ID);

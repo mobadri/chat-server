@@ -2,7 +2,9 @@ package com.chat.server.model.chat;
 
 import com.chat.server.model.user.User;
 
-public class Notification {
+import java.io.Serializable;
+
+public class Notification implements Serializable {
     private int id;
     private User userFrom;
     private User userTo;

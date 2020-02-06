@@ -35,7 +35,7 @@ public interface UserRepository {
      * @param id user id
      * @return User
      */
-    public User findById(Long id);
+    public User findById(int id);
 
     /**
      * sing in by phone and password
