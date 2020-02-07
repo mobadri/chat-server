@@ -77,8 +77,7 @@ public class ModelAdapter {
      * @param preparedStatement that required to be map in
      * @param user              map its fields to preparedStatement parameters
      */
-    public static void mapUsertoPreparedStatement(PreparedStatement preparedStatement
-            , User user) {
+    public static void mapUsertoPreparedStatement(PreparedStatement preparedStatement, User user) {
         try {
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());

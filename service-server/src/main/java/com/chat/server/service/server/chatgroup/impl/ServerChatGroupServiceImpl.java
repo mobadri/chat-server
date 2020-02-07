@@ -1,5 +1,6 @@
 package com.chat.server.service.server.chatgroup.impl;
 
+import com.chat.client.service.client.chat.ClientChatGroupService;
 import com.chat.server.model.chat.ChatGroup;
 import com.chat.server.model.user.User;
 import com.chat.server.service.server.chatgroup.ServerChatGroupService;
@@ -10,6 +11,8 @@ import java.util.List;
 import java.util.Vector;
 
 public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements ServerChatGroupService {
+
+    Vector<ClientChatGroupService> clientChatGroupServices = new Vector<>();
 
     public ServerChatGroupServiceImpl() throws RemoteException {
     }
@@ -42,5 +45,15 @@ public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements S
     @Override
     public int deleteChatGroup(int id) throws RemoteException {
         return 0;
+    }
+
+    @Override
+    public void register(ClientChatGroupService clientChatGroupService) {
+        clientChatGroupServices.add(clientChatGroupService);
+    }
+
+    @Override
+    public void unRegister(ClientChatGroupService clientChatGroupService) {
+        clientChatGroupServices.remove(clientChatGroupService);
     }
 }

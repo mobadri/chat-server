@@ -18,19 +18,19 @@ public class Server {
 
     public Server() {
         try {
-            // server main
-            ServerUserService serverUserService = ServiceFactory.createServerUserService();
+
+            ServerUserService userService = ServiceFactory.createServerUserService();
             ServerChatGroupService chatGroupService = ServiceFactory.createServerChatGroupService();
             ServerMessageService messageService = ServiceFactory.createServerMessageService();
             ServerNotificationService notificationService = ServiceFactory.createServerNotificationService();
 
-            Registry reg = LocateRegistry.createRegistry(PORT_NUMBER);
+            Registry registry = LocateRegistry.createRegistry(PORT_NUMBER);
             System.out.println("server is sunning");
 
-            reg.rebind("userService", serverUserService);
-            reg.rebind("chatGroupService", chatGroupService);
-            reg.rebind("messageService", messageService);
-            reg.rebind("notificationService", notificationService);
+            registry.rebind("userService", userService);
+            registry.rebind("chatGroupService", chatGroupService);
+            registry.rebind("messageService", messageService);
+            registry.rebind("notificationService", notificationService);
         } catch (RemoteException ex) {
             ex.printStackTrace();
         }

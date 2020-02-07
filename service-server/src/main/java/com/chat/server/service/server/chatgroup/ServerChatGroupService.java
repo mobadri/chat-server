@@ -1,5 +1,6 @@
 package com.chat.server.service.server.chatgroup;
 
+import com.chat.client.service.client.chat.ClientChatGroupService;
 import com.chat.server.model.chat.ChatGroup;
 import com.chat.server.model.user.User;
 
@@ -50,4 +51,15 @@ public interface ServerChatGroupService extends Remote {
      */
     public int deleteChatGroup(int id) throws RemoteException;
 
+    /**
+     * to register client
+     * @param clientChatGroupService client service to register it
+     */
+    public void register(ClientChatGroupService clientChatGroupService);
+
+    /**
+     * to unRegister client
+     * @param  clientChatGroupService client service to register it
+     */
+    public void unRegister(ClientChatGroupService clientChatGroupService);
 }
