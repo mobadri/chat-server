@@ -1,5 +1,7 @@
 package com.chat.server.service.server.notification;
 
+import com.chat.client.service.client.message.ClientMessageService;
+import com.chat.client.service.client.notification.ClientNotificationService;
 import com.chat.server.model.chat.Notification;
 import com.chat.server.model.chat.NotificationType;
 import com.chat.server.model.user.User;
@@ -26,4 +28,15 @@ public interface ServerNotificationService extends Remote {
      */
     public List<Notification> getUserNotificationByType(User user, boolean seen , NotificationType notificationType) throws RemoteException;
 
+    /**
+     * to register client
+     * @param clientNotificationService client service to register it
+     */
+    public void register(ClientNotificationService clientNotificationService);
+
+    /**
+     * to unRegister client
+     * @param  clientNotificationService client service to register it
+     */
+    public void unRegister(ClientNotificationService clientNotificationService);
 }
