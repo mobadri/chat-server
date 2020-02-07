@@ -50,4 +50,9 @@ public interface ServerChatGroupService extends Remote {
      */
     public int deleteChatGroup(int id) throws RemoteException;
 
+    /**
+     * to register client
+     * @param ClientChatGroupService client service to register it
+     */
+
 }
