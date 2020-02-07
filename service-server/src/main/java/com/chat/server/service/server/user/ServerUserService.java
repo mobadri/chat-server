@@ -1,6 +1,5 @@
 package com.chat.server.service.server.user;
 
-
 import com.chat.server.model.user.User;
 
 import java.rmi.Remote;
@@ -8,6 +7,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 public interface ServerUserService extends Remote {
+
     /**
      * get all users register on the system
      *
@@ -19,11 +19,12 @@ public interface ServerUserService extends Remote {
     /**
      * get user by his id
      *
-     * @param id user id
+     * @param id       user id
+     * @param fulldata boolean to get all user data with friends and chatgroups
      * @return user if founded or null of not founded
      * @throws RemoteException
      */
-    public User getUserById(int id) throws RemoteException;
+    public User getUserById(int id, boolean fulldata) throws RemoteException;
 
     /**
      * get user by phone and password
@@ -82,5 +83,4 @@ public interface ServerUserService extends Remote {
      * @return list of online users
      */
     public List<User> getOnlineUsers(boolean online) throws RemoteException;
-
 }

@@ -26,7 +26,7 @@ public interface UserFriendRepository {
     boolean addNewFriend(int user_id, int friend_id);
 
     /**
-     * delete a freind from user friend list
+     * delete a friend from user friend list
      *
      * @param user_id , friend_id
      */

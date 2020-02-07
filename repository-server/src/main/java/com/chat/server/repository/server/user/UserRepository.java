@@ -32,10 +32,11 @@ public interface UserRepository {
     /**
      * get user form database using his id
      *
-     * @param id user id
+     * @param id       user id
+     * @param fullData full user data such as all friends and all groups
      * @return User
      */
-    public User findById(int id);
+    public User findById(int id, boolean fullData);
 
     /**
      * sing in by phone and password

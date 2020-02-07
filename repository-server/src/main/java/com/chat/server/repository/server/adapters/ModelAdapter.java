@@ -1,9 +1,11 @@
 package com.chat.server.repository.server.adapters;
 
 import com.chat.server.model.chat.ChatGroup;
+import com.chat.server.model.chat.Message;
 import com.chat.server.model.user.Gender;
 import com.chat.server.model.user.Mode;
 import com.chat.server.model.user.User;
+import com.chat.server.model.user.UserFriend;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -12,6 +14,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ModelAdapter {
+
 
     public ModelAdapter() {
     }
@@ -122,6 +125,53 @@ public class ModelAdapter {
     public static void mapChatGrouptoPreparedStatement(PreparedStatement preparedStatement, ChatGroup chatGroup) {
         try {
             preparedStatement.setString(1, chatGroup.getName());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * map resultset to a UserFriend object
+     *
+     * @param resultSet query resultset
+     * @return chatGroup object
+     */
+    public static UserFriend mapResultSetToUserFriend(ResultSet resultSet) {
+        UserFriend userFriend = new UserFriend();
+        try {
+            userFriend.setUser(resultSet.getInt("USER_ID"));
+            userFriend.setFriend(resultSet.getInt("FRIEND_ID"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userFriend;
+    }
+
+    /**
+     * @param
+     * @return
+     */
+    public static Message mapResultSetToMessage(ResultSet resultSet) {
+        Message message = new Message();
+        try {
+
+            message.setId(resultSet.getInt("ID"));
+            message.setMessage(resultSet.getString("MESSAGE_CONTENT"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return message;
+    }
+
+    /**
+     * @param
+     * @return
+     */
+    public static void mapMessagetoPreparedStatement(PreparedStatement preparedStatement, Message message) {
+        try {
+            preparedStatement.setString(1, message.getMessage());
+            preparedStatement.setInt(2, message.getUserFrom().getId());
+            preparedStatement.setInt(3, message.getChatGroup().getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }

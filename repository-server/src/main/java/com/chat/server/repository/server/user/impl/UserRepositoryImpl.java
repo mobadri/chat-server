@@ -44,7 +44,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User findById(int id) {
+    public User findById(int id, boolean fullData) {
         User user = new User();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(UserRepository.SELECT_BY_ID);
@@ -52,9 +52,13 @@ public class UserRepositoryImpl implements UserRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                user = ModelAdapter.mapResultSetToUser(resultSet,
-                        findAllUserFriends(user),
-                        chatGroupRepository.getAllChatGroupsForUser(user));
+                if (fullData) {
+                    user = ModelAdapter.mapResultSetToUser(resultSet,
+                            findAllUserFriends(user),
+                            chatGroupRepository.getAllChatGroupsForUser(user));
+                } else {
+                    user = ModelAdapter.mapResultSetToUser(resultSet);
+                }
             }
             return user;
         } catch (SQLException e) {
