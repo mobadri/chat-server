@@ -2,20 +2,30 @@ package com.chat.server.view.server.controller;
 
 import com.chat.server.controller.server.user.UserController;
 import com.chat.server.model.user.User;
+import com.chat.server.view.server.controller.confirmation.ConfirmType;
+import com.chat.server.view.server.controller.confirmation.ConfirmationController;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.text.Format;
@@ -27,7 +37,8 @@ import java.util.ResourceBundle;
 public class MaintainUserViewController implements Initializable {
 
     UserController controller = new UserController();
-
+    @FXML
+    AnchorPane rootPane;
     @FXML
     TableView<User> usersTable;
     @FXML
@@ -77,17 +88,17 @@ public class MaintainUserViewController implements Initializable {
 
     private void searchTextListner(FilteredList<User> filteredData) {
         searchText.textProperty().addListener((observable, oldValue, newValue) ->
-                filteredData.setPredicate(Member -> {
+                filteredData.setPredicate(user -> {
                     if (newValue == null || newValue.isEmpty()) {
                         return true;
                     }
                     String lowerCaseFilter = newValue.toLowerCase();
-                    if (Member.getFirstName().toLowerCase().contains(lowerCaseFilter)
-                            || Member.getPhone().contains(lowerCaseFilter)
-                            || (Member.getCountry() != null
-                            && Member.getCountry().toLowerCase().contains(lowerCaseFilter))
-                            || (Member.getLastName() != null
-                            && Member.getLastName().toLowerCase().contains(lowerCaseFilter))) {
+                    if (user.getFirstName().toLowerCase().contains(lowerCaseFilter)
+                            || user.getPhone().contains(lowerCaseFilter)
+                            || (user.getCountry() != null
+                            && user.getCountry().toLowerCase().contains(lowerCaseFilter))
+                            || (user.getLastName() != null
+                            && user.getLastName().toLowerCase().contains(lowerCaseFilter))) {
                         return true;
                     }
                     return false;
@@ -132,4 +143,38 @@ public class MaintainUserViewController implements Initializable {
             userList.add(u);
         }
     }
+
+    @FXML
+    private void deleteAction(ActionEvent actionEvent) {
+        User user = usersTable.getSelectionModel().getSelectedItem();
+        if (user != null) {
+            try {
+
+                FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/templates/dialog/confirmation-view-daialog.fxml"));
+                Parent root = loader.load();
+                ConfirmationController confirmDialog = loader.getController();
+                confirmDialog.setMessageTitle("Confirm delete User ");
+                confirmDialog.setMessage("Are you sure to delete this user ? \n" +
+                        user.getFirstName() + " " + user.getLastName());
+                Stage stage = new Stage();
+                stage.setResizable(false);
+                stage.setTitle("DELETE USER ?");
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                confirmDialog.setStage(stage);
+                stage.showAndWait();
+                if (confirmDialog.getConfirmType() == ConfirmType.OK) {
+                    deleteUser(user);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    private void deleteUser(User user) {
+        System.out.println(user + " should be deleted");
+    }
+
 }
