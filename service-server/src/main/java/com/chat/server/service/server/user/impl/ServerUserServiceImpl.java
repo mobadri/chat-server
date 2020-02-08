@@ -27,7 +27,7 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
     @Override
     public User getUserById(int id) {
 
-        return userRepository.findById(id);
+        return userRepository.findById(id, false);
     }
 
     @Override
