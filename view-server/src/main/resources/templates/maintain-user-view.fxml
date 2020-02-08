@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane prefHeight="662.0" prefWidth="1017.0" stylesheets="@../static/css/style.css"
+<AnchorPane fx:id="rootPane" prefHeight="662.0" prefWidth="1017.0" stylesheets="@../static/css/style.css"
             xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.chat.server.view.server.controller.MaintainUserViewController">
     <children>
@@ -69,8 +69,8 @@
                             <Font name="System Bold" size="14.0"/>
                         </font>
                     </Button>
-                    <Button id="delete" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" text="Delete"
-                            textFill="WHITE" GridPane.columnIndex="2">
+                    <Button id="delete" mnemonicParsing="false" onAction="#deleteAction" prefHeight="26.0"
+                            prefWidth="105.0" text="Delete" textFill="WHITE" GridPane.columnIndex="2">
                         <font>
                             <Font name="System Bold" size="14.0"/>
                         </font>

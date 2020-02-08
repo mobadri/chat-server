@@ -7,5 +7,6 @@ module view.server {
     requires java.rmi;
 
     opens com.chat.server.view.server.controller;
+    opens com.chat.server.view.server.controller.confirmation;
     opens com.chat.server.view.server;
 }
