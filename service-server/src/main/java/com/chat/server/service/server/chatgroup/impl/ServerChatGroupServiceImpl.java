@@ -11,13 +11,12 @@ import com.chat.server.service.server.chatgroup.ServerChatGroupService;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
-import java.util.Vector;
 
 public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements ServerChatGroupService {
 
-/*
-    Vector<ClientChatGroupService> clientChatGroupServices = new Vector<>();
-*/
+    /*
+        Vector<ClientChatGroupService> clientChatGroupServices = new Vector<>();
+    */
     ChatGroupRepository chatGroupRepository = RepositoryServerFactory.creatChatRepository();
     MessageRepository messageRepository = RepositoryServerFactory.createMessageRepository();
 
@@ -56,6 +55,7 @@ public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements S
 
     @Override
     public Message sendMessage(Message message) {
+
         return messageRepository.insertMessage(message);
     }
 

@@ -12,6 +12,9 @@ public class UserController {
     private ServerUserService service = ServiceFactory.createServerUserService();
 
     public UserController() throws RemoteException {
+//        NetworkFactory.creat
+
+
     }
 
     public List<User> getAllOnlineUsers(boolean online) {
