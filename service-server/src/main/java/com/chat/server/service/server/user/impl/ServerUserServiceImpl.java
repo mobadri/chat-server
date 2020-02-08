@@ -8,7 +8,6 @@ import com.chat.server.service.server.user.ServerUserService;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
-import java.util.Vector;
 
 public class ServerUserServiceImpl extends UnicastRemoteObject implements ServerUserService {
 
@@ -25,9 +24,9 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
     }
 
     @Override
-    public User getUserById(int id) {
+    public User getUserById(int id, boolean fulldata) {
 
-        return userRepository.findById(id);
+        return userRepository.findById(id, fulldata);
     }
 
     @Override

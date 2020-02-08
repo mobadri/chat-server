@@ -18,10 +18,11 @@ public interface ServerUserService extends Remote {
     /**
      * get user by his id
      *
-     * @param id user id
+     * @param id       user id
+     * @param fulldata boolean to get all user data with friends and chatgroups
      * @return user if founded or null of not founded
      */
-    public User getUserById(int id) throws RemoteException;
+    public User getUserById(int id, boolean fulldata) throws RemoteException;
 
     /**
      * get user by phone and password
