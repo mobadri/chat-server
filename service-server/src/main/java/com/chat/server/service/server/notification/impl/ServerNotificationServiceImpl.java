@@ -37,5 +37,4 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
     public void unRegister(ClientNotificationService clientNotificationService) {
         clientNotificationServices.remove(clientNotificationService);
     }
-
 }

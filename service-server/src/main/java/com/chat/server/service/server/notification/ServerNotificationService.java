@@ -13,7 +13,7 @@ import java.util.List;
 public interface ServerNotificationService extends Remote {
     /**
      * get user notifications which seen or not seen
-     * @param user user to get its notification
+     * @param user user to get his notification
      * @param seen seen Or not seen
      * @return list of user notifications
      */
