@@ -1,6 +1,5 @@
 package com.chat.server.service.server.user;
 
-
 import com.chat.server.model.user.User;
 
 import java.rmi.Remote;
@@ -8,6 +7,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 public interface ServerUserService extends Remote {
+
     /**
      * get all users register on the system
      *
@@ -80,5 +80,4 @@ public interface ServerUserService extends Remote {
      * @return list of online users
      */
     public List<User> getOnlineUsers(boolean online) throws RemoteException;
-
 }

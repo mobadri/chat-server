@@ -1,10 +1,11 @@
 package com.chat.server.service.server.chatgroup.impl;
 
-import com.chat.client.service.client.chat.ClientChatGroupService;
 import com.chat.server.model.chat.ChatGroup;
+import com.chat.server.model.chat.Message;
 import com.chat.server.model.user.User;
 import com.chat.server.repository.server.chat.ChatGroupRepository;
 import com.chat.server.repository.server.factory.RepositoryServerFactory;
+import com.chat.server.repository.server.message.MessageRepository;
 import com.chat.server.service.server.chatgroup.ServerChatGroupService;
 
 import java.rmi.RemoteException;
@@ -14,8 +15,11 @@ import java.util.Vector;
 
 public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements ServerChatGroupService {
 
+/*
     Vector<ClientChatGroupService> clientChatGroupServices = new Vector<>();
+*/
     ChatGroupRepository chatGroupRepository = RepositoryServerFactory.creatChatRepository();
+    MessageRepository messageRepository = RepositoryServerFactory.createMessageRepository();
 
     public ServerChatGroupServiceImpl() throws RemoteException {
     }
@@ -36,12 +40,12 @@ public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements S
     }
 
     @Override
-    public int insertChatGroup(ChatGroup chatGroup) throws RemoteException {
+    public ChatGroup insertChatGroup(ChatGroup chatGroup) throws RemoteException {
         return chatGroupRepository.insertChatGroup(chatGroup);
     }
 
     @Override
-    public int updateChatGroup(ChatGroup chatGroup) throws RemoteException {
+    public ChatGroup updateChatGroup(ChatGroup chatGroup) throws RemoteException {
         return chatGroupRepository.updateChatGroup(chatGroup);
     }
 
@@ -51,6 +55,26 @@ public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements S
     }
 
     @Override
+    public Message sendMessage(Message message) {
+        return messageRepository.insertMessage(message);
+    }
+
+    @Override
+    public User addFriend(ChatGroup chatGroup, User friend) {
+        return chatGroupRepository.addFriend(chatGroup, friend);
+    }
+
+    @Override
+    public int removeFriend(ChatGroup chatGroup, User friend) {
+        return chatGroupRepository.removeFriend(chatGroup, friend);
+    }
+
+    @Override
+    public List<ChatGroup> searchByName(String groupName, User user) {
+        return chatGroupRepository.searchByName(groupName, user);
+    }
+
+    /*@Override
     public void register(ClientChatGroupService clientChatGroupService) {
         clientChatGroupServices.add(clientChatGroupService);
     }
@@ -58,5 +82,5 @@ public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements S
     @Override
     public void unRegister(ClientChatGroupService clientChatGroupService) {
         clientChatGroupServices.remove(clientChatGroupService);
-    }
+    }*/
 }

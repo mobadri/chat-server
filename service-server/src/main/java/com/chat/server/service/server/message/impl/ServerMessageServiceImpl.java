@@ -1,6 +1,5 @@
 package com.chat.server.service.server.message.impl;
 
-import com.chat.client.service.client.message.ClientMessageService;
 import com.chat.server.service.server.message.ServerMessageService;
 
 import java.rmi.RemoteException;
@@ -9,12 +8,14 @@ import java.util.Vector;
 
 public class ServerMessageServiceImpl extends UnicastRemoteObject implements ServerMessageService {
 
+/*
     Vector<ClientMessageService> clientMessageServices = new Vector<>();
+*/
 
     public ServerMessageServiceImpl() throws RemoteException {
     }
 
-    @Override
+   /* @Override
     public void register(ClientMessageService clientMessageService) {
         clientMessageServices.add(clientMessageService);
     }
@@ -22,5 +23,5 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
     @Override
     public void unRegister(ClientMessageService clientMessageService) {
         clientMessageServices.remove(clientMessageService);
-    }
+    }*/
 }

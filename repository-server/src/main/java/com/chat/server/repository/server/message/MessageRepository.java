@@ -29,5 +29,4 @@ public interface MessageRepository {
      * @param messgae_id
      */
     void deleteMessage(int messgae_id);
-
 }
