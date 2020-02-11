@@ -25,7 +25,7 @@ public class Server {
             ServerNotificationService notificationService = ServiceFactory.createServerNotificationService();
 
             Registry registry = LocateRegistry.createRegistry(PORT_NUMBER);
-            System.out.println("server is sunning");
+            System.out.println("server is running");
 
             registry.rebind("userService", userService);
             registry.rebind("chatGroupService", chatGroupService);
