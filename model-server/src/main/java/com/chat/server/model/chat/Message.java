@@ -3,6 +3,7 @@ package com.chat.server.model.chat;
 import com.chat.server.model.user.User;
 
 import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicStampedReference;
 
 public class Message implements Serializable {
 
@@ -42,7 +43,18 @@ public class Message implements Serializable {
         return chatGroup;
     }
 
+
     public void setChatGroup(ChatGroup chatGroup) {
         this.chatGroup = chatGroup;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", message='" + message + '\'' +
+                ", userFrom=" + userFrom.getPhone() +
+               // ", chatGroup=" + chatGroup.getName() +
+                '}';
     }
 }

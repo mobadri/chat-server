@@ -5,22 +5,7 @@ import com.chat.server.model.user.User;
 import java.util.List;
 
 public interface UserRepository {
-    String SELECT_ALL = "SELECT * FROM USER";
-    String SELECT_BY_ID = "SELECT * FROM USER WHERE ID = ?";
-    String SELECT_IF_ONLINE = "SELECT * FROM USER WHERE ONLINE = ?";
-    String SELECT_BY_PHONE_PASSWORD = "SELECT * FROM USER WHERE PHONE = ? " +
-            "AND PASSWORD = ?";
-    String SELECT_ALL_USER_FRIENDS = "SELECT * FROM USER INNER JOIN USER_FRIENDS " +
-            "ON USER.ID = USER_FRIENDS.FRIEND_ID WHERE USER.ID = ?";
-    String SELECT_BY_PHONE = "SELECT * FROM USER WHERE PHONE = ?";
-    String INSERT_USER = "INSERT INTO USER (FIRST_NAME,LAST_NAME,PHONE,PASSWORD,EMAIL," +
-            "COUNTRY,GENDER,DATE_OF_BIRTH,BIO,ONLINE,MODE)" +
-            "  VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-    String UPDATE_USER = "UPDATE USER SET FIRST_NAME= ?," +
-            "LAST_NAME = ?,PHONE = ?,PASSWORD = ? ,EMAIL = ?," +
-            " COUNTRY =? ,GENDER = ?,DATE_OF_BIRTH =?,BIO = ?,ONLINE = ?,MODE = ?" +
-            " WHERE ID = ?";
-    String DELETE_USER = "DELETE FROM USER WHERE ID = ?";
+
 
     /**
      * get all users form database
