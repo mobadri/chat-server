@@ -14,7 +14,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatGroupRepositoryImpl implements ChatGroupRepository {
+    private final String SELECT_ALL_CHAT_GROUP = "SELECT * FROM CHAT_GROUP";
 
+    private final String SELECT_CHAT_GROUP_BY_ID = "SELECT * FROM CHAT_GROUP WHERE ID = ?";
+
+    private final String SELECT_ALL_CHAT_GROUPS_BY_USER_ID = "SELECT * FROM CHAT_GROUP " +
+            "INNER join GROUP_USER " +
+            "ON CHAT_GROUP.ID =GROUP_USER.GROUP_ID " +
+            "WHERE GROUP_USER.USER_ID = ?";
+
+    private final String INSERT_CHAT_GROUP = "INSERT INTO CHAT_GROUP (GROUP_NAME) VALUES (?)";
+
+    private final String UPDATE_CHAT_GROUP = "UPDATE CHAT_GROUP SET GROUP_NAME = ? WHERE ID = ?";
+
+    private final String DELETE_CHAT_GROUP = "DELETE FROM CHAT_GROUP WHERE ID = ?";
     private MessageRepository messageRepository = RepositoryServerFactory.createMessageRepository();
     private Connection connection = null;
     private PreparedStatement preparedStatement = null;
@@ -29,7 +42,7 @@ public class ChatGroupRepositoryImpl implements ChatGroupRepository {
 
         List<ChatGroup> chatGroups = new ArrayList<>();
         try {
-            preparedStatement = connection.prepareStatement(ChatGroupRepository.SELECT_ALL_CHAT_GROUP);
+            preparedStatement = connection.prepareStatement(SELECT_ALL_CHAT_GROUP);
             resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 ChatGroup chatGroup = ModelAdapter.mapResultSetToChatGroup(resultSet);
@@ -50,7 +63,7 @@ public class ChatGroupRepositoryImpl implements ChatGroupRepository {
 
         ChatGroup chatGroup= new ChatGroup();
         try {
-            preparedStatement = connection.prepareStatement(ChatGroupRepository.SELECT_CHAT_GROUP_BY_ID);
+            preparedStatement = connection.prepareStatement(SELECT_CHAT_GROUP_BY_ID);
             preparedStatement.setLong(1,id);
             resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
@@ -70,7 +83,7 @@ public class ChatGroupRepositoryImpl implements ChatGroupRepository {
 
         List<ChatGroup> chatGroups = new ArrayList<>();
         try {
-            preparedStatement = connection.prepareStatement(ChatGroupRepository.SELECT_ALL_CHAT_GROUPS_BY_USER_ID);
+            preparedStatement = connection.prepareStatement(SELECT_ALL_CHAT_GROUPS_BY_USER_ID);
             preparedStatement.setInt(1,user.getId());
             resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
@@ -92,7 +105,7 @@ public class ChatGroupRepositoryImpl implements ChatGroupRepository {
 
         ChatGroup insertedChatGroup = null;
         try {
-            preparedStatement = connection.prepareStatement(ChatGroupRepository.INSERT_CHAT_GROUP, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement = connection.prepareStatement(INSERT_CHAT_GROUP, Statement.RETURN_GENERATED_KEYS);
             ModelAdapter.mapChatGrouptoPreparedStatement(preparedStatement, chatGroup);
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
@@ -115,7 +128,7 @@ public class ChatGroupRepositoryImpl implements ChatGroupRepository {
     public ChatGroup updateChatGroup(ChatGroup chatGroup) {
 
         try {
-            preparedStatement = connection.prepareStatement(ChatGroupRepository.UPDATE_CHAT_GROUP);
+            preparedStatement = connection.prepareStatement(UPDATE_CHAT_GROUP);
             ModelAdapter.mapChatGrouptoPreparedStatement(preparedStatement,chatGroup);
             preparedStatement.setLong(2,chatGroup.getId());
             preparedStatement.executeUpdate();
@@ -135,7 +148,7 @@ public class ChatGroupRepositoryImpl implements ChatGroupRepository {
     @Override
     public int deleteChatGroup(int id) {
         try {
-            preparedStatement = connection.prepareStatement(ChatGroupRepository.DELETE_CHAT_GROUP);
+            preparedStatement = connection.prepareStatement(DELETE_CHAT_GROUP);
             preparedStatement.setInt(1,id);
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {
