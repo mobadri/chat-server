@@ -22,11 +22,11 @@
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>com.chat.client</groupId>
-            <artifactId>service-client</artifactId>
+            <artifactId>service-client-callback</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>-->
+        </dependency>
     </dependencies>
 
     <properties>

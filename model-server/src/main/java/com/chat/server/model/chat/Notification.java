@@ -19,7 +19,6 @@ public class Notification implements Serializable {
         this.notificationType = notificationType;
     }
 
-
     public int getId() {
         return id;
     }

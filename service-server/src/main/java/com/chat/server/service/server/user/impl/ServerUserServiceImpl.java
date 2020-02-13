@@ -19,19 +19,16 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
     @Override
 
     public List<User> getAllUsers() {
-
         return userRepository.findAll();
     }
 
     @Override
-    public User getUserById(int id, boolean fulldata) {
-
-        return userRepository.findById(id, fulldata);
+    public User getUserById(int id, boolean fullData) {
+        return userRepository.findById(id, fullData);
     }
 
     @Override
     public User getByPhoneAndPassword(String phone, String password) {
-
         return userRepository.findByPhoneAndPassword(phone, password);
     }
 
@@ -48,25 +45,22 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
     }
 
     @Override
-    public int insertUser(User user) {
-
+    public User insertUser(User user) {
         return userRepository.insertUser(user);
     }
 
     @Override
-    public int updateUser(User user) {
+    public User updateUser(User user) {
         return userRepository.updateUser(user);
     }
 
     @Override
     public int deleteUser(int id) {
-
         return userRepository.delete(id);
     }
 
     @Override
     public List<User> getOnlineUsers(boolean online) {
-
         return userRepository.findIfOnline(online);
     }
 }

@@ -56,17 +56,17 @@ public interface ServerUserService extends Remote {
      * insert Or register user to the system
      *
      * @param user user to be inserted
-     * @return int id of user inserted 0 if failed to insert
+     * @return inserted user
      */
-    public int insertUser(User user) throws RemoteException;
+    public User insertUser(User user) throws RemoteException;
 
     /**
      * update user data to the system
      *
      * @param user user to be updated
-     * @return int number of row updated
+     * @return updated user
      */
-    public int updateUser(User user) throws RemoteException;
+    public User updateUser(User user) throws RemoteException;
 
     /**
      * delete user form the system
