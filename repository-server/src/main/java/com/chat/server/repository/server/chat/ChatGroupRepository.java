@@ -22,6 +22,14 @@ public interface ChatGroupRepository {
 
     String DELETE_CHAT_GROUP = "DELETE FROM CHAT_GROUP WHERE ID = ?";
 
+    String INSERT_USER_IN_CHAT_GROUP = "INSERT INTO GROUP_USER VALUES (?, ?)";
+
+    String DELETE_USER_FROM_CHAT_GROUP = "DELETE FROM GROUP_USER WHERE GROUP_ID = ? and USER_ID = ?";
+
+    String GET_ALL_CHAT_GROUP_BY_NAME = "SELECT * FROM CHAT_GROUP " +
+            "INNER join GROUP_USER " +
+            "ON CHAT_GROUP.ID = GROUP_USER.GROUP_ID " +
+            "WHERE GROUP_USER.USER_ID = ? AND CHAT_GROUP.GROUP_NAME = ?";
 
     /**
      *  get all groups from the database
@@ -70,7 +78,7 @@ public interface ChatGroupRepository {
      * @param friend friend to add
      * @return added friend
      */
-    public User addFriend(ChatGroup chatGroup, User friend);
+    public ChatGroup addFriend(ChatGroup chatGroup, User friend);
 
     /**
      * to remove friend to chat
@@ -78,7 +86,7 @@ public interface ChatGroupRepository {
      * @param friend friend to remove
      * @return 1 if removed, 0 otherwise
      */
-    public int removeFriend(ChatGroup chatGroup, User friend);
+    public ChatGroup removeFriend(ChatGroup chatGroup, User friend);
 
     /**
      * search for my groups

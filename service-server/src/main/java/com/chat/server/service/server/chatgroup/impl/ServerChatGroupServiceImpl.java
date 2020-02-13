@@ -14,13 +14,10 @@ import java.util.List;
 
 public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements ServerChatGroupService {
 
-    /*
-        Vector<ClientChatGroupService> clientChatGroupServices = new Vector<>();
-    */
-    ChatGroupRepository chatGroupRepository = RepositoryServerFactory.creatChatRepository();
-    MessageRepository messageRepository = RepositoryServerFactory.createMessageRepository();
+    private ChatGroupRepository chatGroupRepository;
 
     public ServerChatGroupServiceImpl() throws RemoteException {
+        chatGroupRepository = RepositoryServerFactory.creatChatRepository();
     }
 
     @Override
@@ -54,18 +51,12 @@ public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements S
     }
 
     @Override
-    public Message sendMessage(Message message) {
-
-        return messageRepository.insertMessage(message);
-    }
-
-    @Override
-    public User addFriend(ChatGroup chatGroup, User friend) {
+    public ChatGroup addFriend(ChatGroup chatGroup, User friend) {
         return chatGroupRepository.addFriend(chatGroup, friend);
     }
 
     @Override
-    public int removeFriend(ChatGroup chatGroup, User friend) {
+    public ChatGroup removeFriend(ChatGroup chatGroup, User friend) {
         return chatGroupRepository.removeFriend(chatGroup, friend);
     }
 
@@ -73,14 +64,4 @@ public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements S
     public List<ChatGroup> searchByName(String groupName, User user) {
         return chatGroupRepository.searchByName(groupName, user);
     }
-
-    /*@Override
-    public void register(ClientChatGroupService clientChatGroupService) {
-        clientChatGroupServices.add(clientChatGroupService);
-    }
-
-    @Override
-    public void unRegister(ClientChatGroupService clientChatGroupService) {
-        clientChatGroupServices.remove(clientChatGroupService);
-    }*/
 }

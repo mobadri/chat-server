@@ -58,20 +58,13 @@ public interface ServerChatGroupService extends Remote {
     public int deleteChatGroup(int id) throws RemoteException;
 
     /**
-     * send message to chat group
-     *
-     * @param message message to be appended
-     */
-    Message sendMessage(Message message) throws RemoteException;
-
-    /**
      * to add friend to chat
      *
      * @param chatGroup to add friend in this chat group
      * @param friend    friend to add
      * @return added friend
      */
-    public User addFriend(ChatGroup chatGroup, User friend) throws RemoteException;
+    public ChatGroup addFriend(ChatGroup chatGroup, User friend) throws RemoteException;
 
     /**
      * to remove friend to chat
@@ -80,7 +73,7 @@ public interface ServerChatGroupService extends Remote {
      * @param friend    friend to remove
      * @return 1 if removed, 0 otherwise
      */
-    public int removeFriend(ChatGroup chatGroup, User friend) throws RemoteException;
+    public ChatGroup removeFriend(ChatGroup chatGroup, User friend) throws RemoteException;
 
     /**
      * search for my groups

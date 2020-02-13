@@ -61,7 +61,7 @@ public interface UserRepository {
      * @param user user to insert
      * @return id of inserted user or (-1) if failed to insert
      */
-    public int insertUser(User user);
+    public User insertUser(User user);
 
     /**
      * update user to database
@@ -69,7 +69,7 @@ public interface UserRepository {
      * @param user user to update
      * @return integer number of row updated
      */
-    public int updateUser(User user);
+    public User updateUser(User user);
 
     /**
      * delete user from database

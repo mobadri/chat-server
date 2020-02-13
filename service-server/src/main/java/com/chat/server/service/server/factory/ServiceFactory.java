@@ -28,4 +28,8 @@ public class ServiceFactory {
     public static ServerChatGroupService createServerChatGroupService() throws RemoteException {
         return new ServerChatGroupServiceImpl();
     }
+
+    public static ServerNotificationService createNotificationService() throws RemoteException {
+        return new ServerNotificationServiceImpl();
+    }
 }

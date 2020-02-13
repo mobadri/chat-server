@@ -3,6 +3,7 @@ package com.chat.server.repository.server.notification.impl;
 import com.chat.server.config.database.ConnectToDBFactory;
 import com.chat.server.model.chat.Notification;
 import com.chat.server.model.user.User;
+import com.chat.server.repository.server.adapters.ModelAdapter;
 import com.chat.server.repository.server.notification.NotificationRepository;
 
 import java.sql.Connection;
@@ -14,8 +15,6 @@ import java.util.List;
 
 public class NotificationRepositoryImpl implements NotificationRepository {
 
-    //todo complete notification repo
-    //@author noura
     private Connection connection = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
@@ -33,7 +32,10 @@ public class NotificationRepositoryImpl implements NotificationRepository {
             preparedStatement.setInt(1, user.getId());
             resultSet = preparedStatement.executeQuery();
 
-            // map result to notifications..
+            while (resultSet.next()){
+                notifications.add(ModelAdapter.mapResultSetToNotification(resultSet));
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -50,7 +52,10 @@ public class NotificationRepositoryImpl implements NotificationRepository {
             preparedStatement.setBoolean(2, seen);
             resultSet = preparedStatement.executeQuery();
 
-            // map result to notifications..
+            while (resultSet.next()){
+                notifications.add(ModelAdapter.mapResultSetToNotification(resultSet));
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

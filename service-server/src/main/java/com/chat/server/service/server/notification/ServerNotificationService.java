@@ -26,15 +26,4 @@ public interface ServerNotificationService extends Remote {
      */
     public List<Notification> getUserNotificationByType(User user, boolean seen , NotificationType notificationType) throws RemoteException;
 
-   /* *//**
-     * to register client
-     * @param clientNotificationService client service to register it
-     *//*
-    public void register(ClientNotificationService clientNotificationService);
-
-    *//**
-     * to unRegister client
-     * @param  clientNotificationService client service to register it
-     *//*
-    public void unRegister(ClientNotificationService clientNotificationService);*/
 }

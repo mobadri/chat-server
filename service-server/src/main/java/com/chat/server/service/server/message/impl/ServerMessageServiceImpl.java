@@ -1,5 +1,9 @@
 package com.chat.server.service.server.message.impl;
 
+import com.chat.server.model.chat.ChatGroup;
+import com.chat.server.model.chat.Message;
+import com.chat.server.repository.server.factory.RepositoryServerFactory;
+import com.chat.server.repository.server.message.MessageRepository;
 import com.chat.server.service.server.message.ServerMessageService;
 
 import java.rmi.RemoteException;
@@ -8,20 +12,20 @@ import java.util.Vector;
 
 public class ServerMessageServiceImpl extends UnicastRemoteObject implements ServerMessageService {
 
-/*
-    Vector<ClientMessageService> clientMessageServices = new Vector<>();
-*/
+    //todo
+    private MessageRepository messageRepository;
 
     public ServerMessageServiceImpl() throws RemoteException {
-    }
-
-   /* @Override
-    public void register(ClientMessageService clientMessageService) {
-        clientMessageServices.add(clientMessageService);
+        messageRepository = RepositoryServerFactory.createMessageRepository();
     }
 
     @Override
-    public void unRegister(ClientMessageService clientMessageService) {
-        clientMessageServices.remove(clientMessageService);
-    }*/
+    public Message sendMessage(Message message, ChatGroup group) throws RemoteException {
+
+        message.setChatGroup(group);
+        Message insertedMessage =  messageRepository.insertMessage(message);
+        group.getMessages().add(insertedMessage);
+        //broadcasting
+        return insertedMessage;
+    }
 }

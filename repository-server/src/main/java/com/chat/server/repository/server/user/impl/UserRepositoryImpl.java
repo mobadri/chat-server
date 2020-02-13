@@ -20,12 +20,12 @@ public class UserRepositoryImpl implements UserRepository {
     private ChatGroupRepository chatGroupRepository = RepositoryServerFactory.creatChatRepository();
 
     public UserRepositoryImpl() {
-
         connection = ConnectToDBFactory.creatConnectionManualy();
     }
 
     @Override
     public List<User> findAll() {
+
         List<User> users = new ArrayList<>();
         try {
             preparedStatement = connection.prepareStatement(UserRepository.SELECT_ALL);
@@ -45,7 +45,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findById(int id, boolean fullData) {
-        User user = new User();
+
+        User user = null;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(UserRepository.SELECT_BY_ID);
             preparedStatement.setLong(1, id);
@@ -67,12 +68,12 @@ public class UserRepositoryImpl implements UserRepository {
             closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return user;
-
     }
 
     @Override
     public User findByPhoneAndPassword(String phone, String password) {
-        User user = new User();
+
+        User user = null;
         try {
             preparedStatement = connection.prepareStatement(UserRepository.SELECT_BY_PHONE_PASSWORD);
             preparedStatement.setString(1, phone);
@@ -92,6 +93,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findAllUserFriends(User user) {
+
         List<User> users = new ArrayList<>();
         try {
             preparedStatement = connection.prepareStatement(UserRepository.SELECT_ALL_USER_FRIENDS);
@@ -110,17 +112,18 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public int insertUser(User user) {
-        int id = -1;
+    public User insertUser(User user) {
+
+        User newUser = null;
         try {
             preparedStatement = connection.prepareStatement(UserRepository.INSERT_USER, Statement.RETURN_GENERATED_KEYS);
             ModelAdapter.mapUsertoPreparedStatement(preparedStatement, user);
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
-                id = resultSet.getInt(1);
+                newUser = ModelAdapter.mapResultSetToUser(resultSet);
             }
-            return id;
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -130,16 +133,20 @@ public class UserRepositoryImpl implements UserRepository {
                 e.printStackTrace();
             }
         }
-        return id;
+        return newUser;
     }
 
     @Override
-    public int updateUser(User user) {
+    public User updateUser(User user) {
+
+        User updated = null;
         try {
             preparedStatement = connection.prepareStatement(UserRepository.UPDATE_USER);
             ModelAdapter.mapUsertoPreparedStatement(preparedStatement, user);
             preparedStatement.setLong(12, user.getId());
-            return preparedStatement.executeUpdate();
+            int res = preparedStatement.executeUpdate();
+            if(res > 0)
+                updated = user;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -150,11 +157,12 @@ public class UserRepositoryImpl implements UserRepository {
                 e.printStackTrace();
             }
         }
-        return 0;
+        return updated;
     }
 
     @Override
     public int delete(int id) {
+
         try {
             preparedStatement = connection.prepareStatement(UserRepository.DELETE_USER);
             preparedStatement.setInt(1, id);
@@ -174,6 +182,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findByPhone(String phone) {
+
         User user = null;
         try {
             preparedStatement = connection.prepareStatement(UserRepository.SELECT_BY_PHONE);
@@ -189,11 +198,11 @@ public class UserRepositoryImpl implements UserRepository {
             closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return user;
-
     }
 
     @Override
     public List<User> findIfOnline(boolean online) {
+
         List<User> users = new ArrayList<>();
         try {
             preparedStatement = connection.prepareStatement(UserRepository.SELECT_IF_ONLINE);
@@ -210,10 +219,10 @@ public class UserRepositoryImpl implements UserRepository {
             closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return users;
-
     }
 
     private void closeResultSetAndPreparedStatement(ResultSet resultSet, PreparedStatement preparedStatement) {
+
         try {
             preparedStatement.close();
             resultSet.close();

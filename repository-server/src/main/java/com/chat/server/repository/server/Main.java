@@ -63,19 +63,19 @@ public class Main {
         newUser.setMode(Mode.BUSY);
 
         System.out.println("\ntest insert");
-        int id = userRepository.insertUser(newUser);
-        if (id == -1) {
+        User insertedUser = userRepository.insertUser(newUser);
+        if (insertedUser == null) {
             System.out.println("error");
         } else {
-            System.out.println("done");
-            newUser.setId(id);
+            System.out.print("done ");
+            System.out.println(insertedUser.getId());
         }
 
         System.out.println("\ntest update");
         newUser.setFirstName("7mada");
-        int updated = userRepository.updateUser(newUser);
-        if (updated != 0) {
-            System.out.println("done");
+        User updatedUser = userRepository.updateUser(newUser);
+        if (updatedUser != null) {
+            System.out.println("done" + updatedUser.getFirstName() + " " + updatedUser.getLastName());
         } else {
             System.out.println("error");
         }

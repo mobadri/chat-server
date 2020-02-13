@@ -2,6 +2,8 @@ package com.chat.server.repository.server.adapters;
 
 import com.chat.server.model.chat.ChatGroup;
 import com.chat.server.model.chat.Message;
+import com.chat.server.model.chat.Notification;
+import com.chat.server.model.chat.NotificationType;
 import com.chat.server.model.user.Gender;
 import com.chat.server.model.user.Mode;
 import com.chat.server.model.user.User;
@@ -161,6 +163,46 @@ public class ModelAdapter {
             e.printStackTrace();
         }
         return message;
+    }
+
+    public static Notification mapResultSetToNotification(ResultSet resultSet){
+
+        Notification notification = new Notification();
+        try {
+            notification.setId(resultSet.getInt("id"));
+            notification.setUserFrom((User) resultSet.getObject("user_from"));
+            notification.setUserTo((User) resultSet.getObject("user_to"));
+
+            int type = resultSet.getInt("notification_type");
+            NotificationType notificationType;
+            switch (type){
+                case 1:
+                    notificationType = NotificationType.MESSAGE_RECEIVED;
+                    break;
+                case 2:
+                    notificationType = NotificationType.MESSAGE_SENT;
+                    break;
+                case 3:
+                    notificationType = NotificationType.FRIEND_REQUEST;
+                    break;
+                case 4:
+                    notificationType = NotificationType.FRIEND_ACCEPT;
+                    break;
+                case 5:
+                    notificationType = NotificationType.FILE_TRANSFER_REQUEST;
+                    break;
+                case 6:
+                    notificationType = NotificationType.FILE_TRANSFER_ACCEPT;
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + type);
+            }
+            notification.setNotificationType(notificationType);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return notification;
     }
 
     /**
