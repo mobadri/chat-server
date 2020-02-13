@@ -1,26 +1,12 @@
 package com.chat.server.repository.server.chat;
 
 import com.chat.server.model.chat.ChatGroup;
-import com.chat.server.model.chat.Message;
 import com.chat.server.model.user.User;
 
 import java.util.List;
 
 public interface ChatGroupRepository {
-     String SELECT_ALL_CHAT_GROUP = "SELECT * FROM CHAT_GROUP";
 
-     String SELECT_CHAT_GROUP_BY_ID = "SELECT * FROM CHAT_GROUP WHERE ID = ?";
-
-     String SELECT_ALL_CHAT_GROUPS_BY_USER_ID = "SELECT * FROM CHAT_GROUP " +
-             "INNER join GROUP_USER " +
-             "ON CHAT_GROUP.ID =GROUP_USER.GROUP_ID " +
-             "WHERE GROUP_USER.USER_ID = ?";
-
-    String INSERT_CHAT_GROUP= "INSERT INTO CHAT_GROUP (GROUP_NAME) VALUES (?)";
-
-    String UPDATE_CHAT_GROUP= "UPDATE CHAT_GROUP SET GROUP_NAME = ? WHERE ID = ?";
-
-    String DELETE_CHAT_GROUP = "DELETE FROM CHAT_GROUP WHERE ID = ?";
 
     String INSERT_USER_IN_CHAT_GROUP = "INSERT INTO GROUP_USER VALUES (?, ?)";
 

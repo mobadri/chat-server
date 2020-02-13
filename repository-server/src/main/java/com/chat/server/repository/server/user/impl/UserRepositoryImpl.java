@@ -13,7 +13,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepositoryImpl implements UserRepository {
-
+    private final String SELECT_ALL = "SELECT * FROM USER";
+    private final String SELECT_BY_ID = "SELECT * FROM USER WHERE ID = ?";
+    private final String SELECT_IF_ONLINE = "SELECT * FROM USER WHERE ONLINE = ?";
+    private final String SELECT_BY_PHONE_PASSWORD = "SELECT * FROM USER WHERE PHONE = ? " +
+            "AND PASSWORD = ?";
+    private final String SELECT_ALL_USER_FRIENDS = "SELECT * FROM USER INNER JOIN USER_FRIENDS " +
+            "ON USER.ID = USER_FRIENDS.FRIEND_ID WHERE USER.ID = ?";
+    private final String SELECT_BY_PHONE = "SELECT * FROM USER WHERE PHONE = ?";
+    private final String INSERT_USER = "INSERT INTO USER (FIRST_NAME,LAST_NAME,PHONE,PASSWORD,EMAIL," +
+            "COUNTRY,GENDER,DATE_OF_BIRTH,BIO,ONLINE,MODE)" +
+            "  VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+    private final String UPDATE_USER = "UPDATE USER SET FIRST_NAME= ?," +
+            "LAST_NAME = ?,PHONE = ?,PASSWORD = ? ,EMAIL = ?," +
+            " COUNTRY =? ,GENDER = ?,DATE_OF_BIRTH =?,BIO = ?,ONLINE = ?,MODE = ?" +
+            " WHERE ID = ?";
+    private final String DELETE_USER = "DELETE FROM USER WHERE ID = ?";
     private Connection connection = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
@@ -28,7 +43,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         List<User> users = new ArrayList<>();
         try {
-            preparedStatement = connection.prepareStatement(UserRepository.SELECT_ALL);
+            preparedStatement = connection.prepareStatement(SELECT_ALL);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 User user = ModelAdapter.mapResultSetToUser(resultSet);
@@ -48,7 +63,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         User user = null;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(UserRepository.SELECT_BY_ID);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID);
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -75,7 +90,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         User user = null;
         try {
-            preparedStatement = connection.prepareStatement(UserRepository.SELECT_BY_PHONE_PASSWORD);
+            preparedStatement = connection.prepareStatement(SELECT_BY_PHONE_PASSWORD);
             preparedStatement.setString(1, phone);
             preparedStatement.setString(2, password);
             resultSet = preparedStatement.executeQuery();
@@ -96,7 +111,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         List<User> users = new ArrayList<>();
         try {
-            preparedStatement = connection.prepareStatement(UserRepository.SELECT_ALL_USER_FRIENDS);
+            preparedStatement = connection.prepareStatement(SELECT_ALL_USER_FRIENDS);
             preparedStatement.setInt(1, user.getId());
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -116,7 +131,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         User newUser = null;
         try {
-            preparedStatement = connection.prepareStatement(UserRepository.INSERT_USER, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement = connection.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
             ModelAdapter.mapUsertoPreparedStatement(preparedStatement, user);
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
@@ -141,7 +156,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         User updated = null;
         try {
-            preparedStatement = connection.prepareStatement(UserRepository.UPDATE_USER);
+            preparedStatement = connection.prepareStatement(UPDATE_USER);
             ModelAdapter.mapUsertoPreparedStatement(preparedStatement, user);
             preparedStatement.setLong(12, user.getId());
             int res = preparedStatement.executeUpdate();
@@ -164,7 +179,7 @@ public class UserRepositoryImpl implements UserRepository {
     public int delete(int id) {
 
         try {
-            preparedStatement = connection.prepareStatement(UserRepository.DELETE_USER);
+            preparedStatement = connection.prepareStatement(DELETE_USER);
             preparedStatement.setInt(1, id);
             return preparedStatement.executeUpdate();
 
@@ -185,7 +200,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         User user = null;
         try {
-            preparedStatement = connection.prepareStatement(UserRepository.SELECT_BY_PHONE);
+            preparedStatement = connection.prepareStatement(SELECT_BY_PHONE);
             preparedStatement.setString(1, phone);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -205,7 +220,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         List<User> users = new ArrayList<>();
         try {
-            preparedStatement = connection.prepareStatement(UserRepository.SELECT_IF_ONLINE);
+            preparedStatement = connection.prepareStatement(SELECT_IF_ONLINE);
             preparedStatement.setBoolean(1, online);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {

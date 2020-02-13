@@ -15,7 +15,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatGroupRepositoryImpl implements ChatGroupRepository {
+    private final String SELECT_ALL_CHAT_GROUP = "SELECT * FROM CHAT_GROUP";
 
+    private final String SELECT_CHAT_GROUP_BY_ID = "SELECT * FROM CHAT_GROUP WHERE ID = ?";
+
+    private final String SELECT_ALL_CHAT_GROUPS_BY_USER_ID = "SELECT * FROM CHAT_GROUP " +
+            "INNER join GROUP_USER " +
+            "ON CHAT_GROUP.ID =GROUP_USER.GROUP_ID " +
+            "WHERE GROUP_USER.USER_ID = ?";
+
+    private final String INSERT_CHAT_GROUP = "INSERT INTO CHAT_GROUP (GROUP_NAME) VALUES (?)";
+
+    private final String UPDATE_CHAT_GROUP = "UPDATE CHAT_GROUP SET GROUP_NAME = ? WHERE ID = ?";
+
+    private final String DELETE_CHAT_GROUP = "DELETE FROM CHAT_GROUP WHERE ID = ?";
     private MessageRepository messageRepository = RepositoryServerFactory.createMessageRepository();
     private Connection connection = null;
     private PreparedStatement preparedStatement = null;

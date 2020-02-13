@@ -5,6 +5,7 @@ import com.chat.server.model.user.User;
 import java.util.List;
 
 public interface UserFriendRepository {
+
     String SELECT_ALL_FRIENDS_BY_USER_ID = "SELECT * FROM USER_FRIENDS WHERE USER_ID = ?";
     String INSERT_FRIEND = "INSERT INTO USER_FRIENDS VALUES (USER_ID = ? , FRIEND_ID = ? )";
     String DELETE_FRIEND = "DELETE FROM USER_FRIENDS WHERE (USER_ID = ? AND FRIEND_ID = ?) OR " +
