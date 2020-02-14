@@ -65,12 +65,39 @@ public class UserFriendRepositoryImpl implements UserFriendRepository {
     }
 
     public int updateFriend(int user_id, int friend_id, FriendStatus friendStatus) {
-
+        try {
+            preparedStatement = connection.prepareStatement(UPDATE_FRIEND);
+            preparedStatement.setInt(1, friendStatus.ordinal());
+            preparedStatement.setInt(2, user_id);
+            preparedStatement.setInt(3, friend_id);
+            preparedStatement.setInt(4, friend_id);
+            preparedStatement.setInt(5, user_id);
+            int i = preparedStatement.executeUpdate();
+            if (i > 0) {
+                return i;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return 0;
     }
 
     @Override
-    public boolean deleteFreind(int user_id, int friend_id) {
-        return false;
+    public int deleteFreind(int user_id, int friend_id) {
+        try {
+            preparedStatement = connection.prepareStatement(DELETE_FRIEND);
+            preparedStatement.setInt(1, user_id);
+            preparedStatement.setInt(2, friend_id);
+            preparedStatement.setInt(3, friend_id);
+            preparedStatement.setInt(4, user_id);
+            int i = preparedStatement.executeUpdate();
+            if (i > 0) {
+                return i;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
     }
 }

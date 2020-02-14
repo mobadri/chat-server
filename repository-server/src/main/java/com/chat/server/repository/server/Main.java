@@ -1,7 +1,6 @@
 package com.chat.server.repository.server;
 
 import com.chat.server.model.chat.ChatGroup;
-import com.chat.server.model.user.FriendStatus;
 import com.chat.server.model.user.Gender;
 import com.chat.server.model.user.Mode;
 import com.chat.server.model.user.User;
@@ -111,7 +110,12 @@ public class Main {
         //@radwa
         //public int addNewFriend(int user_id, int friend_id , FriendStatus friendStatus)
         UserFriendRepositoryImpl userFriendRepository = new UserFriendRepositoryImpl();
-        userFriendRepository.addNewFriend(92, 93, FriendStatus.PENDING);
+        //userFriendRepository.addNewFriend(92, 93, FriendStatus.PENDING);
 
+        //int i = userFriendRepository.updateFriend(92, 93, FriendStatus.REJECT);
+        //System.out.println(i);
+
+
+        userFriendRepository.deleteFreind(93, 92);
     }
 }

@@ -42,6 +42,6 @@ public interface UserFriendRepository {
      *
      * @param user_id , friend_id
      */
-    boolean deleteFreind(int user_id, int friend_id);
+    int deleteFreind(int user_id, int friend_id);
 
 }
