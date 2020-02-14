@@ -6,8 +6,9 @@ import com.chat.server.service.server.message.ServerMessageService;
 import com.chat.server.service.server.notification.ServerNotificationService;
 import com.chat.server.service.server.user.ServerUserService;
 
-import java.rmi.*;
-import java.rmi.registry.*;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 public class Server {
 
@@ -33,6 +34,7 @@ public class Server {
             registry.rebind("notificationService", notificationService);
         } catch (RemoteException ex) {
             ex.printStackTrace();
+
         }
     }
 }

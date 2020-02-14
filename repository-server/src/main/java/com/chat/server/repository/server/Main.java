@@ -7,6 +7,7 @@ import com.chat.server.model.user.User;
 import com.chat.server.repository.server.chat.ChatGroupRepository;
 import com.chat.server.repository.server.factory.RepositoryServerFactory;
 import com.chat.server.repository.server.user.UserRepository;
+import com.chat.server.repository.server.user.impl.UserFriendRepositoryImpl;
 
 import java.util.Date;
 import java.util.List;
@@ -99,10 +100,22 @@ public class Main {
         for (ChatGroup group : allChatGroups) {
             System.out.println(group.getId() + " " + group.getName());
         }
-        System.out.println(chatGroupRepository.getChatGroupByID(1).getName());
+//        System.out.println(chatGroupRepository.getChatGroupByID(1).getName());
 
         //-------------------------------
         // @badri
         //todo test all user repo methods
+
+
+        //@radwa
+        //public int addNewFriend(int user_id, int friend_id , FriendStatus friendStatus)
+        UserFriendRepositoryImpl userFriendRepository = new UserFriendRepositoryImpl();
+        //userFriendRepository.addNewFriend(92, 93, FriendStatus.PENDING);
+
+        //int i = userFriendRepository.updateFriend(92, 93, FriendStatus.REJECT);
+        //System.out.println(i);
+
+
+        userFriendRepository.deleteFreind(93, 92);
     }
 }

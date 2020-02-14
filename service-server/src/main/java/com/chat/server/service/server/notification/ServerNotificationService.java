@@ -1,5 +1,6 @@
 package com.chat.server.service.server.notification;
 
+import com.chat.client.service.client.callback.NotificationServiceCallback;
 import com.chat.server.model.chat.Notification;
 import com.chat.server.model.chat.NotificationType;
 import com.chat.server.model.user.User;
@@ -25,5 +26,11 @@ public interface ServerNotificationService extends Remote {
      * @return
      */
     public List<Notification> getUserNotificationByType(User user, boolean seen , NotificationType notificationType) throws RemoteException;
+
+    void sendNotification(Notification notification) throws RemoteException;
+
+    void register(NotificationServiceCallback notificationServiceCallback) throws RemoteException;
+
+    void unregister(NotificationServiceCallback notificationServiceCallback) throws RemoteException;
 
 }

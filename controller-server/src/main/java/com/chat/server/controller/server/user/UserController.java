@@ -34,4 +34,13 @@ public class UserController {
         }
         return null;
     }
+
+    public int deleteUser(User user) {
+        try {
+            return service.deleteUser(user.getId());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }
