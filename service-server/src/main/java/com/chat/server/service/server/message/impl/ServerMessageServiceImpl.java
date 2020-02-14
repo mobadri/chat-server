@@ -41,7 +41,11 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
     }
     public void notifyAll(Message message){
         for (MessageServiceCallBack messageServiceCallBack : messageServiceCallBackVector){
-            messageServiceCallBack.receiveMessage(message);
+            try {
+                messageServiceCallBack.receiveMessage(message);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
     }
 

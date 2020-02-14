@@ -11,7 +11,7 @@ import java.rmi.registry.*;
 
 public class Server {
 
-    private final static int PORT_NUMBER = 11223;
+    private final static int PORT_NUMBER = 44444;
     public static void main(String[] args) {
         new Server();
     }

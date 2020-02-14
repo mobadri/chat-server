@@ -35,12 +35,12 @@ public class UserRepositoryImpl implements UserRepository {
     private ChatGroupRepository chatGroupRepository = RepositoryServerFactory.creatChatRepository();
 
     public UserRepositoryImpl() {
+
         connection = ConnectToDBFactory.creatConnectionManualy();
     }
 
     @Override
     public List<User> findAll() {
-
         List<User> users = new ArrayList<>();
         try {
             preparedStatement = connection.prepareStatement(SELECT_ALL);
@@ -83,6 +83,7 @@ public class UserRepositoryImpl implements UserRepository {
             closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return user;
+
     }
 
     @Override
@@ -108,7 +109,6 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findAllUserFriends(User user) {
-
         List<User> users = new ArrayList<>();
         try {
             preparedStatement = connection.prepareStatement(SELECT_ALL_USER_FRIENDS);
@@ -128,17 +128,17 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User insertUser(User user) {
-
-        User newUser = null;
+        int id = -1;
         try {
             preparedStatement = connection.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
             ModelAdapter.mapUsertoPreparedStatement(preparedStatement, user);
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
-                newUser = ModelAdapter.mapResultSetToUser(resultSet);
+                id = resultSet.getInt(1);
             }
-
+            user.setId(id);
+            return user;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -148,7 +148,7 @@ public class UserRepositoryImpl implements UserRepository {
                 e.printStackTrace();
             }
         }
-        return newUser;
+        return null;
     }
 
     @Override
@@ -177,7 +177,6 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public int delete(int id) {
-
         try {
             preparedStatement = connection.prepareStatement(DELETE_USER);
             preparedStatement.setInt(1, id);
@@ -197,7 +196,6 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findByPhone(String phone) {
-
         User user = null;
         try {
             preparedStatement = connection.prepareStatement(SELECT_BY_PHONE);
@@ -213,11 +211,11 @@ public class UserRepositoryImpl implements UserRepository {
             closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return user;
+
     }
 
     @Override
     public List<User> findIfOnline(boolean online) {
-
         List<User> users = new ArrayList<>();
         try {
             preparedStatement = connection.prepareStatement(SELECT_IF_ONLINE);
@@ -237,7 +235,6 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     private void closeResultSetAndPreparedStatement(ResultSet resultSet, PreparedStatement preparedStatement) {
-
         try {
             preparedStatement.close();
             resultSet.close();
