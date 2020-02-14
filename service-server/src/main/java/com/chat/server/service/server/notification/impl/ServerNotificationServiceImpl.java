@@ -15,7 +15,7 @@ import java.util.Vector;
 
 public class ServerNotificationServiceImpl extends UnicastRemoteObject implements ServerNotificationService {
 
-    Vector<NotificationServiceCallback> notificationServiceCallbackVector = new Vector<>();
+    static Vector<NotificationServiceCallback> notificationServiceCallbackVector = new Vector<>();
     // todo
     private NotificationRepository notificationRepository;
 
@@ -40,6 +40,7 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
 
     @Override
     public void register(NotificationServiceCallback notificationServiceCallback) {
+        System.out.println("try reg" + notificationServiceCallback);
         notificationServiceCallbackVector.add(notificationServiceCallback);
     }
 
@@ -49,6 +50,8 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
     }
 
     private void notifyAll(Notification notification) {
+        System.out.println("try to send notification" + notificationServiceCallbackVector.size());
+
         for (NotificationServiceCallback notificationServiceCallback : notificationServiceCallbackVector) {
             try {
                 notificationServiceCallback.receiveNotification(notification);
