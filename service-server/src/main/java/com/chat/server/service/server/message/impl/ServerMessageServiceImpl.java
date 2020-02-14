@@ -2,7 +2,11 @@ package com.chat.server.service.server.message.impl;
 
 import com.chat.client.service.client.callback.MessageServiceCallBack;
 import com.chat.server.model.chat.Message;
+import com.chat.server.model.chat.Notification;
+import com.chat.server.model.chat.NotificationType;
+import com.chat.server.service.server.factory.ServiceFactory;
 import com.chat.server.service.server.message.ServerMessageService;
+import com.chat.server.service.server.notification.ServerNotificationService;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -12,7 +16,7 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
 
 
     Vector<MessageServiceCallBack> messageServiceCallBackVector = new Vector<>();
-
+    ServerNotificationService serverNotificationService = ServiceFactory.createServerNotificationService();
 
     public ServerMessageServiceImpl() throws RemoteException {
     }
@@ -24,6 +28,13 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
         //-----------------
         System.out.println(message);
         notifyAll(message);
+        Notification notification = creatNotification("you have a new message form " + message.getUserFrom().getPhone(),
+                NotificationType.MESSAGE_RECEIVED, false);
+        try {
+            serverNotificationService.sendNotification(notification);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         //todo save message to db;
         //todo send message notification to all user on the group
         //todo send message to all user on the group s
@@ -41,9 +52,19 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
     }
     public void notifyAll(Message message){
         for (MessageServiceCallBack messageServiceCallBack : messageServiceCallBackVector){
-            messageServiceCallBack.receiveMessage(message);
+            try {
+                messageServiceCallBack.receiveMessage(message);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
     }
 
+    private Notification creatNotification(String message, NotificationType notificationType, boolean seen) {
+        Notification notification = new Notification();
+        notification.setNotificationType(notificationType);
+        notification.setNotificationMessage(message);
+        return notification;
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.chat.server.service.server.notification.impl;
 
+import com.chat.client.service.client.callback.NotificationServiceCallback;
 import com.chat.server.model.chat.Notification;
 import com.chat.server.model.chat.NotificationType;
 import com.chat.server.model.user.User;
@@ -14,7 +15,7 @@ import java.util.Vector;
 
 public class ServerNotificationServiceImpl extends UnicastRemoteObject implements ServerNotificationService {
 
-    //still incomplete
+    Vector<NotificationServiceCallback> notificationServiceCallbackVector = new Vector<>();
     // todo
     private NotificationRepository notificationRepository;
 
@@ -30,5 +31,30 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
     @Override
     public List<Notification> getUserNotificationByType(User user, boolean seen, NotificationType notificationType) {
         return null;
+    }
+
+    @Override
+    public void sendNotification(Notification notification) {
+        notifyAll(notification);
+    }
+
+    @Override
+    public void register(NotificationServiceCallback notificationServiceCallback) {
+        notificationServiceCallbackVector.add(notificationServiceCallback);
+    }
+
+    @Override
+    public void unregister(NotificationServiceCallback notificationServiceCallback) {
+        notificationServiceCallbackVector.remove(notificationServiceCallback);
+    }
+
+    private void notifyAll(Notification notification) {
+        for (NotificationServiceCallback notificationServiceCallback : notificationServiceCallbackVector) {
+            try {
+                notificationServiceCallback.receiveNotification(notification);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
