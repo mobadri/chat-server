@@ -174,6 +174,11 @@ public class MaintainUserViewController implements Initializable {
     }
 
     private void deleteUser(User user) {
+        int i = controller.deleteUser(user);
+        if (i > 0) {
+            userList.remove(user);
+        }
+
         System.out.println(user + " should be deleted");
     }
 
