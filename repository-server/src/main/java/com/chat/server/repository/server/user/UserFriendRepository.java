@@ -1,15 +1,13 @@
 package com.chat.server.repository.server.user;
 
+import com.chat.server.model.user.FriendStatus;
 import com.chat.server.model.user.User;
 
 import java.util.List;
 
 public interface UserFriendRepository {
 
-    String SELECT_ALL_FRIENDS_BY_USER_ID = "SELECT * FROM USER_FRIENDS WHERE USER_ID = ?";
-    String INSERT_FRIEND = "INSERT INTO USER_FRIENDS VALUES (USER_ID = ? , FRIEND_ID = ? )";
-    String DELETE_FRIEND = "DELETE FROM USER_FRIENDS WHERE (USER_ID = ? AND FRIEND_ID = ?) OR " +
-            "(FRIEND_ID = ? AND USER_ID = ?)";
+
 
     /**
      * get all friends by user_id
@@ -22,9 +20,22 @@ public interface UserFriendRepository {
     /**
      * insert a friend to user friend list
      *
-     * @param user_id , friend_id
+     * @param user_id who send friend req
+     * @param friend_id who receive req friend
+     * @param friendStatus pending
+     * @return int no of rows inserted
      */
-    boolean addNewFriend(int user_id, int friend_id);
+    int addNewFriend(int user_id, int friend_id, FriendStatus friendStatus);
+
+    /**
+     * update a friend status
+     *
+     * @param user_id      who send friend req
+     * @param friend_id    who receive req friend
+     * @param friendStatus approve or reject
+     * @return int no of rows updated
+     */
+    int updateFriend(int user_id, int friend_id, FriendStatus friendStatus);
 
     /**
      * delete a friend from user friend list
