@@ -1,5 +1,6 @@
 package com.chat.server.service.server.message.impl;
 
+import com.chat.client.service.client.callback.MessageServiceCallBack;
 import com.chat.server.model.chat.Message;
 import com.chat.server.service.server.message.ServerMessageService;
 
@@ -9,9 +10,9 @@ import java.util.Vector;
 
 public class ServerMessageServiceImpl extends UnicastRemoteObject implements ServerMessageService {
 
-/*
-    Vector<ClientMessageService> clientMessageServices = new Vector<>();
-*/
+
+    Vector<MessageServiceCallBack> messageServiceCallBackVector = new Vector<>();
+
 
     public ServerMessageServiceImpl() throws RemoteException {
     }
@@ -22,20 +23,27 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
         //todo message to all
         //-----------------
         System.out.println(message);
+        notifyAll(message);
         //todo save message to db;
         //todo send message notification to all user on the group
         //todo send message to all user on the group s
         // message.getChatGroup().getMessages().add(message);
     }
 
-   /* @Override
-    public void register(ClientMessageService clientMessageService) {
-        clientMessageServices.add(clientMessageService);
+    @Override
+    public void register(MessageServiceCallBack messageServiceCallBack) {
+        messageServiceCallBackVector.add(messageServiceCallBack);
     }
 
     @Override
-    public void unRegister(ClientMessageService clientMessageService) {
-        clientMessageServices.remove(clientMessageService);
-    }*/
+    public void unRegister(MessageServiceCallBack messageServiceCallBack) {
+        messageServiceCallBackVector.remove(messageServiceCallBack);
+    }
+    public void notifyAll(Message message){
+        for (MessageServiceCallBack messageServiceCallBack : messageServiceCallBackVector){
+            messageServiceCallBack.receiveMessage(message);
+        }
+    }
+
 
 }
