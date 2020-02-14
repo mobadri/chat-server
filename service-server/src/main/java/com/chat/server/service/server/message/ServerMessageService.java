@@ -1,5 +1,6 @@
 package com.chat.server.service.server.message;
 
+import com.chat.client.service.client.callback.MessageServiceCallBack;
 import com.chat.server.model.chat.Message;
 
 import java.rmi.Remote;
@@ -10,17 +11,17 @@ public interface ServerMessageService extends Remote {
      * send Message to group
      * @param message to send
      */
-
         void sendMessage(Message message) throws RemoteException;
-   /* *//**
-     * to register client
-     * @param clientMessageService client service to register it
-     *//*
-    public void register(ClientMessageService clientMessageService);
 
-    *//**
+    /**
+     * to register client
+     * @param messageServiceCallBack client service to register it
+     */
+     void register(MessageServiceCallBack messageServiceCallBack)throws RemoteException;
+
+    /**
      * to unRegister client
-     * @param  clientMessageService client service to register it
-     *//*
-    public void unRegister(ClientMessageService clientMessageService);*/
+     * @param  messageServiceCallBack client service to register it
+     */
+    public void unRegister(MessageServiceCallBack messageServiceCallBack)throws RemoteException;
 }
