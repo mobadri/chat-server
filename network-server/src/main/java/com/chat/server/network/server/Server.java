@@ -13,7 +13,6 @@ import java.rmi.registry.Registry;
 public class Server {
 
     private final static int PORT_NUMBER = 11223;
-
     public static void main(String[] args) {
         new Server();
     }

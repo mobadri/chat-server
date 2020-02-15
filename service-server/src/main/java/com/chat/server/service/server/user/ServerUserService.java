@@ -43,7 +43,7 @@ public interface ServerUserService extends Remote {
      * @return user if founded Or null if not founded
      * @throws RemoteException
      */
-    public User getByPhone(String phone) throws RemoteException;
+    public List<User> getByPhone(String phone) throws RemoteException;
 
     /**
      * get list of user friends

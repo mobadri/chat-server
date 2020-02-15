@@ -22,7 +22,6 @@ public class MessageRepositoryImpl implements MessageRepository {
     private ResultSet resultSet = null;
 
     public MessageRepositoryImpl() {
-
         connection = ConnectToDBFactory.creatConnectionManualy();
     }
 

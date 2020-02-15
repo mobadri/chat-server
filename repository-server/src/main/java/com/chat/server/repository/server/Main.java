@@ -20,9 +20,14 @@ public class Main {
 
         UserRepository userRepository = RepositoryServerFactory.creatUserRepository();
         List<User> all = userRepository.findAll();
+
+        List<User> userFound = userRepository.findByPhone("0111");
+        System.out.println("User Number Founds" + userFound.size());
+
         System.out.println("test find all");
         System.out.println(all.size());
         all.forEach(System.out::println);
+
 
         User user = userRepository.findById(2, false);
         System.out.println("phone number of user's id  = 2");
@@ -42,7 +47,7 @@ public class Main {
         System.out.println("friends for user's id = 91 : " + all.size());
         all.forEach(System.out::println);
 
-        user = userRepository.findByPhone("011111111");
+        //  user = userRepository.findByPhone("011111111");
         System.out.println("\nname of user who has phone = 011111111 : " + user);
 
         user = userRepository.findByPhoneAndPassword("011111111", "aaaaa");
@@ -114,7 +119,6 @@ public class Main {
 
         //int i = userFriendRepository.updateFriend(92, 93, FriendStatus.REJECT);
         //System.out.println(i);
-
 
         userFriendRepository.deleteFreind(93, 92);
     }

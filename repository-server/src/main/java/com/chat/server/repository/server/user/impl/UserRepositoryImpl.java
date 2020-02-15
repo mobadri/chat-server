@@ -20,7 +20,7 @@ public class UserRepositoryImpl implements UserRepository {
             "AND PASSWORD = ?";
     private final String SELECT_ALL_USER_FRIENDS = "SELECT * FROM USER INNER JOIN USER_FRIENDS " +
             "ON USER.ID = USER_FRIENDS.FRIEND_ID WHERE USER.ID = ?";
-    private final String SELECT_BY_PHONE = "SELECT * FROM USER WHERE PHONE = ?";
+    private final String SELECT_BY_PHONE = "SELECT * FROM USER WHERE PHONE like '%' ? '%'";
     private final String INSERT_USER = "INSERT INTO USER (FIRST_NAME,LAST_NAME,PHONE,PASSWORD,EMAIL," +
             "COUNTRY,GENDER,DATE_OF_BIRTH,BIO,ONLINE,MODE)" +
             "  VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -160,7 +160,7 @@ public class UserRepositoryImpl implements UserRepository {
             ModelAdapter.mapUsertoPreparedStatement(preparedStatement, user);
             preparedStatement.setLong(12, user.getId());
             int res = preparedStatement.executeUpdate();
-            if(res > 0)
+            if (res > 0)
                 updated = user;
 
         } catch (SQLException e) {
@@ -195,22 +195,25 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User findByPhone(String phone) {
-        User user = null;
+    public List<User> findByPhone(String phone) {
+        // User user = null;
+        List<User> users = new ArrayList<>();
         try {
             preparedStatement = connection.prepareStatement(SELECT_BY_PHONE);
             preparedStatement.setString(1, phone);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                user = ModelAdapter.mapResultSetToUser(resultSet);
+                User user = ModelAdapter.mapResultSetToUser(resultSet);
+                System.out.println("REsultSet.next" + user.getPhone());
+                users.add(user);
             }
-            return user;
+            return users;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
-        return user;
+        return users;
 
     }
 
