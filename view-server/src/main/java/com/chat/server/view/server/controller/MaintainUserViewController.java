@@ -103,7 +103,6 @@ public class MaintainUserViewController implements Initializable {
                     }
                     return false;
                 }));
-
     }
 
     private void setDataOnView() {

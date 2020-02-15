@@ -53,7 +53,11 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
         System.out.println("try to send notification" + notificationServiceCallbackVector.size());
 
         for (NotificationServiceCallback notificationServiceCallback : notificationServiceCallbackVector) {
-            notificationServiceCallback.receiveNotification(notification);
+            try {
+                notificationServiceCallback.receiveNotification(notification);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

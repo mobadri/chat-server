@@ -41,7 +41,7 @@ public interface ServerUserService extends Remote {
      *
      * @param phone user phone
      * @return user if founded Or null if not founded
-     *  @throws RemoteException
+     * @throws RemoteException
      */
     public User getByPhone(String phone) throws RemoteException;
 
@@ -59,7 +59,7 @@ public interface ServerUserService extends Remote {
      *
      * @param user user to be inserted
      * @return inserted user
-     *  @throws RemoteException
+     * @throws RemoteException
      */
     public User insertUser(User user) throws RemoteException;
 
@@ -89,4 +89,14 @@ public interface ServerUserService extends Remote {
      * @throws RemoteException
      */
     public List<User> getOnlineUsers(boolean online) throws RemoteException;
+
+    /**
+     * add user to my friend list
+     *
+     * @param currentUser login user
+     * @param friend      a friend to add
+     * @return number of row inserted
+     */
+    public int addFriend(User currentUser, User friend) throws RemoteException;
+
 }

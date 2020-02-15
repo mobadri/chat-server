@@ -13,8 +13,6 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Vector;
 
 public class ServerMessageServiceImpl extends UnicastRemoteObject implements ServerMessageService {
-
-
     Vector<MessageServiceCallBack> messageServiceCallBackVector = new Vector<>();
     ServerNotificationService serverNotificationService = ServiceFactory.createServerNotificationService();
 
@@ -50,8 +48,9 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
     public void unRegister(MessageServiceCallBack messageServiceCallBack) {
         messageServiceCallBackVector.remove(messageServiceCallBack);
     }
-    public void notifyAll(Message message){
-        for (MessageServiceCallBack messageServiceCallBack : messageServiceCallBackVector){
+
+    public void notifyAll(Message message) {
+        for (MessageServiceCallBack messageServiceCallBack : messageServiceCallBackVector) {
             try {
                 messageServiceCallBack.receiveMessage(message);
             } catch (RemoteException e) {
