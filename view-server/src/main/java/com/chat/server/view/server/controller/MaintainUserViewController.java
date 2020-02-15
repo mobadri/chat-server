@@ -59,7 +59,7 @@ public class MaintainUserViewController implements Initializable {
     TableColumn BIOCol;
 
     @FXML
-    TextField searchText;
+    private TextField searchText;
 
     ObservableList<User> userList = FXCollections.observableArrayList();
     ListProperty<User> userListProperty = new SimpleListProperty<>();

@@ -65,12 +65,12 @@ public interface UserRepository {
     public int delete(int id);
 
     /**
-     * search to find user by his phone
+     * search to find List of users by there phone
      *
      * @param phone user phone
-     * @return user if founded or null if not founded
+     * @return list of users if founded or empty list if not founded
      */
-    public User findByPhone(String phone);
+    public List<User> findByPhone(String phone);
 
     /**
      * find all online users

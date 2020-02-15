@@ -34,10 +34,10 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
     }
 
     @Override
-    public User getByPhone(String phone) {
-
+    public List<User> getByPhone(String phone)  {
         return userRepository.findByPhone(phone);
     }
+
 
     @Override
     public List<User> getUserFriends(User user) {
