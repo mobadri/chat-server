@@ -22,6 +22,7 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
     private static ServerNotificationServiceImpl instance;
 
     private ServerNotificationServiceImpl() throws RemoteException {
+        super(11223);
         notificationRepository = RepositoryServerFactory.createNotificationRepository();
     }
 
@@ -37,7 +38,12 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
 
     @Override
     public void sendNotification(Notification notification) {
-        notifyAll(notification);
+        System.out.println(notification);
+        try {
+            notifyAll(notification);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -51,14 +57,23 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
         notificationServiceCallbackVector.remove(notificationServiceCallback);
     }
 
-    private void notifyAll(Notification notification) {
-        System.out.println("try to send notification" + notificationServiceCallbackVector.size());
-
+    private void notifyAll(Notification notification) throws RemoteException {
+        notificationServiceCallbackVector.size();
         for (NotificationServiceCallback notificationServiceCallback : notificationServiceCallbackVector) {
-                notificationServiceCallback.receiveNotification(notification);
+            System.out.println(notification);
+            System.out.println(notification.getUserTo().getId());
+            System.out.println(notificationServiceCallback.getUserId());
+            System.out.println(notification.getUserTo().isOnline());
+            try {
+                if (notification.getUserTo().getId() == notificationServiceCallback.getUserId()
+                        && notification.getUserTo().isOnline()) {
+                    notificationServiceCallback.receiveNotification(notification);
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
     }
-
     public synchronized static ServerNotificationServiceImpl getInstance() {
         if (instance == null) {
             try {

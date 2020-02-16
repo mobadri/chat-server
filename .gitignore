@@ -49,4 +49,5 @@ chat-server.iml
 *.properties
 *.lst
 pom.properties
-*/target/*
+*/target/**
+*/target/*/pom.properties

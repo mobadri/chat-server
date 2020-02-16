@@ -170,6 +170,7 @@ public class User implements Serializable {
                 ", contacts=" + friends.size() +
                 ", online=" + online +
                 ", mode=" + mode +
+                ", Date of Birth "+ dateOfBirth +
                 '}';
     }
 }

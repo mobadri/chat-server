@@ -5,8 +5,6 @@ import com.chat.server.model.chat.Message;
 import java.util.List;
 
 public interface MessageRepository {
-
-
     /**
      * get all messages
      *

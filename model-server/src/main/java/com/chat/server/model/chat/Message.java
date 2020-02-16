@@ -3,12 +3,12 @@ package com.chat.server.model.chat;
 import com.chat.server.model.user.User;
 
 import java.io.Serializable;
-import java.util.concurrent.atomic.AtomicStampedReference;
 
 public class Message implements Serializable {
 
     private int id;
     private String message;
+    private String style;
     private User userFrom;
     private ChatGroup chatGroup;
 
@@ -48,13 +48,21 @@ public class Message implements Serializable {
         this.chatGroup = chatGroup;
     }
 
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
+    }
+
     @Override
     public String toString() {
         return "Message{" +
                 "id=" + id +
                 ", message='" + message + '\'' +
                 ", userFrom=" + userFrom.getPhone() +
-               // ", chatGroup=" + chatGroup.getName() +
+                // ", chatGroup=" + chatGroup.getName() +
                 '}';
     }
 }

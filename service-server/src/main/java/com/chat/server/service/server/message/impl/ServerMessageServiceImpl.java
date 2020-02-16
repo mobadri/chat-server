@@ -4,6 +4,7 @@ import com.chat.client.service.client.callback.MessageServiceCallBack;
 import com.chat.server.model.chat.Message;
 import com.chat.server.model.chat.Notification;
 import com.chat.server.model.chat.NotificationType;
+import com.chat.server.model.user.User;
 import com.chat.server.service.server.factory.ServiceFactory;
 import com.chat.server.service.server.message.ServerMessageService;
 import com.chat.server.service.server.notification.ServerNotificationService;
@@ -18,10 +19,11 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
     Vector<MessageServiceCallBack> messageServiceCallBackVector = new Vector<>();
     ServerNotificationService serverNotificationService = ServiceFactory.createServerNotificationService();
 
+
     private static ServerMessageServiceImpl instance;
 
     private ServerMessageServiceImpl() throws RemoteException {
-    }
+        super(11223);}
 
     @Override
     public void sendMessage(Message message) {
@@ -30,12 +32,19 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
         //-----------------
         System.out.println(message);
         notifyAll(message);
-        Notification notification = creatNotification("you have a new message form " + message.getUserFrom().getPhone(),
-                NotificationType.MESSAGE_RECEIVED, false);
-        try {
-            serverNotificationService.sendNotification(notification);
-        } catch (RemoteException e) {
-            e.printStackTrace();
+        for (User user : message.getChatGroup().getUsers()) {
+            System.out.println(message.getChatGroup().getUsers());
+            if (user != message.getUserFrom() && user.isOnline()) {
+                Notification notification = creatNotification("you have a new message form " + message.getUserFrom().getPhone(),
+                        NotificationType.MESSAGE_RECEIVED, false);
+                notification.setUserFrom(message.getUserFrom());
+                notification.setUserTo(user);
+                try {
+                    serverNotificationService.sendNotification(notification);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         //todo save message to db;
         //todo send message notification to all user on the group
@@ -53,15 +62,16 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
         messageServiceCallBackVector.remove(messageServiceCallBack);
     }
 
-    public synchronized static ServerMessageServiceImpl getInstance() {
-        if (instance == null) {
+    public void notifyAll(Message message) {
+        for (MessageServiceCallBack messageServiceCallBack : messageServiceCallBackVector) {
             try {
-                instance = new ServerMessageServiceImpl();
+                if (messageServiceCallBack.getChatGroupId() == message.getChatGroup().getId()) {
+                    messageServiceCallBack.receiveMessage(message);
+                }
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
         }
-        return instance;
     }
 
     private Notification creatNotification(String message, NotificationType notificationType, boolean seen) {
@@ -79,6 +89,16 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
                 e.printStackTrace();
             }
         }
+    }
+    public synchronized static ServerMessageServiceImpl getInstance() {
+        if (instance == null) {
+            try {
+                instance = new ServerMessageServiceImpl();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+        return instance;
     }
 
 }
