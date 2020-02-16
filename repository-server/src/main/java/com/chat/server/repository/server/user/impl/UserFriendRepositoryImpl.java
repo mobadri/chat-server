@@ -94,7 +94,6 @@ public class UserFriendRepositoryImpl implements UserFriendRepository {
             if (i > 0) {
                 return i;
             }
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
