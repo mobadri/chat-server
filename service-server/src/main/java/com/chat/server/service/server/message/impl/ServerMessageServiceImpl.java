@@ -18,7 +18,9 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
     Vector<MessageServiceCallBack> messageServiceCallBackVector = new Vector<>();
     ServerNotificationService serverNotificationService = ServiceFactory.createServerNotificationService();
 
-    public ServerMessageServiceImpl() throws RemoteException {
+    private static ServerMessageServiceImpl instance;
+
+    private ServerMessageServiceImpl() throws RemoteException {
     }
 
     @Override
@@ -50,14 +52,16 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
     public void unRegister(MessageServiceCallBack messageServiceCallBack) {
         messageServiceCallBackVector.remove(messageServiceCallBack);
     }
-    public void notifyAll(Message message){
-        for (MessageServiceCallBack messageServiceCallBack : messageServiceCallBackVector){
+
+    public synchronized static ServerMessageServiceImpl getInstance() {
+        if (instance == null) {
             try {
-                messageServiceCallBack.receiveMessage(message);
+                instance = new ServerMessageServiceImpl();
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
         }
+        return instance;
     }
 
     private Notification creatNotification(String message, NotificationType notificationType, boolean seen) {
@@ -65,6 +69,16 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
         notification.setNotificationType(notificationType);
         notification.setNotificationMessage(message);
         return notification;
+    }
+
+    public void notifyAll(Message message) {
+        for (MessageServiceCallBack messageServiceCallBack : messageServiceCallBackVector) {
+            try {
+                messageServiceCallBack.receiveMessage(message);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

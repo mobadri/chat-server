@@ -3,4 +3,5 @@ module config.server {
     requires mysql.connector.java;
     opens com.chat.server.config.database;
     exports com.chat.server.config.database;
+    requires java.naming;
 }

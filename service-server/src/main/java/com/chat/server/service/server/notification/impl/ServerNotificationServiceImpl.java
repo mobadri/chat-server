@@ -19,7 +19,9 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
     // todo
     private NotificationRepository notificationRepository;
 
-    public ServerNotificationServiceImpl() throws RemoteException {
+    private static ServerNotificationServiceImpl instance;
+
+    private ServerNotificationServiceImpl() throws RemoteException {
         notificationRepository = RepositoryServerFactory.createNotificationRepository();
     }
 
@@ -53,11 +55,18 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
         System.out.println("try to send notification" + notificationServiceCallbackVector.size());
 
         for (NotificationServiceCallback notificationServiceCallback : notificationServiceCallbackVector) {
-            try {
                 notificationServiceCallback.receiveNotification(notification);
+        }
+    }
+
+    public synchronized static ServerNotificationServiceImpl getInstance() {
+        if (instance == null) {
+            try {
+                instance = new ServerNotificationServiceImpl();
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
         }
+        return instance;
     }
 }

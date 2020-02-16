@@ -13,7 +13,9 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
 
     UserRepository userRepository = RepositoryServerFactory.creatUserRepository();
 
-    public ServerUserServiceImpl() throws RemoteException {
+    private static ServerUserServiceImpl instance;
+
+    private ServerUserServiceImpl() throws RemoteException {
     }
 
     @Override
@@ -62,5 +64,16 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
     @Override
     public List<User> getOnlineUsers(boolean online) {
         return userRepository.findIfOnline(online);
+    }
+
+    public synchronized static ServerUserServiceImpl getInstance() {
+        if (instance == null) {
+            try {
+                instance = new ServerUserServiceImpl();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+        return instance;
     }
 }

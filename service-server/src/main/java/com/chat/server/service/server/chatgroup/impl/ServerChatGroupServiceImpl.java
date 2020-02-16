@@ -1,11 +1,9 @@
 package com.chat.server.service.server.chatgroup.impl;
 
 import com.chat.server.model.chat.ChatGroup;
-import com.chat.server.model.chat.Message;
 import com.chat.server.model.user.User;
 import com.chat.server.repository.server.chat.ChatGroupRepository;
 import com.chat.server.repository.server.factory.RepositoryServerFactory;
-import com.chat.server.repository.server.message.MessageRepository;
 import com.chat.server.service.server.chatgroup.ServerChatGroupService;
 
 import java.rmi.RemoteException;
@@ -14,9 +12,12 @@ import java.util.List;
 
 public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements ServerChatGroupService {
 
+
+    private static ServerChatGroupServiceImpl instance;
+
     private ChatGroupRepository chatGroupRepository;
 
-    public ServerChatGroupServiceImpl() throws RemoteException {
+    private ServerChatGroupServiceImpl() throws RemoteException {
         chatGroupRepository = RepositoryServerFactory.creatChatRepository();
     }
 
@@ -63,5 +64,16 @@ public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements S
     @Override
     public List<ChatGroup> searchByName(String groupName, User user) {
         return chatGroupRepository.searchByName(groupName, user);
+    }
+
+    public synchronized static ServerChatGroupServiceImpl getInstance() {
+        if (instance == null) {
+            try {
+                instance = new ServerChatGroupServiceImpl();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+        return instance;
     }
 }
