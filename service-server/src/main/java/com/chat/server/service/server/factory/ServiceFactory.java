@@ -27,6 +27,7 @@ public class ServiceFactory {
 
     public static ServerChatGroupService createServerChatGroupService() throws RemoteException {
         return ServerChatGroupServiceImpl.getInstance();
+
     }
 
 
