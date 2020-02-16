@@ -13,6 +13,7 @@ import java.rmi.registry.Registry;
 public class Server {
 
     private final static int PORT_NUMBER = 11223;
+
     public static void main(String[] args) {
         new Server();
     }
@@ -20,12 +21,22 @@ public class Server {
     public Server() {
         try {
 
+
+//            RMIserver server = new RMIserver();
+
+//            Context context = new InitialContext();
+//            System.out.println("Binding...");
+//            context.bind("rmi:server", server);
+//            System.out.println("Bound!");
+
+            Registry registry = LocateRegistry.createRegistry(PORT_NUMBER);
+//            System.setProperty("java.rmi.server.hostname", "10.145.7.174"); // Uses the loopback address, 127.0.0.1, if yo
+
             ServerUserService userService = ServiceFactory.createServerUserService();
             ServerChatGroupService chatGroupService = ServiceFactory.createServerChatGroupService();
             ServerMessageService messageService = ServiceFactory.createServerMessageService();
             ServerNotificationService notificationService = ServiceFactory.createServerNotificationService();
-
-            Registry registry = LocateRegistry.createRegistry(PORT_NUMBER);
+//            LocateRegistry.createRegistry()
             System.out.println("server is running");
 
             registry.rebind("userService", userService);

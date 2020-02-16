@@ -28,10 +28,9 @@ public class ModelAdapter {
      * @param resultSet query resultset
      * @return user object
      */
-    public static User mapResultSetToUser(ResultSet resultSet, List<User> friends,
-                                          List<ChatGroup> chatGroups) {
-        User user = new User();
-        mapResultSetToUser(resultSet);
+    public static synchronized User mapResultSetToUser(ResultSet resultSet, List<User> friends,
+                                                       List<ChatGroup> chatGroups) {
+        User user = mapResultSetToUser(resultSet);
         user.setFriends(friends);
         user.setChatGroups(chatGroups);
 
@@ -44,7 +43,7 @@ public class ModelAdapter {
      * @param resultSet query resultset
      * @return user object
      */
-    public static User mapResultSetToUser(ResultSet resultSet) {
+    public static synchronized User mapResultSetToUser(ResultSet resultSet) {
         User user = new User();
         try {
             user.setId(resultSet.getInt("ID"));
@@ -82,7 +81,7 @@ public class ModelAdapter {
      * @param preparedStatement that required to be map in
      * @param user              map its fields to preparedStatement parameters
      */
-    public static void mapUsertoPreparedStatement(PreparedStatement preparedStatement, User user) {
+    public static synchronized void mapUsertoPreparedStatement(PreparedStatement preparedStatement, User user) {
         try {
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
@@ -106,7 +105,7 @@ public class ModelAdapter {
      * @param resultSet query resultset
      * @return chatGroup object
      */
-    public static ChatGroup mapResultSetToChatGroup(ResultSet resultSet) {
+    public static synchronized ChatGroup mapResultSetToChatGroup(ResultSet resultSet) {
         ChatGroup chatGroup = new ChatGroup();
         try {
             chatGroup.setId(resultSet.getInt("ID"));
@@ -124,7 +123,7 @@ public class ModelAdapter {
      * @param preparedStatement that required to be map in
      * @param chatGroup         map its fields to preparedStatement parameters
      */
-    public static void mapChatGrouptoPreparedStatement(PreparedStatement preparedStatement, ChatGroup chatGroup) {
+    public static synchronized void mapChatGrouptoPreparedStatement(PreparedStatement preparedStatement, ChatGroup chatGroup) {
         try {
             preparedStatement.setString(1, chatGroup.getName());
         } catch (SQLException e) {
@@ -153,7 +152,7 @@ public class ModelAdapter {
      * @param
      * @return
      */
-    public static Message mapResultSetToMessage(ResultSet resultSet) {
+    public static synchronized Message mapResultSetToMessage(ResultSet resultSet) {
         Message message = new Message();
         try {
 
@@ -165,7 +164,7 @@ public class ModelAdapter {
         return message;
     }
 
-    public static Notification mapResultSetToNotification(ResultSet resultSet){
+    public static synchronized Notification mapResultSetToNotification(ResultSet resultSet) {
 
         Notification notification = new Notification();
         try {
@@ -175,7 +174,7 @@ public class ModelAdapter {
 
             int type = resultSet.getInt("notification_type");
             NotificationType notificationType;
-            switch (type){
+            switch (type) {
                 case 1:
                     notificationType = NotificationType.MESSAGE_RECEIVED;
                     break;
@@ -209,7 +208,7 @@ public class ModelAdapter {
      * @param
      * @return
      */
-    public static void mapMessagetoPreparedStatement(PreparedStatement preparedStatement, Message message) {
+    public static synchronized void mapMessagetoPreparedStatement(PreparedStatement preparedStatement, Message message) {
         try {
             preparedStatement.setString(1, message.getMessage());
             preparedStatement.setInt(2, message.getUserFrom().getId());
@@ -219,12 +218,12 @@ public class ModelAdapter {
         }
     }
 
-    public static Date mapDateToSqlDate(java.util.Date date) {
+    public static synchronized Date mapDateToSqlDate(java.util.Date date) {
 
         return new Date(date.getTime());
     }
 
-    public static java.util.Date mapDateFromSqlDate(Date date) {
+    public static synchronized java.util.Date mapDateFromSqlDate(Date date) {
 
         return new java.util.Date(date.getTime());
     }

@@ -1,5 +1,6 @@
 package com.chat.server.repository.server.user;
 
+import com.chat.server.model.user.FriendStatus;
 import com.chat.server.model.user.User;
 
 import java.util.List;
@@ -35,10 +36,10 @@ public interface UserRepository {
     /**
      * get all user friendsx
      *
-     * @param user user to get his/her friends
+     * @param userID user to get his/her friends
      * @return list of users as a friends for current user
      */
-    public List<User> findAllUserFriends(User user);
+    public List<User> findAllUserFriends(int userID, FriendStatus friendStatus);
 
     /**
      * insert user to database
@@ -79,4 +80,13 @@ public interface UserRepository {
      * @return list of online Or offline users
      */
     public List<User> findIfOnline(boolean online);
+
+    /**
+     * find all users on same chat group
+     *
+     * @param chatGroupId the id of chat group
+     * @return list of users on the same group
+     */
+    public List<User> findByChatGroup(int chatGroupId);
+
 }

@@ -21,6 +21,8 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
     ServerNotificationService serverNotificationService = ServiceFactory.createServerNotificationService();
 
     public ServerUserServiceImpl() throws RemoteException {
+        super(11223);
+        System.out.println("creat service");
     }
 
     @Override
@@ -42,15 +44,15 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
     }
 
     @Override
-    public List<User> getByPhone(String phone)  {
+    public List<User> getByPhone(String phone) {
         return userRepository.findByPhone(phone);
     }
 
 
     @Override
-    public List<User> getUserFriends(User user) {
+    public List<User> getUserFriends(User user, FriendStatus friendStatus) {
 
-        return userRepository.findAllUserFriends(user);
+        return userRepository.findAllUserFriends(user.getId(), friendStatus);
     }
 
     @Override

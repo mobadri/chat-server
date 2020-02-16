@@ -1,11 +1,10 @@
 package com.chat.server.service.server.chatgroup.impl;
 
 import com.chat.server.model.chat.ChatGroup;
-import com.chat.server.model.chat.Message;
 import com.chat.server.model.user.User;
 import com.chat.server.repository.server.chat.ChatGroupRepository;
 import com.chat.server.repository.server.factory.RepositoryServerFactory;
-import com.chat.server.repository.server.message.MessageRepository;
+import com.chat.server.repository.server.user.UserRepository;
 import com.chat.server.service.server.chatgroup.ServerChatGroupService;
 
 import java.rmi.RemoteException;
@@ -15,9 +14,12 @@ import java.util.List;
 public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements ServerChatGroupService {
 
     private ChatGroupRepository chatGroupRepository;
+    private UserRepository userRepository;
 
     public ServerChatGroupServiceImpl() throws RemoteException {
+        super(11223);
         chatGroupRepository = RepositoryServerFactory.creatChatRepository();
+        userRepository = RepositoryServerFactory.creatUserRepository();
     }
 
     @Override
@@ -27,12 +29,14 @@ public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements S
 
     @Override
     public ChatGroup getChatGroupByID(int id) throws RemoteException {
-        return chatGroupRepository.getChatGroupByID(id);
+        ChatGroup chatGroup = chatGroupRepository.getChatGroupByID(id);
+        chatGroup.setUsers(userRepository.findByChatGroup(id));
+        return chatGroup;
     }
 
     @Override
     public List<ChatGroup> getAllChatGroupsForUser(User user) throws RemoteException {
-        return chatGroupRepository.getAllChatGroupsForUser(user);
+        return chatGroupRepository.getAllChatGroupsForUser(user.getId());
     }
 
     @Override

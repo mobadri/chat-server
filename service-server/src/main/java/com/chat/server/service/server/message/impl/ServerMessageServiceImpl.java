@@ -4,6 +4,7 @@ import com.chat.client.service.client.callback.MessageServiceCallBack;
 import com.chat.server.model.chat.Message;
 import com.chat.server.model.chat.Notification;
 import com.chat.server.model.chat.NotificationType;
+import com.chat.server.model.user.User;
 import com.chat.server.service.server.factory.ServiceFactory;
 import com.chat.server.service.server.message.ServerMessageService;
 import com.chat.server.service.server.notification.ServerNotificationService;
@@ -17,6 +18,7 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
     ServerNotificationService serverNotificationService = ServiceFactory.createServerNotificationService();
 
     public ServerMessageServiceImpl() throws RemoteException {
+        super(11223);
     }
 
     @Override
@@ -26,13 +28,21 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
         //-----------------
         System.out.println(message);
         notifyAll(message);
-        Notification notification = creatNotification("you have a new message form " + message.getUserFrom().getPhone(),
-                NotificationType.MESSAGE_RECEIVED, false);
-        try {
-            serverNotificationService.sendNotification(notification);
-        } catch (RemoteException e) {
-            e.printStackTrace();
+        for (User user : message.getChatGroup().getUsers()) {
+            System.out.println(message.getChatGroup().getUsers());
+            if (user != message.getUserFrom() && user.isOnline()) {
+                Notification notification = creatNotification("you have a new message form " + message.getUserFrom().getPhone(),
+                        NotificationType.MESSAGE_RECEIVED, false);
+                notification.setUserFrom(message.getUserFrom());
+                notification.setUserTo(user);
+                try {
+                    serverNotificationService.sendNotification(notification);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
         }
+
         //todo save message to db;
         //todo send message notification to all user on the group
         //todo send message to all user on the group s
@@ -52,7 +62,9 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
     public void notifyAll(Message message) {
         for (MessageServiceCallBack messageServiceCallBack : messageServiceCallBackVector) {
             try {
-                messageServiceCallBack.receiveMessage(message);
+                if (messageServiceCallBack.getChatGroupId() == message.getChatGroup().getId()) {
+                    messageServiceCallBack.receiveMessage(message);
+                }
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
