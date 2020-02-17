@@ -2,10 +2,11 @@ package com.chat.server.repository.server.user.impl;
 
 
 import com.chat.server.config.database.ConnectToDBFactory;
+import com.chat.server.model.user.FriendStatus;
 import com.chat.server.model.user.User;
 import com.chat.server.repository.server.adapters.ModelAdapter;
 import com.chat.server.repository.server.chat.ChatGroupRepository;
-import com.chat.server.repository.server.factory.RepositoryServerFactory;
+import com.chat.server.repository.server.chat.impl.ChatGroupRepositoryImpl;
 import com.chat.server.repository.server.user.UserRepository;
 
 import java.sql.*;
@@ -18,8 +19,14 @@ public class UserRepositoryImpl implements UserRepository {
     private final String SELECT_IF_ONLINE = "SELECT * FROM USER WHERE ONLINE = ?";
     private final String SELECT_BY_PHONE_PASSWORD = "SELECT * FROM USER WHERE PHONE = ? " +
             "AND PASSWORD = ?";
-    private final String SELECT_ALL_USER_FRIENDS = "SELECT * FROM USER INNER JOIN USER_FRIENDS " +
-            "ON USER.ID = USER_FRIENDS.FRIEND_ID WHERE USER.ID = ?";
+    private final String SELECT_BY_GROUP = "SELECT * FROM USER INNER JOIN GROUP_USER ON USER.ID = GROUP_USER.USER_ID " +
+            " INNER JOIN CHAT_GROUP ON CHAT_GROUP.ID =GROUP_USER.GROUP_ID" +
+            " AND CHAT_GROUP.ID = ?";
+    private final String SELECT_ALL_USER_FRIENDS = "SELECT * FROM USER inner join USER_FRIENDS " +
+            " ON (USER_FRIENDS.USER_ID = USER.ID" +
+            " OR USER_FRIENDS.FRIEND_ID = USER.ID)" +
+            " WHERE (USER_FRIENDS.USER_ID = ? OR USER_FRIENDS.FRIEND_ID = ?)" +
+            " AND USER.ID <> ? AND USER_FRIENDS.FRIEND_STATUS = ?";
     private final String SELECT_BY_PHONE = "SELECT * FROM USER WHERE PHONE like '%' ? '%'";
     private final String INSERT_USER = "INSERT INTO USER (FIRST_NAME,LAST_NAME,PHONE,PASSWORD,EMAIL," +
             "COUNTRY,GENDER,DATE_OF_BIRTH,BIO,ONLINE,MODE)" +
@@ -32,7 +39,7 @@ public class UserRepositoryImpl implements UserRepository {
     private Connection connection = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
-    private ChatGroupRepository chatGroupRepository = RepositoryServerFactory.creatChatRepository();
+    private ChatGroupRepository chatGroupRepository = new ChatGroupRepositoryImpl();
 
     public UserRepositoryImpl() {
 
@@ -60,18 +67,20 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findById(int id, boolean fullData) {
-
         User user = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID);
+            preparedStatement = connection.prepareStatement(SELECT_BY_ID);
             preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 if (fullData) {
+                    int userId = resultSet.getInt("ID");
                     user = ModelAdapter.mapResultSetToUser(resultSet,
-                            findAllUserFriends(user),
-                            chatGroupRepository.getAllChatGroupsForUser(user));
+                            findAllUserFriends(userId, FriendStatus.APPROVED),
+                            chatGroupRepository.getAllChatGroupsForUser(userId));
                 } else {
                     user = ModelAdapter.mapResultSetToUser(resultSet);
                 }
@@ -90,13 +99,17 @@ public class UserRepositoryImpl implements UserRepository {
     public User findByPhoneAndPassword(String phone, String password) {
 
         User user = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
             preparedStatement = connection.prepareStatement(SELECT_BY_PHONE_PASSWORD);
             preparedStatement.setString(1, phone);
             preparedStatement.setString(2, password);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                user = ModelAdapter.mapResultSetToUser(resultSet);
+                int userId = resultSet.getInt("ID");
+                user = ModelAdapter.mapResultSetToUser(resultSet, findAllUserFriends(userId, FriendStatus.APPROVED)
+                        , chatGroupRepository.getAllChatGroupsForUser(userId));
             }
             return user;
         } catch (SQLException e) {
@@ -108,14 +121,17 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<User> findAllUserFriends(User user) {
+    public List<User> findAllUserFriends(int userId, FriendStatus friendStatus) {
         List<User> users = new ArrayList<>();
         try {
             preparedStatement = connection.prepareStatement(SELECT_ALL_USER_FRIENDS);
-            preparedStatement.setInt(1, user.getId());
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, userId);
+            preparedStatement.setInt(3, userId);
+            preparedStatement.setInt(4, friendStatus.ordinal());
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                users.add(ModelAdapter.mapResultSetToUser(resultSet, null, null));
+                users.add(ModelAdapter.mapResultSetToUser(resultSet));
             }
             return users;
         } catch (SQLException e) {
@@ -237,10 +253,34 @@ public class UserRepositoryImpl implements UserRepository {
         return users;
     }
 
+    @Override
+    public List<User> findByChatGroup(int chatGroupId) {
+        List<User> users = new ArrayList<>();
+        try {
+            preparedStatement = connection.prepareStatement(SELECT_BY_GROUP);
+            preparedStatement.setInt(1, chatGroupId);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                User user = ModelAdapter.mapResultSetToUser(resultSet);
+                users.add(user);
+            }
+            return users;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
+        }
+        return users;
+    }
+
     private void closeResultSetAndPreparedStatement(ResultSet resultSet, PreparedStatement preparedStatement) {
         try {
-            preparedStatement.close();
-            resultSet.close();
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (resultSet != null) {
+                resultSet.close();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

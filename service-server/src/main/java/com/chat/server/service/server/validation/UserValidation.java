@@ -1,12 +1,12 @@
 package com.chat.server.service.server.validation;
 
-import com.chat.server.model.user.User;
 import com.chat.server.model.user.Gender;
-import com.chat.server.repository.server.user.impl.*;
+import com.chat.server.model.user.User;
+import com.chat.server.service.server.factory.ServiceFactory;
+import com.chat.server.service.server.user.ServerUserService;
 
-import java.util.HashMap;
+import java.rmi.RemoteException;
 import java.util.List;
-import java.util.Map;
 
 public class UserValidation {
 
@@ -37,16 +37,19 @@ public class UserValidation {
     }
 
     public boolean uniquePhone(String phone) {
-        UserRepositoryImpl userRepository = new UserRepositoryImpl();
-        List<User> listOfUser = userRepository.findAll();
-        for (User u : listOfUser) {
-            if (u.getPhone().equals(phone)) {
-                return false;
+        try {
+            ServerUserService serverUserService = ServiceFactory.createServerUserService();
+            List<User> listOfUser = serverUserService.getAllUsers();
+            for (User u : listOfUser) {
+                if (u.getPhone().equals(phone)) {
+                    return false;
+                }
             }
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
         return true;
     }
-
 
 
 }

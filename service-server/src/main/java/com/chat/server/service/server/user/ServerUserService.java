@@ -1,5 +1,6 @@
 package com.chat.server.service.server.user;
 
+import com.chat.server.model.user.FriendStatus;
 import com.chat.server.model.user.User;
 
 import java.rmi.Remote;
@@ -52,7 +53,7 @@ public interface ServerUserService extends Remote {
      * @return list of users as user friends
      * @throws RemoteException
      */
-    public List<User> getUserFriends(User user) throws RemoteException;
+    public List<User> getUserFriends(User user, FriendStatus friendStatus) throws RemoteException;
 
     /**
      * insert Or register user to the system

@@ -16,17 +16,21 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
 public class ServerUserServiceImpl extends UnicastRemoteObject implements ServerUserService {
+
     UserRepository userRepository = RepositoryServerFactory.creatUserRepository();
     UserFriendRepository userFriendRepository = RepositoryServerFactory.createUserFriendRepository();
     ServerNotificationService serverNotificationService = ServiceFactory.createServerNotificationService();
+    private static ServerUserServiceImpl instance;
 
-    public ServerUserServiceImpl() throws RemoteException {
+
+    private ServerUserServiceImpl() throws RemoteException {
+        super(11223);
+        System.out.println("creat service");
     }
 
     @Override
 
     public List<User> getAllUsers() {
-
         return userRepository.findAll();
     }
 
@@ -37,20 +41,18 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
 
     @Override
     public User getByPhoneAndPassword(String phone, String password) {
-
         return userRepository.findByPhoneAndPassword(phone, password);
     }
 
     @Override
-    public List<User> getByPhone(String phone)  {
+    public List<User> getByPhone(String phone) {
         return userRepository.findByPhone(phone);
     }
 
-
     @Override
-    public List<User> getUserFriends(User user) {
+    public List<User> getUserFriends(User user, FriendStatus friendStatus) {
 
-        return userRepository.findAllUserFriends(user);
+        return userRepository.findAllUserFriends(user.getId(), friendStatus);
     }
 
     @Override
@@ -92,5 +94,16 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
 
         return i;
 
+    }
+
+    public synchronized static ServerUserServiceImpl getInstance() {
+        if (instance == null) {
+            try {
+                instance = new ServerUserServiceImpl();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+        return instance;
     }
 }

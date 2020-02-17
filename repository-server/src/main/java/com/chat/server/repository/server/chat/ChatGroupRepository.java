@@ -18,13 +18,15 @@ public interface ChatGroupRepository {
             "WHERE GROUP_USER.USER_ID = ? AND CHAT_GROUP.GROUP_NAME = ?";
 
     /**
-     *  get all groups from the database
+     * get all groups from the database
+     *
      * @return list of groups stored on database
      */
     public List<ChatGroup> getAllChatGroups();
 
     /**
      * get chat group with id
+     *
      * @param id chat group id
      * @return ChatGroup by id
      */
@@ -32,13 +34,15 @@ public interface ChatGroupRepository {
 
     /**
      * get all chat groups for a user
-     * @param user user that register on group
+     *
+     * @param userId user that register on group
      * @return list of user groups
      */
-    public List<ChatGroup> getAllChatGroupsForUser(User user);
+    public List<ChatGroup> getAllChatGroupsForUser(int userId);
 
     /**
      * insert chatGroup to database
+     *
      * @param chatGroup chatGroup to insert
      * @return id of inserted chatGroup or (-1) if failed to insert
      */
@@ -46,6 +50,7 @@ public interface ChatGroupRepository {
 
     /**
      * update chatGroup to database
+     *
      * @param chatGroup chatGroup to update
      * @return integer number of row updated
      */
@@ -53,6 +58,7 @@ public interface ChatGroupRepository {
 
     /**
      * delete chatGroup from database
+     *
      * @param id chatGroup id to be deleted
      * @return integer number of row deleted or 0 if not deleted
      */
@@ -60,24 +66,27 @@ public interface ChatGroupRepository {
 
     /**
      * to add friend to chat
+     *
      * @param chatGroup to add friend in this chat group
-     * @param friend friend to add
+     * @param friend    friend to add
      * @return added friend
      */
     public ChatGroup addFriend(ChatGroup chatGroup, User friend);
 
     /**
      * to remove friend to chat
+     *
      * @param chatGroup to remove friend from it
-     * @param friend friend to remove
+     * @param friend    friend to remove
      * @return 1 if removed, 0 otherwise
      */
     public ChatGroup removeFriend(ChatGroup chatGroup, User friend);
 
     /**
      * search for my groups
+     *
      * @param groupName chat group name
-     * @param user current user
+     * @param user      current user
      * @return list of my groups
      */
     List<ChatGroup> searchByName(String groupName, User user);

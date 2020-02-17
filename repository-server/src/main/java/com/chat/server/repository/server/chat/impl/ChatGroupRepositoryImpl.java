@@ -3,12 +3,9 @@ package com.chat.server.repository.server.chat.impl;
 
 import com.chat.server.config.database.ConnectToDBFactory;
 import com.chat.server.model.chat.ChatGroup;
-import com.chat.server.model.user.Mode;
 import com.chat.server.model.user.User;
 import com.chat.server.repository.server.adapters.ModelAdapter;
 import com.chat.server.repository.server.chat.ChatGroupRepository;
-import com.chat.server.repository.server.factory.RepositoryServerFactory;
-import com.chat.server.repository.server.message.MessageRepository;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -29,12 +26,11 @@ public class ChatGroupRepositoryImpl implements ChatGroupRepository {
     private final String UPDATE_CHAT_GROUP = "UPDATE CHAT_GROUP SET GROUP_NAME = ? WHERE ID = ?";
 
     private final String DELETE_CHAT_GROUP = "DELETE FROM CHAT_GROUP WHERE ID = ?";
-    private MessageRepository messageRepository = RepositoryServerFactory.createMessageRepository();
     private Connection connection = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
 
-    public ChatGroupRepositoryImpl(){
+    public ChatGroupRepositoryImpl() {
         connection = ConnectToDBFactory.creatConnectionManualy();
     }
 
@@ -45,16 +41,15 @@ public class ChatGroupRepositoryImpl implements ChatGroupRepository {
         try {
             preparedStatement = connection.prepareStatement(SELECT_ALL_CHAT_GROUP);
             resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 ChatGroup chatGroup = ModelAdapter.mapResultSetToChatGroup(resultSet);
                 chatGroups.add(chatGroup);
             }
             return chatGroups;
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
-            closeResultSetAndPreparedStatement(resultSet,preparedStatement);
+        } finally {
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return chatGroups;
     }
@@ -65,36 +60,35 @@ public class ChatGroupRepositoryImpl implements ChatGroupRepository {
         ChatGroup chatGroup = null;
         try {
             preparedStatement = connection.prepareStatement(SELECT_CHAT_GROUP_BY_ID);
-            preparedStatement.setLong(1,id);
+            preparedStatement.setLong(1, id);
             resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 chatGroup = ModelAdapter.mapResultSetToChatGroup(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            closeResultSetAndPreparedStatement(resultSet,preparedStatement);
+        } finally {
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return chatGroup;
     }
 
     @Override
-    public List<ChatGroup> getAllChatGroupsForUser(User user) {
+    public List<ChatGroup> getAllChatGroupsForUser(int userId) {
 
         List<ChatGroup> chatGroups = new ArrayList<>();
         try {
             preparedStatement = connection.prepareStatement(SELECT_ALL_CHAT_GROUPS_BY_USER_ID);
-            preparedStatement.setInt(1,user.getId());
+            preparedStatement.setInt(1, userId);
             resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 ChatGroup chatGroup = ModelAdapter.mapResultSetToChatGroup(resultSet);
                 chatGroups.add(chatGroup);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
-            closeResultSetAndPreparedStatement(resultSet,preparedStatement);
+        } finally {
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return chatGroups;
     }
@@ -108,13 +102,13 @@ public class ChatGroupRepositoryImpl implements ChatGroupRepository {
             ModelAdapter.mapChatGrouptoPreparedStatement(preparedStatement, chatGroup);
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 insertedChatGroup = getChatGroupByID(resultSet.getInt(1));
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            closeResultSetAndPreparedStatement(resultSet,preparedStatement);
+        } finally {
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return insertedChatGroup;
     }
@@ -124,14 +118,14 @@ public class ChatGroupRepositoryImpl implements ChatGroupRepository {
 
         try {
             preparedStatement = connection.prepareStatement(UPDATE_CHAT_GROUP);
-            ModelAdapter.mapChatGrouptoPreparedStatement(preparedStatement,chatGroup);
-            preparedStatement.setLong(2,chatGroup.getId());
+            ModelAdapter.mapChatGrouptoPreparedStatement(preparedStatement, chatGroup);
+            preparedStatement.setLong(2, chatGroup.getId());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            closeResultSetAndPreparedStatement(resultSet,preparedStatement);
+        } finally {
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return chatGroup;
     }
@@ -141,12 +135,12 @@ public class ChatGroupRepositoryImpl implements ChatGroupRepository {
 
         try {
             preparedStatement = connection.prepareStatement(DELETE_CHAT_GROUP);
-            preparedStatement.setInt(1,id);
+            preparedStatement.setInt(1, id);
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            closeResultSetAndPreparedStatement(resultSet,preparedStatement);
+        } finally {
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return 0;
     }
@@ -163,8 +157,8 @@ public class ChatGroupRepositoryImpl implements ChatGroupRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            closeResultSetAndPreparedStatement(resultSet,preparedStatement);
+        } finally {
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return chatGroup;
     }
@@ -181,8 +175,8 @@ public class ChatGroupRepositoryImpl implements ChatGroupRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            closeResultSetAndPreparedStatement(resultSet,preparedStatement);
+        } finally {
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return chatGroup;
     }
@@ -193,22 +187,22 @@ public class ChatGroupRepositoryImpl implements ChatGroupRepository {
         List<ChatGroup> chatGroups = new ArrayList<>();
         try {
             preparedStatement = connection.prepareStatement(GET_ALL_CHAT_GROUP_BY_NAME);
-            preparedStatement.setInt(1,user.getId());
-            preparedStatement.setString(2,groupName);
+            preparedStatement.setInt(1, user.getId());
+            preparedStatement.setString(2, groupName);
             resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 chatGroups.add(ModelAdapter.mapResultSetToChatGroup(resultSet));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            closeResultSetAndPreparedStatement(resultSet,preparedStatement);
+        } finally {
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return chatGroups;
     }
 
-    private void closeResultSetAndPreparedStatement(ResultSet resultSet,PreparedStatement preparedStatement){
+    private void closeResultSetAndPreparedStatement(ResultSet resultSet, PreparedStatement preparedStatement) {
         try {
             resultSet.close();
             preparedStatement.close();

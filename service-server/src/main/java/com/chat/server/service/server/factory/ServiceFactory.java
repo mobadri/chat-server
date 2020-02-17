@@ -14,22 +14,21 @@ import java.rmi.RemoteException;
 public class ServiceFactory {
 
     public static ServerUserService createServerUserService() throws RemoteException {
-        return new ServerUserServiceImpl();
+        return ServerUserServiceImpl.getInstance();
     }
 
     public static ServerMessageService createServerMessageService() throws RemoteException {
-        return new ServerMessageServiceImpl();
+        return ServerMessageServiceImpl.getInstance();
     }
 
     public static ServerNotificationService createServerNotificationService() throws RemoteException {
-        return new ServerNotificationServiceImpl();
+        return ServerNotificationServiceImpl.getInstance();
     }
 
     public static ServerChatGroupService createServerChatGroupService() throws RemoteException {
-        return new ServerChatGroupServiceImpl();
+        return ServerChatGroupServiceImpl.getInstance();
+
     }
 
-    public static ServerNotificationService createNotificationService() throws RemoteException {
-        return new ServerNotificationServiceImpl();
-    }
+
 }
