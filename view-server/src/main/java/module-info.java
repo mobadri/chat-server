@@ -9,4 +9,6 @@ module view.server {
     opens com.chat.server.view.server.controller;
     opens com.chat.server.view.server.controller.confirmation;
     opens com.chat.server.view.server;
+    exports com.chat.server.view.server;
+    exports com.chat.server.view.server.controller;
 }

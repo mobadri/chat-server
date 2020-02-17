@@ -23,7 +23,8 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
     private static ServerMessageServiceImpl instance;
 
     private ServerMessageServiceImpl() throws RemoteException {
-        super(11223);}
+        super(11223);
+    }
 
     @Override
     public void sendMessage(Message message) {
@@ -81,15 +82,6 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
         return notification;
     }
 
-    public void notifyAll(Message message) {
-        for (MessageServiceCallBack messageServiceCallBack : messageServiceCallBackVector) {
-            try {
-                messageServiceCallBack.receiveMessage(message);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        }
-    }
     public synchronized static ServerMessageServiceImpl getInstance() {
         if (instance == null) {
             try {

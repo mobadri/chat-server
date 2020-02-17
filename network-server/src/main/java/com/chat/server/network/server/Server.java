@@ -6,46 +6,73 @@ import com.chat.server.service.server.message.ServerMessageService;
 import com.chat.server.service.server.notification.ServerNotificationService;
 import com.chat.server.service.server.user.ServerUserService;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Objects;
 
 public class Server {
 
     private final static int PORT_NUMBER = 11223;
 
-    public static void main(String[] args) {
-        new Server();
+    private static Server instance;
+
+    private Registry registry;
+
+    private boolean running = false;
+
+    private Server() {
+        try {
+            registry = LocateRegistry.createRegistry(PORT_NUMBER);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public Server() {
+    public synchronized static Server getInstance() {
+        instance = Objects.requireNonNullElseGet(instance, Server::new);
+        return instance;
+    }
+
+    public void startServer() {
         try {
-
-
-//            RMIserver server = new RMIserver();
-
-//            Context context = new InitialContext();
-//            System.out.println("Binding...");
-//            context.bind("rmi:server", server);
-//            System.out.println("Bound!");
-
-            Registry registry = LocateRegistry.createRegistry(PORT_NUMBER);
 //            System.setProperty("java.rmi.server.hostname", "10.145.7.174"); // Uses the loopback address, 127.0.0.1, if yo
-
-            ServerUserService userService = ServiceFactory.createServerUserService();
-            ServerChatGroupService chatGroupService = ServiceFactory.createServerChatGroupService();
-            ServerMessageService messageService = ServiceFactory.createServerMessageService();
-            ServerNotificationService notificationService = ServiceFactory.createServerNotificationService();
+            if (!running) {
+                ServerUserService userService = ServiceFactory.createServerUserService();
+                ServerChatGroupService chatGroupService = ServiceFactory.createServerChatGroupService();
+                ServerMessageService messageService = ServiceFactory.createServerMessageService();
+                ServerNotificationService notificationService = ServiceFactory.createServerNotificationService();
 //            LocateRegistry.createRegistry()
-            System.out.println("server is running");
+                System.out.println("server is running");
 
-            registry.rebind("userService", userService);
-            registry.rebind("chatGroupService", chatGroupService);
-            registry.rebind("messageService", messageService);
-            registry.rebind("notificationService", notificationService);
+                registry.rebind("userService", userService);
+                registry.rebind("chatGroupService", chatGroupService);
+                registry.rebind("messageService", messageService);
+                registry.rebind("notificationService", notificationService);
+                running = !running;
+            }
         } catch (RemoteException ex) {
             ex.printStackTrace();
 
         }
     }
+
+    public void stopServer() {
+        try {
+            if (running) {
+                System.out.println("stop server");
+                registry.unbind("userService");
+                registry.unbind("chatGroupService");
+                registry.unbind("messageService");
+                registry.unbind("notificationService");
+                running = !running;
+            }
+        } catch (RemoteException | NotBoundException ex) {
+            ex.printStackTrace();
+
+        }
+    }
+
 }

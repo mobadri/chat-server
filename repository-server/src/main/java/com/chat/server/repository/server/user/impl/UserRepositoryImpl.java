@@ -259,6 +259,7 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             preparedStatement = connection.prepareStatement(SELECT_BY_GROUP);
             preparedStatement.setInt(1, chatGroupId);
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 User user = ModelAdapter.mapResultSetToUser(resultSet);
                 users.add(user);

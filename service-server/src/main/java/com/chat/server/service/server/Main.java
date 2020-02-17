@@ -1,10 +1,5 @@
 package com.chat.server.service.server;
 
-import com.chat.server.model.user.User;
-import com.chat.server.repository.server.user.impl.UserRepositoryImpl;
-
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
 
@@ -33,9 +28,9 @@ public class Main {
 //            System.out.println("Email is valid : " + userValidation.validMail(InvalidEmailProvider[i]));
 //
 //        }
-        UserRepositoryImpl userRepository = new UserRepositoryImpl();
-        List<User> byPhone = userRepository.findByPhone("0111");
-        System.out.println(byPhone.size());
+//        UserRepositoryImpl userRepository = new UserRepositoryImpl();
+//        List<User> byPhone = userRepository.findByPhone("0111");
+//        System.out.println(byPhone.size());
     }
 
 }

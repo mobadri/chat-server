@@ -4,8 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane id="root" prefHeight="662.0" prefWidth="1017.0"
-            stylesheets="@../static/css/style.css"
+<AnchorPane id="root" prefHeight="662.0" prefWidth="1017.0" stylesheets="@../static/css/style.css"
             xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.chat.server.view.server.controller.ServerViewController">
     <children>
@@ -22,8 +21,8 @@
                         <Font size="18.0"/>
                     </font>
                 </Label>
-                <Button id="start_pause" layoutX="821.0" layoutY="39.0" mnemonicParsing="false" prefHeight="80.0"
-                        prefWidth="80.0" text="Start"/>
+                <Button id="start_pause" fx:id="startButton" layoutX="821.0" layoutY="39.0" mnemonicParsing="false"
+                        onAction="#startOrStopServer" prefHeight="80.0" prefWidth="80.0" text="Start"/>
                 <Label layoutX="839.0" layoutY="126.0" text="status" textFill="WHITE">
                     <font>
                         <Font size="14.0"/>
@@ -45,8 +44,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
-                        <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="160.0"
-                                prefWidth="268.0"
+                        <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="160.0" prefWidth="268.0"
                                 text="Add User">
                             <graphic>
                                 <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
