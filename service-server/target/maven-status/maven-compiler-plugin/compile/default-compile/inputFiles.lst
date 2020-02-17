@@ -7,7 +7,9 @@ E:\Project\Server\chat-server\service-server\src\main\java\com\chat\server\servi
 E:\Project\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\validation\UserValidation.java
 E:\Project\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\chatgroup\impl\ServerChatGroupServiceImpl.java
 E:\Project\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\Main.java
+E:\Project\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\fileTransfer\ServerFileTranseferService.java
 E:\Project\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\notification\ServerNotificationService.java
 E:\Project\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\package-info.java
 E:\Project\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\message\impl\ServerMessageServiceImpl.java
+E:\Project\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\fileTransfer\impl\ServerFileTranseferServiceImpl.java
 E:\Project\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\user\ServerUserService.java

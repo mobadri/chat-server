@@ -8,4 +8,5 @@ module service.server {
     exports com.chat.server.service.server.chatgroup;
     exports com.chat.server.service.server.message;
     exports com.chat.server.service.server.notification;
+    exports com.chat.server.service.server.fileTransfer;
 }
