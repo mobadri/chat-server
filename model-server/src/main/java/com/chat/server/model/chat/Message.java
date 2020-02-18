@@ -3,14 +3,16 @@ package com.chat.server.model.chat;
 import com.chat.server.model.user.User;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class Message implements Serializable {
 
     private int id;
     private String message;
-    private String style;
+    private Style style;
     private User userFrom;
     private ChatGroup chatGroup;
+    private LocalDate timestamp;
 
     public Message() {
     }
@@ -48,12 +50,20 @@ public class Message implements Serializable {
         this.chatGroup = chatGroup;
     }
 
-    public String getStyle() {
+    public Style getStyle() {
         return style;
     }
 
-    public void setStyle(String style) {
+    public void setStyle(Style style) {
         this.style = style;
+    }
+
+    public LocalDate getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDate timestamp) {
+        this.timestamp = timestamp;
     }
 
     @Override
