@@ -57,6 +57,7 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
 
     @Override
     public User insertUser(User user) {
+
         return userRepository.insertUser(user);
     }
 
@@ -67,11 +68,13 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
 
     @Override
     public int deleteUser(int id) {
+
         return userRepository.delete(id);
     }
 
     @Override
     public List<User> getOnlineUsers(boolean online) {
+
         return userRepository.findIfOnline(online);
     }
 
