@@ -38,7 +38,6 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
 
     @Override
     public void sendNotification(Notification notification) {
-        System.out.println(notification);
         try {
             notifyAll(notification);
         } catch (RemoteException e) {
@@ -58,15 +57,12 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
     }
 
     private void notifyAll(Notification notification) throws RemoteException {
-        notificationServiceCallbackVector.size();
         for (NotificationServiceCallback notificationServiceCallback : notificationServiceCallbackVector) {
-            System.out.println(notification);
-            System.out.println(notification.getUserTo().getId());
-            System.out.println(notificationServiceCallback.getUserId());
-            System.out.println(notification.getUserTo().isOnline());
             try {
                 if (notification.getUserTo().getId() == notificationServiceCallback.getUserId()
-                        && notification.getUserTo().isOnline()) {
+                        && notification.getUserTo().isOnline()
+                        && notification.getUserFrom().getId() != notificationServiceCallback.getUserId()
+                ) {
                     notificationServiceCallback.receiveNotification(notification);
                 }
             } catch (RemoteException e) {
@@ -74,6 +70,7 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
             }
         }
     }
+
     public synchronized static ServerNotificationServiceImpl getInstance() {
         if (instance == null) {
             try {

@@ -31,10 +31,14 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
         //@yasmine
         //todo message to all
         //-----------------
-        System.out.println(message);
         notifyAll(message);
+        sedNotification(message);
+        //todo save message to db;
+        // message.getChatGroup().getMessages().add(message);
+    }
+
+    private void sedNotification(Message message) {
         for (User user : message.getChatGroup().getUsers()) {
-            System.out.println(message.getChatGroup().getUsers());
             if (user != message.getUserFrom() && user.isOnline()) {
                 Notification notification = creatNotification("you have a new message form " + message.getUserFrom().getPhone(),
                         NotificationType.MESSAGE_RECEIVED, false);
@@ -47,10 +51,6 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
                 }
             }
         }
-        //todo save message to db;
-        //todo send message notification to all user on the group
-        //todo send message to all user on the group s
-        // message.getChatGroup().getMessages().add(message);
     }
 
     @Override
@@ -65,8 +65,13 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
 
     public void notifyAll(Message message) {
         for (MessageServiceCallBack messageServiceCallBack : messageServiceCallBackVector) {
+
             try {
-                if (messageServiceCallBack.getChatGroupId() == message.getChatGroup().getId()) {
+                System.out.println("message from = " + message.getUserFrom().getId());
+                System.out.println("call back from =" + messageServiceCallBack.getCurrentUserId());
+                if (messageServiceCallBack.getChatGroupId() == message.getChatGroup().getId()
+
+                ) {
                     messageServiceCallBack.receiveMessage(message);
                 }
             } catch (RemoteException e) {
