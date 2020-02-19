@@ -212,7 +212,6 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findByPhone(String phone) {
-        // User user = null;
         List<User> users = new ArrayList<>();
         try {
             preparedStatement = connection.prepareStatement(SELECT_BY_PHONE);
@@ -230,7 +229,27 @@ public class UserRepositoryImpl implements UserRepository {
             closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return users;
+    }
 
+    @Override
+    public User findUserByPhone(String phone) {
+        User user = null;
+        try {
+            preparedStatement = connection.prepareStatement(SELECT_BY_PHONE);
+            preparedStatement.setString(1, phone);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                user = ModelAdapter.mapResultSetToUser(resultSet);
+                if (user.getPhone().equals(phone)) {
+                    return user;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
+        }
+        return user;
     }
 
     @Override

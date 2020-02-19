@@ -89,4 +89,11 @@ public interface UserRepository {
      */
     public List<User> findByChatGroup(int chatGroupId);
 
+    /**
+     * find user
+     * @param pbone user phone
+     * @return user or null if not found
+     */
+    public  User findUserByPhone(String pbone);
+
 }

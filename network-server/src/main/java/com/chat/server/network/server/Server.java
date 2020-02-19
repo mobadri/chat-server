@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class Server {
 
-    private final static int PORT_NUMBER = 11223;
+    private final static int PORT_NUMBER = 44444;
 
     private static Server instance;
 
