@@ -11,37 +11,33 @@ import java.util.List;
 public class UserValidation {
 
     User user = null;
+    ServerUserService serverUserService;
+
 
     public UserValidation(User user) {
-
+        try {
+            serverUserService = ServiceFactory.createServerUserService();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         this.user = user;
     }
 
-    public boolean validName(String name) {
-
-        return name.matches("[a-zA-z]+");
-    }
-
-    public boolean validMail(String mail) {
-        return mail.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-    }
-
-    public boolean validPhone(String phone) {
-
-        return phone.matches("^(?:\\+?2)?01[0-9]\\d{9}$");
-    }
-
-    public boolean gender(Gender gender) {
-        return gender != null;
+    public boolean reservedphone(String phone) {
+        try {
+            User user = serverUserService.getUserByPhone(phone);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return user != null ? true : false;
     }
 
     public boolean uniquePhone(String phone) {
         try {
-            ServerUserService serverUserService = ServiceFactory.createServerUserService();
+
             List<User> listOfUser = serverUserService.getAllUsers();
-            for (User u : listOfUser) {
-                if (u.getPhone().equals(phone)) {
+            for (User user : listOfUser) {
+                if (user.getPhone().equals(phone)) {
                     return false;
                 }
             }

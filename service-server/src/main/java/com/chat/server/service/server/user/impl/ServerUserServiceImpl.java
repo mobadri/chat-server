@@ -99,6 +99,11 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
 
     }
 
+    @Override
+    public User getUserByPhone(String phone) throws RemoteException {
+        return userRepository.findUserByPhone(phone);
+    }
+
     public synchronized static ServerUserServiceImpl getInstance() {
         if (instance == null) {
             try {
