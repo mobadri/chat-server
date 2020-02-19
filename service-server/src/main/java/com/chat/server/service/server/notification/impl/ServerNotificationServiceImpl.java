@@ -59,6 +59,7 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
     private void notifyAll(Notification notification) throws RemoteException {
         for (NotificationServiceCallback notificationServiceCallback : notificationServiceCallbackVector) {
             try {
+//                if (notification.getUserTo().getId() == notificationServiceCallback.getUserId()
                 if (notification.getUserTo().getId() == notificationServiceCallback.getUserId()
                         && notification.getUserTo().isOnline()
                         && notification.getUserFrom().getId() != notificationServiceCallback.getUserId()
