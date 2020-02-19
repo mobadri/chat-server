@@ -1,14 +1,17 @@
 package com.chat.server.model.chat;
 
-public class Style {
-    int id;
-    float fontSize;
-    boolean bold;
-    boolean italic;
-    boolean Underline;
-    private String fontStyle;
+import java.io.Serializable;
+
+public class Style implements Serializable {
+    private int id;
+    private String fontName;
+    private String fontFamily;
     private String fontColor;
     private String background;
+    private float fontSize;
+    private boolean bold;
+    private boolean italic;
+    private boolean underline;
 
     public Style() {
     }
@@ -21,12 +24,20 @@ public class Style {
         this.id = id;
     }
 
-    public String getFontStyle() {
-        return fontStyle;
+    public String getFontName() {
+        return fontName;
     }
 
-    public void setFontStyle(String fontStyle) {
-        this.fontStyle = fontStyle;
+    public void setFontName(String fontName) {
+        this.fontName = fontName;
+    }
+
+    public String getFontFamily() {
+        return fontFamily;
+    }
+
+    public void setFontFamily(String fontFamily) {
+        this.fontFamily = fontFamily;
     }
 
     public String getFontColor() {
@@ -70,10 +81,24 @@ public class Style {
     }
 
     public boolean isUnderline() {
-        return Underline;
+        return underline;
     }
 
     public void setUnderline(boolean underline) {
-        Underline = underline;
+        this.underline = underline;
+    }
+
+    @Override
+    public String toString() {
+        return " -fx-font-name:" + fontName + ';' +
+                " -fx-font-family:" + fontFamily + ';' +
+                " -fx-fill:" + fontColor + ';' +
+                " -fx-background-color:" + background + ';' +
+                " -fx-font-size:" + fontSize + ";" + (
+                bold || italic || underline ?
+                        " -fx-font-weight :" + (bold ? "bold " : "") +
+                                (italic ? "italic " : "") +
+                                (underline ? " underline" : "") + ";" : "");
+
     }
 }
