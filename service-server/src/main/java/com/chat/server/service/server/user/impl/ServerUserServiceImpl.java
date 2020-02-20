@@ -66,8 +66,8 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
     }
 
     @Override
-    public int deleteUser(int id) {
-        return userRepository.delete(id);
+    public int deleteUser(int userid) {
+        return userRepository.delete(userid);
     }
 
     @Override
@@ -94,6 +94,15 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
 
         return i;
 
+    }
+
+    @Override
+    public int removeFriend(int currentUser, int friend) {
+        int i = userFriendRepository.deleteFriend(currentUser, friend);
+
+
+
+        return i;
     }
 
     public synchronized static ServerUserServiceImpl getInstance() {

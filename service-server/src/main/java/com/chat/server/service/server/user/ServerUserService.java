@@ -76,11 +76,11 @@ public interface ServerUserService extends Remote {
     /**
      * delete user form the system
      *
-     * @param id user id to be deleted
+     * @param  userid to be deleted
      * @return int number of row deleted
      * @throws RemoteException
      */
-    public int deleteUser(int id) throws RemoteException;
+    public int deleteUser(int userid) throws RemoteException;
 
     /**
      * get all online Users
@@ -99,5 +99,5 @@ public interface ServerUserService extends Remote {
      * @return number of row inserted
      */
     public int addFriend(User currentUser, User friend) throws RemoteException;
-
+    public int removeFriend(int currentUser, int friend) throws RemoteException;
 }
