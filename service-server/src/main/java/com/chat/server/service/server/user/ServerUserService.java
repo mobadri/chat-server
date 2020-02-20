@@ -100,6 +100,7 @@ public interface ServerUserService extends Remote {
      * @throws RemoteException
      */
     public int addFriend(User currentUser, User friend) throws RemoteException;
+    public int removeFriend(int currentUser, int friend) throws RemoteException;
 
     /**
      *  get specific user by phone

@@ -97,6 +97,15 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
     }
 
     @Override
+    public int removeFriend(int currentUser, int friend) {
+        int i = userFriendRepository.deleteFriend(currentUser, friend);
+
+
+
+        return i;
+    }
+
+    @Override
     public User getUserByPhone(String phone) throws RemoteException {
         return userRepository.findUserByPhone(phone);
     }

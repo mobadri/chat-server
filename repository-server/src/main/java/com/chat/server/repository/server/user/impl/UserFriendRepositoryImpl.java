@@ -83,13 +83,13 @@ public class UserFriendRepositoryImpl implements UserFriendRepository {
     }
 
     @Override
-    public int deleteFreind(int user_id, int friend_id) {
+    public int deleteFriend(int user_id, int friend_id) {
         try {
             preparedStatement = connection.prepareStatement(DELETE_FRIEND);
-            preparedStatement.setInt(1, user_id);
-            preparedStatement.setInt(2, friend_id);
-            preparedStatement.setInt(3, friend_id);
-            preparedStatement.setInt(4, user_id);
+            preparedStatement.setInt(1,user_id);
+            preparedStatement.setInt(2,friend_id);
+            preparedStatement.setInt(3,friend_id);
+            preparedStatement.setInt(4,user_id);
             int i = preparedStatement.executeUpdate();
             if (i > 0) {
                 return i;
@@ -99,4 +99,7 @@ public class UserFriendRepositoryImpl implements UserFriendRepository {
         }
         return 0;
     }
+
+
 }
+
