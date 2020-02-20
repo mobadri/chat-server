@@ -8,6 +8,11 @@ import com.chat.server.repository.server.message.StyleRepository;
 import java.sql.*;
 
 public class StyleRepositoryImpl implements StyleRepository {
+    private final    String INSERT_STYLE = "INSERT INTO style_massege (FONT_NAME,FONT_FAMILY,FONT_COLOR,back_ground," +
+            "FONT_SIZE,BOLD,ITALIC,UNDER_LINE)VALUES(?,?,?,?,?,?,?,?)";
+    private final String DELETE_STYLE = "DELETE FROM style_massege WHERE STYLE_ID=?";
+    private final String SELECT_STYLE =  "SELECT * FROM style_massege WHERE STYLE_ID = ?";
+
     //@mariam
     //@todo impl this three methods to
     // select ,insert  and delete style form database
@@ -17,18 +22,6 @@ public class StyleRepositoryImpl implements StyleRepository {
 
     public StyleRepositoryImpl() {
         connection = ConnectToDBFactory.creatConnectionManualy();
-    }
-
-    public static void main(String[] args) {
-        StyleRepositoryImpl s = new StyleRepositoryImpl();
-        System.out.println(s.connection);
-        Style style = new Style();
-
-
-        System.out.println(s.insertStyle(new Style("POIUYTRE","fdUUUUU","sdJJf",
-                "fdcg",45,true,true,true)));
-        System.out.println(s.findById(3));
-        System.out.println(s.deleteStyle(1));
     }
 
     @Override
@@ -49,20 +42,22 @@ public class StyleRepositoryImpl implements StyleRepository {
 
     @Override
     public Style insertStyle(Style style) {
-        int res = 0;
+        int id =-1;
         try {
-            preparedStatement = connection.prepareStatement(INSERT_STYLE);
+            preparedStatement = connection.prepareStatement(INSERT_STYLE,Statement.RETURN_GENERATED_KEYS);
             ModelAdapter.mapStyleTopreparedStatement(preparedStatement, style);
-
-            preparedStatement.setInt(1, style.getId());
-            res = preparedStatement.executeUpdate();
-
+             preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                id = resultSet.getInt(1);
+            }
+            style.setId(id);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return res != 0 ? style : null;
+        return style;
     }
 
     @Override

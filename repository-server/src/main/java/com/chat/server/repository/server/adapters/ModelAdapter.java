@@ -236,7 +236,7 @@ public class ModelAdapter {
 
     public static void mapStyleTopreparedStatement(PreparedStatement preparedStatement, Style style) {
         try {
-            System.out.println(style.getFontName());
+            System.out.println("font name"+style.getFontName());
             preparedStatement.setString(1, style.getFontName());
             preparedStatement.setString(2, style.getFontFamily());
             preparedStatement.setString(3, style.getFontColor());

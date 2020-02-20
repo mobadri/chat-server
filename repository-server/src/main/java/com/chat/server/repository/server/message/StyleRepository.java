@@ -3,10 +3,6 @@ package com.chat.server.repository.server.message;
 import com.chat.server.model.chat.Style;
 
 public interface StyleRepository {
-    String INSERT_STYLE = "INSERT INTO style_massege (FONT_NAME,FONT_FAMILY,FONT_COLOR,back_ground," +
-            "FONT_SIZE,BOLD,ITALIC,UNDER_LINE)VALUES(?,?,?,?,?,?,?,?)";
-    String DELETE_STYLE = "DELETE FROM style_massege WHERE STYLE_ID=?";
-    String SELECT_STYLE =  "SELECT * FROM style_massege WHERE STYLE_ID = ?";
 
 
     /**
