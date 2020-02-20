@@ -1,9 +1,6 @@
 package com.chat.server.repository.server.adapters;
 
-import com.chat.server.model.chat.ChatGroup;
-import com.chat.server.model.chat.Message;
-import com.chat.server.model.chat.Notification;
-import com.chat.server.model.chat.NotificationType;
+import com.chat.server.model.chat.*;
 import com.chat.server.model.user.Gender;
 import com.chat.server.model.user.Mode;
 import com.chat.server.model.user.User;
@@ -43,7 +40,7 @@ public class ModelAdapter {
      * @param resultSet query resultset
      * @return user object
      */
-    public static synchronized User mapResultSetToUser(ResultSet resultSet) {
+    public static User mapResultSetToUser(ResultSet resultSet) {
         User user = new User();
         try {
             user.setId(resultSet.getInt("ID"));
@@ -81,7 +78,7 @@ public class ModelAdapter {
      * @param preparedStatement that required to be map in
      * @param user              map its fields to preparedStatement parameters
      */
-    public static synchronized void mapUsertoPreparedStatement(PreparedStatement preparedStatement, User user) {
+    public static void mapUsertoPreparedStatement(PreparedStatement preparedStatement, User user) {
         try {
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
@@ -105,7 +102,7 @@ public class ModelAdapter {
      * @param resultSet query resultset
      * @return chatGroup object
      */
-    public static synchronized ChatGroup mapResultSetToChatGroup(ResultSet resultSet) {
+    public static ChatGroup mapResultSetToChatGroup(ResultSet resultSet) {
         ChatGroup chatGroup = new ChatGroup();
         try {
             chatGroup.setId(resultSet.getInt("ID"));
@@ -123,7 +120,7 @@ public class ModelAdapter {
      * @param preparedStatement that required to be map in
      * @param chatGroup         map its fields to preparedStatement parameters
      */
-    public static synchronized void mapChatGrouptoPreparedStatement(PreparedStatement preparedStatement, ChatGroup chatGroup) {
+    public static void mapChatGrouptoPreparedStatement(PreparedStatement preparedStatement, ChatGroup chatGroup) {
         try {
             preparedStatement.setString(1, chatGroup.getName());
         } catch (SQLException e) {
@@ -152,7 +149,7 @@ public class ModelAdapter {
      * @param
      * @return
      */
-    public static synchronized Message mapResultSetToMessage(ResultSet resultSet) {
+    public static Message mapResultSetToMessage(ResultSet resultSet) {
         Message message = new Message();
         try {
 
@@ -164,7 +161,7 @@ public class ModelAdapter {
         return message;
     }
 
-    public static synchronized Notification mapResultSetToNotification(ResultSet resultSet) {
+    public static Notification mapResultSetToNotification(ResultSet resultSet) {
 
         Notification notification = new Notification();
         try {
@@ -208,7 +205,7 @@ public class ModelAdapter {
      * @param
      * @return
      */
-    public static synchronized void mapMessagetoPreparedStatement(PreparedStatement preparedStatement, Message message) {
+    public static void mapMessagetoPreparedStatement(PreparedStatement preparedStatement, Message message) {
         try {
             preparedStatement.setString(1, message.getMessage());
             preparedStatement.setInt(2, message.getUserFrom().getId());
@@ -218,12 +215,48 @@ public class ModelAdapter {
         }
     }
 
-    public static synchronized Date mapDateToSqlDate(java.util.Date date) {
+    public static Style mapResulsetTosTyle(ResultSet resultSet) {
+        Style style = new Style();
+        try {
+            resultSet.next();
+            style.setId(resultSet.getInt(1));
+            style.setFontName(resultSet.getString(2));
+            style.setFontFamily(resultSet.getString(3));
+            style.setFontColor(resultSet.getString(4));
+            style.setBackground(resultSet.getString(5));
+            style.setFontSize(resultSet.getFloat(6));
+            style.setBold(resultSet.getBoolean(7));
+            style.setItalic(resultSet.getBoolean(8));
+            style.setUnderline(resultSet.getBoolean(9));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return style;
+    }
+
+    public static void mapStyleTopreparedStatement(PreparedStatement preparedStatement, Style style) {
+        try {
+            System.out.println(style.getFontName());
+            preparedStatement.setString(1, style.getFontName());
+            preparedStatement.setString(2, style.getFontFamily());
+            preparedStatement.setString(3, style.getFontColor());
+            preparedStatement.setString(4, style.getBackground());
+            preparedStatement.setFloat(5, style.getFontSize());
+            preparedStatement.setBoolean(6, style.isBold());
+            preparedStatement.setBoolean(7, style.isItalic());
+            preparedStatement.setBoolean(8, style.isUnderline());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Date mapDateToSqlDate(java.util.Date date) {
 
         return new Date(date.getTime());
     }
 
-    public static synchronized java.util.Date mapDateFromSqlDate(Date date) {
+    public static java.util.Date mapDateFromSqlDate(Date date) {
 
         return new java.util.Date(date.getTime());
     }

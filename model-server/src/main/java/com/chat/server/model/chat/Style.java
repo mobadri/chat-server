@@ -16,6 +16,18 @@ public class Style implements Serializable {
     public Style() {
     }
 
+    public Style(String fontName, String fontFamily, String fontColor,
+                 String background, float fontSize, boolean bold, boolean italic, boolean underline) {
+        this.fontName = fontName;
+        this.fontFamily = fontFamily;
+        this.fontColor = fontColor;
+        this.background = background;
+        this.fontSize = fontSize;
+        this.bold = bold;
+        this.italic = italic;
+        this.underline = underline;
+    }
+
     public int getId() {
         return id;
     }

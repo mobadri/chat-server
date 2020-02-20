@@ -9,7 +9,6 @@ import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ServerFileTranseferServiceImpl extends UnicastRemoteObject implements ServerFileTranseferService {
-    private Vector<FileTransferServiceCallBack> vector = new Vector<>();
 
     public ServerFileTranseferServiceImpl() throws RemoteException {
     }
@@ -17,6 +16,7 @@ public class ServerFileTranseferServiceImpl extends UnicastRemoteObject implemen
     @Override
     public void register(FileTransferServiceCallBack fileTransferServiceCallBack) throws RuntimeException {
         vector.add(fileTransferServiceCallBack);
+        //concurrentHashMap.put(fileTransferServiceCallBack.)
     }
 
     @Override
@@ -38,4 +38,6 @@ public class ServerFileTranseferServiceImpl extends UnicastRemoteObject implemen
             }
         }
     }
+
+
 }

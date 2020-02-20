@@ -44,7 +44,9 @@ public class Server {
                 ServerChatGroupService chatGroupService = ServiceFactory.createServerChatGroupService();
                 ServerMessageService messageService = ServiceFactory.createServerMessageService();
                 ServerNotificationService notificationService = ServiceFactory.createServerNotificationService();
-//            LocateRegistry.createRegistry()
+
+
+
                 System.out.println("server is running");
 
                 registry.rebind("userService", userService);
