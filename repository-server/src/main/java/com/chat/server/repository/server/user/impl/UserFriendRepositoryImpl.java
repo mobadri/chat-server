@@ -88,7 +88,8 @@ public class UserFriendRepositoryImpl implements UserFriendRepository {
             preparedStatement = connection.prepareStatement(DELETE_FRIEND);
             preparedStatement.setInt(1,user_id);
             preparedStatement.setInt(2,friend_id);
-            preparedStatement.setInt(3,1);
+            preparedStatement.setInt(3,friend_id);
+            preparedStatement.setInt(4,user_id);
             int i = preparedStatement.executeUpdate();
             if (i > 0) {
                 return i;
