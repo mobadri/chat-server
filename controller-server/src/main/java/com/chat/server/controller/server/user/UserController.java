@@ -64,4 +64,13 @@ public class UserController {
         return validateUserData;
     }
 
+
+    public User updateUser(User user) {
+        try {
+            return service.updateUser(user);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
