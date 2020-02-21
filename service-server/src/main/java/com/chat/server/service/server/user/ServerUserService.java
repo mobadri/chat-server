@@ -6,6 +6,7 @@ import com.chat.server.model.user.User;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Map;
 
 public interface ServerUserService extends Remote {
 
@@ -109,5 +110,14 @@ public interface ServerUserService extends Remote {
      * @throws RemoteException
      */
     public User getUserByPhone(String phone) throws RemoteException;
+
+    /**
+     * validate user data aginest ruels
+     *
+     * @param user user to be validate his data
+     * @return map of validate keys and values <String ,Boolean>
+     * @throws RemoteException
+     */
+    Map<String, Boolean> validateUsr(User user) throws RemoteException;
 
 }

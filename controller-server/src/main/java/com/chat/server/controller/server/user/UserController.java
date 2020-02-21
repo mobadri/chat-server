@@ -5,7 +5,9 @@ import com.chat.server.service.server.factory.ServiceFactory;
 import com.chat.server.service.server.user.ServerUserService;
 
 import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserController {
 
@@ -41,4 +43,25 @@ public class UserController {
         }
         return 0;
     }
+
+
+    public User insertUser(User user) {
+        try {
+            return service.insertUser(user);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    public Map<String, Boolean> validateUser(User user) {
+        Map<String, Boolean> validateUserData = new HashMap<>();
+        try {
+            validateUserData = service.validateUsr(user);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return validateUserData;
+    }
+
 }

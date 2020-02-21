@@ -10,10 +10,12 @@ import com.chat.server.repository.server.user.UserRepository;
 import com.chat.server.service.server.factory.ServiceFactory;
 import com.chat.server.service.server.notification.ServerNotificationService;
 import com.chat.server.service.server.user.ServerUserService;
+import com.chat.server.service.server.validation.UserValidation;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
+import java.util.Map;
 
 public class ServerUserServiceImpl extends UnicastRemoteObject implements ServerUserService {
 
@@ -101,7 +103,6 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
         int i = userFriendRepository.deleteFriend(currentUser, friend);
 
 
-
         return i;
     }
 
@@ -109,6 +110,14 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
     public User getUserByPhone(String phone) throws RemoteException {
         return userRepository.findUserByPhone(phone);
     }
+
+    @Override
+    public Map<String, Boolean> validateUsr(User user) throws RemoteException {
+        UserValidation validator = new UserValidation(user);
+        Map<String, Boolean> validate = validator.validUser(user);
+        return validate;
+    }
+
 
     public synchronized static ServerUserServiceImpl getInstance() {
         if (instance == null) {
