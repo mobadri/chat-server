@@ -96,46 +96,45 @@ public class UserDataView implements Initializable {
         User user = new User();
         user.setFirstName(firstName.getText());
         user.setLastName(lastName.getText());
+        //   if (password.getText().equals(confirmPassword.getText())) {
+        user.setPassword(password.getText());
+
+        user.setEmail(email.getText());
         user.setPhone(phone.getText());
         user.setCountry(country.getSelectionModel().getSelectedItem().toString());
-        user.setEmail(email.getText());
+        user.setDateOfBirth(new Date(dateOfBirth.getText()));
+        user.setBIO(bio.getText());
+        if (male.isSelected()) {
+            user.setGender(Gender.MALE);
+        } else if (female.isSelected()) ;
+        user.setGender(Gender.FEMALE);
+        user.setOnline(false);
+        user.setMode(Mode.AVAILABLE);
 
-        if (password.getText().equals(confirmPassword.getText())) {
-            user.setPassword(password.getText());
-            user.setDateOfBirth(new Date(dateOfBirth.getText()));
-            user.setBIO(bio.getText());
-            if (male.isSelected()) {
-                user.setGender(Gender.MALE);
-            } else if (female.isSelected()) ;
-            user.setGender(Gender.FEMALE);
-            user.setOnline(false);
-            user.setMode(Mode.AVAILABLE);
-
-            return user;
-        } else {
-            InvalidConfirmPassword.setText("* Invalid Password");
-            password.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
-        }
-        return null;
-
-
-    }
-
-
-    private void newUser() {
-        userController.insertUser(setUserData());
-    }
-
-    public void backAction(ActionEvent actionEvent) {
+        return user;
+        //} else {
+        //  InvalidConfirmPassword.setText("* Invalid Password");
+        //  password.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+        //   return null;
     }
 
 
     private void clearValidation() {
+
+
         InvalidFirstName.setText("");
         InvalidLastName.setText("");
         InvalidPhone.setText("");
+        InvalidPassword.setText("");
         InvalidEmail.setText("");
         InvalidCountry.setText("");
+        firstName.setStyle("-fx-border-color: gray; -fx-border-width: 1px ;");
+        lastName.setStyle("-fx-border-color: gray ; -fx-border-width: 1px ;");
+        phone.setStyle("-fx-border-color: gray ; -fx-border-width: 1px ;");
+        password.setStyle("-fx-border-color: gray ; -fx-border-width: 1px ;");
+        email.setStyle("-fx-border-color: gray ; -fx-border-width: 1px ;");
+        country.setStyle("-fx-border-color: gray ; -fx-border-width: 1px ;");
+
     }
 
 
@@ -154,7 +153,7 @@ public class UserDataView implements Initializable {
                 phone.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
                 break;
             case "InvalidPassword":
-                InvalidPassword.setText("* Invalid Password");
+                InvalidPassword.setText("* Weak Pass At least 8 character");
                 password.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
                 break;
             case "InvalidEmail":
@@ -174,25 +173,31 @@ public class UserDataView implements Initializable {
 
     public void addUserAction(ActionEvent actionEvent) {
         clearValidation();
-        Map<String, Boolean> validationMap = new HashMap<>();
-        User user = setUserData();
-        if (user != null) {
-            Map<String, Boolean> validateMap = userController.validateUser(user);
-            validateMap.forEach((key, valid) -> {
-                if (!valid) {
-                    validationMap.put(key, valid);
-                }
-            });
-            if (validationMap.size() > 0) {
-                validationMap.forEach((key, value) -> {
-                    setError(key, value);
-                    System.out.println(key + "" + value);
-                });
-            } else {
-                userController.insertUser(user);
-            }
+        if (password.getText().equals(confirmPassword.getText())) {
 
-            System.out.println("user added");
+            Map<String, Boolean> validationMap = new HashMap<>();
+            User user = setUserData();
+            if (user != null) {
+
+                Map<String, Boolean> validateMap = userController.validateUser(user);
+                validateMap.forEach((key, valid) -> {
+                    if (!valid) {
+                        validationMap.put(key, valid);
+                    }
+                });
+                if (validationMap.size() > 0) {
+                    validationMap.forEach((key, value) -> {
+                        setError(key, value);
+                        System.out.println(key + "" + value);
+                    });
+                } else {
+                    userController.insertUser(user);
+                    System.out.println("user added");
+                }
+            }
+        } else {
+            InvalidPassword.setText("* Invalid Password");
+            password.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
         }
     }
 
