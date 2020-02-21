@@ -57,14 +57,14 @@
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                 </rowConstraints>
                 <children>
-                    <Button id="new" mnemonicParsing="false" prefHeight="26.0" prefWidth="104.0" text="New"
-                            textFill="WHITE">
+                    <Button id="new" mnemonicParsing="false" onAction="#newAction" prefHeight="26.0" prefWidth="104.0"
+                            text="New" textFill="WHITE">
                         <font>
                             <Font name="System Bold" size="14.0"/>
                         </font>
                     </Button>
-                    <Button id="update" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0" text="Update"
-                            textFill="WHITE" GridPane.columnIndex="1">
+                    <Button id="update" mnemonicParsing="false" onAction="#updateAction" prefHeight="26.0"
+                            prefWidth="103.0" text="Update" textFill="WHITE" GridPane.columnIndex="1">
                         <font>
                             <Font name="System Bold" size="14.0"/>
                         </font>
