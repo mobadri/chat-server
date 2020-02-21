@@ -29,11 +29,11 @@ public class UserRepositoryImpl implements UserRepository {
             " AND USER.ID <> ? AND USER_FRIENDS.FRIEND_STATUS = ?";
     private final String SELECT_BY_PHONE = "SELECT * FROM USER WHERE PHONE like '%' ? '%'";
     private final String INSERT_USER = "INSERT INTO USER (FIRST_NAME,LAST_NAME,PHONE,PASSWORD,EMAIL," +
-            "COUNTRY,GENDER,DATE_OF_BIRTH,BIO,ONLINE,MODE)" +
-            "  VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+            "COUNTRY,GENDER,DATE_OF_BIRTH,BIO,ONLINE,MODE,IMAGE)" +
+            "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
     private final String UPDATE_USER = "UPDATE USER SET FIRST_NAME= ?," +
             "LAST_NAME = ?,PHONE = ?,PASSWORD = ? ,EMAIL = ?," +
-            " COUNTRY =? ,GENDER = ?,DATE_OF_BIRTH =?,BIO = ?,ONLINE = ?,MODE = ?" +
+            " COUNTRY =? ,GENDER = ?,DATE_OF_BIRTH =?,BIO = ?,ONLINE = ?,MODE = ?,IMAGE=?" +
             " WHERE ID = ?";
     private final String DELETE_USER = "DELETE FROM USER WHERE ID = ?";
     private Connection connection = null;
@@ -174,7 +174,7 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             preparedStatement = connection.prepareStatement(UPDATE_USER);
             ModelAdapter.mapUsertoPreparedStatement(preparedStatement, user);
-            preparedStatement.setLong(12, user.getId());
+            preparedStatement.setLong(13, user.getId());
             int res = preparedStatement.executeUpdate();
             if (res > 0)
                 updated = user;

@@ -15,7 +15,7 @@ import java.util.List;
 public class ModelAdapter {
 
 
-    public ModelAdapter() {
+    private ModelAdapter() {
     }
 
 
@@ -25,8 +25,8 @@ public class ModelAdapter {
      * @param resultSet query resultset
      * @return user object
      */
-    public static synchronized User mapResultSetToUser(ResultSet resultSet, List<User> friends,
-                                                       List<ChatGroup> chatGroups) {
+    public static User mapResultSetToUser(ResultSet resultSet, List<User> friends,
+                                          List<ChatGroup> chatGroups) {
         User user = mapResultSetToUser(resultSet);
         user.setFriends(friends);
         user.setChatGroups(chatGroups);
@@ -55,6 +55,7 @@ public class ModelAdapter {
             user.setOnline(resultSet.getBoolean("ONLINE"));
             user.setMode(Mode.values()[resultSet.getInt("MODE")]);
             user.setBIO(resultSet.getString("BIO"));
+            user.setImage(resultSet.getBytes("image") != null ? resultSet.getBytes("image") : new byte[0]);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -91,6 +92,7 @@ public class ModelAdapter {
             preparedStatement.setString(9, user.getBIO());
             preparedStatement.setBoolean(10, user.isOnline());
             preparedStatement.setInt(11, user.getMode().ordinal());
+            preparedStatement.setBytes(12, user.getImage() != null ? user.getImage() : new byte[0]);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -236,7 +238,7 @@ public class ModelAdapter {
 
     public static void mapStyleTopreparedStatement(PreparedStatement preparedStatement, Style style) {
         try {
-            System.out.println("font name"+style.getFontName());
+            System.out.println("font name" + style.getFontName());
             preparedStatement.setString(1, style.getFontName());
             preparedStatement.setString(2, style.getFontFamily());
             preparedStatement.setString(3, style.getFontColor());
