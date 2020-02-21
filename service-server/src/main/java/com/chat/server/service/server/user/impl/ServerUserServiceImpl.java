@@ -9,6 +9,8 @@ import com.chat.server.repository.server.user.UserFriendRepository;
 import com.chat.server.repository.server.user.UserRepository;
 import com.chat.server.service.server.factory.ServiceFactory;
 import com.chat.server.service.server.notification.ServerNotificationService;
+import com.chat.server.service.server.socket_factories.RMISSLClientSocketFactory;
+import com.chat.server.service.server.socket_factories.RMISSLServerSocketFactory;
 import com.chat.server.service.server.user.ServerUserService;
 
 import java.rmi.RemoteException;
@@ -51,18 +53,17 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
 
     @Override
     public List<User> getUserFriends(User user, FriendStatus friendStatus) {
-
         return userRepository.findAllUserFriends(user.getId(), friendStatus);
     }
 
     @Override
-    public User insertUser(User user) {
-        return userRepository.insertUser(user);
+    public User insertUser(User user, String password) {
+        return userRepository.insertUser(user, password);
     }
 
     @Override
-    public User updateUser(User user) {
-        return userRepository.updateUser(user);
+    public User updateUser(User user, String password) {
+        return userRepository.updateUser(user, password);
     }
 
     @Override

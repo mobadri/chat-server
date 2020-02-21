@@ -113,9 +113,13 @@ public class Main {
 //        //System.out.println(i);
 //
 //        userFriendRepository.deleteFreind(93, 92);
-        UserRepository userRepository = new UserRepositoryImpl();
-        User user = userRepository.findByPhoneAndPassword("01061510304", "ahm741741");
-        System.out.println(user.getChatGroups().size());
-        System.out.println(user);
+        try {
+            UserRepository userRepository = new UserRepositoryImpl();
+            User user = userRepository.findByPhoneAndPassword("01061510304", "ahm741741");
+            System.out.println(user.getChatGroups().size());
+            System.out.println(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
