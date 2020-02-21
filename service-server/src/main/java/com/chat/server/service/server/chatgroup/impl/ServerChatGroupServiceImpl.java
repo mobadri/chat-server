@@ -6,6 +6,8 @@ import com.chat.server.repository.server.chat.ChatGroupRepository;
 import com.chat.server.repository.server.factory.RepositoryServerFactory;
 import com.chat.server.repository.server.user.UserRepository;
 import com.chat.server.service.server.chatgroup.ServerChatGroupService;
+import com.chat.server.service.server.socket_factories.RMISSLClientSocketFactory;
+import com.chat.server.service.server.socket_factories.RMISSLServerSocketFactory;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -19,8 +21,9 @@ public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements S
     private ChatGroupRepository chatGroupRepository;
     private UserRepository userRepository;
 
-    private ServerChatGroupServiceImpl() throws RemoteException {
-        super(11223);
+    private ServerChatGroupServiceImpl() throws Exception {
+        super(11223/*, new RMISSLClientSocketFactory(),
+                new RMISSLServerSocketFactory()*/);
 
         chatGroupRepository = RepositoryServerFactory.creatChatRepository();
         userRepository = RepositoryServerFactory.creatUserRepository();
@@ -77,7 +80,7 @@ public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements S
         if (instance == null) {
             try {
                 instance = new ServerChatGroupServiceImpl();
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

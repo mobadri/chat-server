@@ -12,7 +12,7 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private String phone;
-    private String password;
+    transient private String password;
     private String email;
     private String country;
     private Gender gender;
@@ -163,7 +163,6 @@ public class User implements Serializable {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
-                ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", country='" + country + '\'' +
                 ", gender=" + gender +
