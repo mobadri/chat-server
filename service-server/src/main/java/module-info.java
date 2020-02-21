@@ -9,4 +9,5 @@ module service.server {
     exports com.chat.server.service.server.message;
     exports com.chat.server.service.server.notification;
     exports com.chat.server.service.server.fileTransfer;
+    exports com.chat.server.service.server.socket_factories;
 }

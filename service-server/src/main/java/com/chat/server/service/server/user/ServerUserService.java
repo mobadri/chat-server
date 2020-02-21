@@ -22,11 +22,11 @@ public interface ServerUserService extends Remote {
      * get user by his id
      *
      * @param id       user id
-     * @param fulldata boolean to get all user data with friends and chatgroups
+     * @param fullData boolean to get all user data with friends and chatgroups
      * @return user if founded or null of not founded
      * @throws RemoteException
      */
-    public User getUserById(int id, boolean fulldata) throws RemoteException;
+    public User getUserById(int id, boolean fullData) throws RemoteException;
 
     /**
      * get user by phone and password
@@ -63,7 +63,7 @@ public interface ServerUserService extends Remote {
      * @return inserted user
      * @throws RemoteException
      */
-    public User insertUser(User user) throws RemoteException;
+    public User insertUser(User user, String password) throws RemoteException;
 
     /**
      * update user data to the system
@@ -72,7 +72,7 @@ public interface ServerUserService extends Remote {
      * @return updated user
      * @throws RemoteException
      */
-    public User updateUser(User user) throws RemoteException;
+    public User updateUser(User user, String password) throws RemoteException;
 
     /**
      * delete user form the system

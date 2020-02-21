@@ -1,5 +1,9 @@
 package com.chat.server.repository.server;
 
+import com.chat.server.model.user.User;
+import com.chat.server.repository.server.user.UserRepository;
+import com.chat.server.repository.server.user.impl.UserRepositoryImpl;
+
 public class Main {
     public static void main(String[] args) {
 //        //-------------------------------
@@ -109,17 +113,13 @@ public class Main {
 //        //System.out.println(i);
 //
 //        userFriendRepository.deleteFreind(93, 92);
-
-
-//        UserRepository userRepository = new UserRepositoryImpl();
-//        User user = new User("ahmed", "shaheen", "01061510304", "ahm741741", "ahmedshahehen676@yahoo.com", "Egypt", Gender.MALE,
-//                new Date("9/9/1993"), "java dev",
-//                readImage("/home/lts/Pictures/4.jpg"), null, null, false, com.chat.server.model.user.Mode.AVAILABLE);
-//        userRepository.insertUser(user);
-//        User user = userRepository.findByPhoneAndPassword("01061510304", "ahm741741");
-//        System.out.println(user.getFriends().size());
-//        System.out.println(user);
+        try {
+            UserRepository userRepository = new UserRepositoryImpl();
+            User user = userRepository.findByPhoneAndPassword("01061510304", "ahm741741");
+            System.out.println(user.getChatGroups().size());
+            System.out.println(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
-
 }
