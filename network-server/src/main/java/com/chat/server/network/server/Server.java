@@ -1,25 +1,22 @@
 package com.chat.server.network.server;
 
+import com.chat.server.config.database.NetworkDatabaseConfig;
 import com.chat.server.service.server.chatgroup.ServerChatGroupService;
 import com.chat.server.service.server.factory.ServiceFactory;
 import com.chat.server.service.server.message.ServerMessageService;
 import com.chat.server.service.server.notification.ServerNotificationService;
-import com.chat.server.service.server.socket_factories.RMISSLClientSocketFactory;
-import com.chat.server.service.server.socket_factories.RMISSLServerSocketFactory;
 import com.chat.server.service.server.user.ServerUserService;
 
 import java.rmi.NotBoundException;
-import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Objects;
 
 
-
 public class Server {
 
-    private final static int PORT_NUMBER = 44444;
+    NetworkDatabaseConfig configuration;
 
     private static Server instance;
 
@@ -28,13 +25,15 @@ public class Server {
     private boolean running = false;
 
     private Server() {
+        configuration = NetworkDatabaseConfig.getInstance();
+        String portNumber = configuration.getServerPortNumber();
+        String serverIP = configuration.getServerIp();
         try {
-
             /*all commented segments of code is connection security trail */
           /*  if (System.getSecurityManager() == null) {
                 System.setSecurityManager(new RMISecurityManager());
             }*/
-            registry = LocateRegistry.createRegistry(PORT_NUMBER);/*, new RMISSLClientSocketFactory(), new RMISSLServerSocketFactory());*/
+            registry = LocateRegistry.createRegistry(Integer.valueOf(portNumber));/*, new RMISSLClientSocketFactory(), new RMISSLServerSocketFactory());*/
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,7 +52,6 @@ public class Server {
                 ServerChatGroupService chatGroupService = ServiceFactory.createServerChatGroupService();
                 ServerMessageService messageService = ServiceFactory.createServerMessageService();
                 ServerNotificationService notificationService = ServiceFactory.createServerNotificationService();
-
 
 
                 System.out.println("server is running");
@@ -84,5 +82,4 @@ public class Server {
             ex.printStackTrace();
         }
     }
-
 }

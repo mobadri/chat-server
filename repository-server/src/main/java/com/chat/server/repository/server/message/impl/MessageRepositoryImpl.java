@@ -41,6 +41,8 @@ public class MessageRepositoryImpl implements MessageRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return messages;
     }
@@ -59,6 +61,8 @@ public class MessageRepositoryImpl implements MessageRepository {
             message.setId(id);
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return message;
     }
@@ -69,6 +73,17 @@ public class MessageRepositoryImpl implements MessageRepository {
             preparedStatement = connection.prepareStatement(DELETE_MESSAGE);
             preparedStatement.setInt(1, messgae_id);
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
+        }
+    }
+
+    private void closeResultSetAndPreparedStatement(ResultSet resultSet, PreparedStatement preparedStatement) {
+        try {
+            preparedStatement.close();
+            resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

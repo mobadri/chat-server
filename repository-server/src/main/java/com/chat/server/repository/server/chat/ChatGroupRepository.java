@@ -1,6 +1,7 @@
 package com.chat.server.repository.server.chat;
 
 import com.chat.server.model.chat.ChatGroup;
+import com.chat.server.model.chat.Message;
 import com.chat.server.model.user.User;
 
 import java.util.List;

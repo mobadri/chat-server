@@ -1,5 +1,8 @@
 package com.chat.server.service.server;
 
+import com.chat.server.repository.server.user.UserFriendRepository;
+import com.chat.server.repository.server.user.impl.UserFriendRepositoryImpl;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -31,6 +34,9 @@ public class Main {
 //        UserRepositoryImpl userRepository = new UserRepositoryImpl();
 //        List<User> byPhone = userRepository.findByPhone("0111");
 //        System.out.println(byPhone.size());
+      //  UserFriendRepository userFriendRepository = new UserFriendRepositoryImpl();
+
+
     }
 
 }
