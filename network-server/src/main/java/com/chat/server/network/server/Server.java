@@ -1,5 +1,6 @@
 package com.chat.server.network.server;
 
+import com.chat.server.config.database.NetworkDatabaseConfig;
 import com.chat.server.service.server.chatgroup.ServerChatGroupService;
 import com.chat.server.service.server.factory.ServiceFactory;
 import com.chat.server.service.server.message.ServerMessageService;
@@ -15,7 +16,7 @@ import java.util.Objects;
 
 public class Server {
 
-    private final static int PORT_NUMBER = 11223;
+    NetworkDatabaseConfig configuration;
 
     private static Server instance;
 
@@ -24,13 +25,15 @@ public class Server {
     private boolean running = false;
 
     private Server() {
+        configuration = NetworkDatabaseConfig.getInstance();
+        String portNumber = configuration.getServerPortNumber();
+        String serverIP = configuration.getServerIp();
         try {
-
             /*all commented segments of code is connection security trail */
           /*  if (System.getSecurityManager() == null) {
                 System.setSecurityManager(new RMISecurityManager());
             }*/
-            registry = LocateRegistry.createRegistry(PORT_NUMBER);/*, new RMISSLClientSocketFactory(), new RMISSLServerSocketFactory());*/
+            registry = LocateRegistry.createRegistry(Integer.valueOf(portNumber));/*, new RMISSLClientSocketFactory(), new RMISSLServerSocketFactory());*/
         } catch (Exception e) {
             e.printStackTrace();
         }
