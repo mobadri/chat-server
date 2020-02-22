@@ -65,9 +65,9 @@ public class UserController {
     }
 
 
-    public User updateUser(User user) {
+    public User updateUser(User user, String password) {
         try {
-            return service.updateUser(user);
+            return service.updateUser(user, password);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
