@@ -9,11 +9,15 @@ import com.chat.server.repository.server.user.UserFriendRepository;
 import com.chat.server.repository.server.user.UserRepository;
 import com.chat.server.service.server.factory.ServiceFactory;
 import com.chat.server.service.server.notification.ServerNotificationService;
+import com.chat.server.service.server.socket_factories.RMISSLClientSocketFactory;
+import com.chat.server.service.server.socket_factories.RMISSLServerSocketFactory;
 import com.chat.server.service.server.user.ServerUserService;
+import com.chat.server.service.server.validation.UserValidation;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
+import java.util.Map;
 
 public class ServerUserServiceImpl extends UnicastRemoteObject implements ServerUserService {
 
@@ -56,25 +60,22 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
     }
 
     @Override
-    public User insertUser(User user) {
-
-        return userRepository.insertUser(user);
+    public User insertUser(User user, String password) {
+        return userRepository.insertUser(user, password);
     }
 
     @Override
-    public User updateUser(User user) {
-        return userRepository.updateUser(user);
+    public User updateUser(User user, String password) {
+        return userRepository.updateUser(user, password);
     }
 
     @Override
     public int deleteUser(int id) {
-
         return userRepository.delete(id);
     }
 
     @Override
     public List<User> getOnlineUsers(boolean online) {
-
         return userRepository.findIfOnline(online);
     }
 
@@ -100,9 +101,25 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
     }
 
     @Override
+    public int removeFriend(int currentUser, int friend) {
+        int i = userFriendRepository.deleteFriend(currentUser, friend);
+
+
+        return i;
+    }
+
+    @Override
     public User getUserByPhone(String phone) throws RemoteException {
         return userRepository.findUserByPhone(phone);
     }
+
+    @Override
+    public Map<String, Boolean> validateUsr(User user) throws RemoteException {
+        UserValidation validator = new UserValidation(user);
+        Map<String, Boolean> validate = validator.validUser(user);
+        return validate;
+    }
+
 
     public synchronized static ServerUserServiceImpl getInstance() {
         if (instance == null) {

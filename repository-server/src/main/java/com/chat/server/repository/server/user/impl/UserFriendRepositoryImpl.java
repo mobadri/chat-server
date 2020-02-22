@@ -31,12 +31,12 @@ public class UserFriendRepositoryImpl implements UserFriendRepository {
     }
 
     @Override
-    public List<User> getAllFriends(int user_id) {
+    public List<User> getAllFriends(int userId) {
         List<User> friends = new ArrayList<>();
         try {
             //"SELECT * FROM USER_FRIENDS WHERE USER_ID = ?";
             preparedStatement = connection.prepareStatement(SELECT_ALL_FRIENDS_BY_USER_ID);
-            preparedStatement.setInt(1, user_id);
+            preparedStatement.setInt(1, userId);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 //friends.add()
@@ -48,11 +48,11 @@ public class UserFriendRepositoryImpl implements UserFriendRepository {
     }
 
     @Override
-    public int addNewFriend(int user_id, int friend_id, FriendStatus friendStatus) {
+    public int addNewFriend(int userId, int friendId, FriendStatus friendStatus) {
         try {
             preparedStatement = connection.prepareStatement(INSERT_FRIEND);
-            preparedStatement.setInt(1, user_id);
-            preparedStatement.setInt(2, friend_id);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, friendId);
             preparedStatement.setInt(3, friendStatus.ordinal());
             int i = preparedStatement.executeUpdate();
             if (i > 0) {
@@ -64,14 +64,14 @@ public class UserFriendRepositoryImpl implements UserFriendRepository {
         return 0;
     }
 
-    public int updateFriend(int user_id, int friend_id, FriendStatus friendStatus) {
+    public int updateFriend(int userId, int friendId, FriendStatus friendStatus) {
         try {
             preparedStatement = connection.prepareStatement(UPDATE_FRIEND);
             preparedStatement.setInt(1, friendStatus.ordinal());
-            preparedStatement.setInt(2, user_id);
-            preparedStatement.setInt(3, friend_id);
-            preparedStatement.setInt(4, friend_id);
-            preparedStatement.setInt(5, user_id);
+            preparedStatement.setInt(2, userId);
+            preparedStatement.setInt(3, friendId);
+            preparedStatement.setInt(4, friendId);
+            preparedStatement.setInt(5, userId);
             int i = preparedStatement.executeUpdate();
             if (i > 0) {
                 return i;
@@ -83,13 +83,13 @@ public class UserFriendRepositoryImpl implements UserFriendRepository {
     }
 
     @Override
-    public int deleteFreind(int user_id, int friend_id) {
+    public int deleteFriend(int userId, int friendId) {
         try {
             preparedStatement = connection.prepareStatement(DELETE_FRIEND);
-            preparedStatement.setInt(1, user_id);
-            preparedStatement.setInt(2, friend_id);
-            preparedStatement.setInt(3, friend_id);
-            preparedStatement.setInt(4, user_id);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, friendId);
+            preparedStatement.setInt(3, friendId);
+            preparedStatement.setInt(4, userId);
             int i = preparedStatement.executeUpdate();
             if (i > 0) {
                 return i;

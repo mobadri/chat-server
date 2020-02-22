@@ -3,6 +3,8 @@ package com.chat.server.repository.server.message;
 import com.chat.server.model.chat.Style;
 
 public interface StyleRepository {
+
+
     /**
      * find style for message by style id
      *
@@ -22,8 +24,8 @@ public interface StyleRepository {
     /**
      * delete style from database
      *
-     * @param style to be deleted
+     * @param id style_id to be deleted
      * @return int number of row deleted
      */
-    int deleteStyle(Style style);
+    int deleteStyle(int id);
 }

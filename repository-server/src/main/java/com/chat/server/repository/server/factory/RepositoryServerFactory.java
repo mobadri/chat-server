@@ -14,7 +14,12 @@ import com.chat.server.repository.server.user.impl.UserRepositoryImpl;
 public class RepositoryServerFactory {
 
     public static final UserRepository creatUserRepository() {
-        return new UserRepositoryImpl();
+        try {
+            return new UserRepositoryImpl();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static final ChatGroupRepository creatChatRepository() {
