@@ -1,7 +1,9 @@
 package com.chat.server.repository.server;
 
 import com.chat.server.model.user.User;
+import com.chat.server.repository.server.user.UserFriendRepository;
 import com.chat.server.repository.server.user.UserRepository;
+import com.chat.server.repository.server.user.impl.UserFriendRepositoryImpl;
 import com.chat.server.repository.server.user.impl.UserRepositoryImpl;
 
 public class Main {
@@ -113,13 +115,6 @@ public class Main {
 //        //System.out.println(i);
 //
 //        userFriendRepository.deleteFreind(93, 92);
-        try {
-            UserRepository userRepository = new UserRepositoryImpl();
-            User user = userRepository.findByPhoneAndPassword("01061510304", "ahm741741");
-            System.out.println(user.getChatGroups().size());
-            System.out.println(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 }

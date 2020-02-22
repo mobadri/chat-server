@@ -42,4 +42,11 @@ public interface UserFriendRepository {
      */
     int deleteFriend(int userId, int friendId);
 
+    /**
+     * get friend status for current user
+     * @param userId current user id
+     * @param friendId friend to to search for
+     * @return status
+     */
+    int getUserStatus(int userId,int friendId);
 }

@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserFriendRepositoryImpl implements UserFriendRepository {
-
+    String SELECT_FRIEND_STATUS = "Select FRIEND_STATUS FROM USER_FRIENDS  WHERE (USER_ID = ? AND FRIEND_ID = ?) OR " +
+                "(FRIEND_ID = ? AND USER_ID = ?)";
+    //String SELECT_FRIEND_STATUS = "SELECT FRIEND_STATUS FROM USER_FRIENDS WHERE (USER_ID = ? and FRIEND_ID=?) OR ";
     String SELECT_ALL_FRIENDS_BY_USER_ID = "SELECT * FROM USER_FRIENDS WHERE USER_ID = ?";
     String INSERT_FRIEND = "INSERT INTO USER_FRIENDS  (USER_ID , FRIEND_ID, FRIEND_STATUS) VALUES (?,?,?)";
     String DELETE_FRIEND = "DELETE FROM USER_FRIENDS WHERE (USER_ID = ? AND FRIEND_ID = ?) OR " +
@@ -99,4 +101,33 @@ public class UserFriendRepositoryImpl implements UserFriendRepository {
         }
         return 0;
     }
+
+
+    @Override
+    public int getUserStatus(int userId, int friendId) {
+        try
+        {
+            preparedStatement = connection.prepareStatement(SELECT_FRIEND_STATUS);
+            preparedStatement.setInt(1,userId);
+            preparedStatement.setInt(2,friendId);
+            preparedStatement.setInt(3,userId);
+            preparedStatement.setInt(4,friendId);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next())
+            {
+//                System.out.println("result set is = " + resultSet.getInt("FRIEND_STATUS"));
+                return resultSet.getInt("FRIEND_STATUS");
+            }
+
+
+        }
+        catch(SQLException exception)
+        {
+            exception.printStackTrace();
+        }
+        return 0;
+    }
+
+
 }
+
