@@ -4,22 +4,18 @@ import com.chat.server.service.server.chatgroup.ServerChatGroupService;
 import com.chat.server.service.server.factory.ServiceFactory;
 import com.chat.server.service.server.message.ServerMessageService;
 import com.chat.server.service.server.notification.ServerNotificationService;
-import com.chat.server.service.server.socket_factories.RMISSLClientSocketFactory;
-import com.chat.server.service.server.socket_factories.RMISSLServerSocketFactory;
 import com.chat.server.service.server.user.ServerUserService;
 
 import java.rmi.NotBoundException;
-import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Objects;
 
 
-
 public class Server {
 
-    private final static int PORT_NUMBER = 44444;
+    private final static int PORT_NUMBER = 11223;
 
     private static Server instance;
 
@@ -55,7 +51,6 @@ public class Server {
                 ServerNotificationService notificationService = ServiceFactory.createServerNotificationService();
 
 
-
                 System.out.println("server is running");
 
                 registry.rebind("userService", userService);
@@ -84,5 +79,4 @@ public class Server {
             ex.printStackTrace();
         }
     }
-
 }
