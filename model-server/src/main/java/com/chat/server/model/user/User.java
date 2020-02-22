@@ -18,6 +18,7 @@ public class User implements Serializable {
     private Gender gender;
     private Date dateOfBirth;
     private String BIO;
+    private byte[] image;
     private List<User> friends = new ArrayList<>();
     private List<ChatGroup> chatGroups = new ArrayList<>();
     private boolean online;
@@ -26,7 +27,10 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String firstName, String lastName, String phone, String password, String email, String country, Gender gender, Date dateOfBirth, String BIO, List<User> friends, List<ChatGroup> chatGroups,
+    public User(String firstName, String lastName, String phone,
+                String password, String email, String country,
+                Gender gender, Date dateOfBirth, String BIO, byte[] image,
+                List<User> friends, List<ChatGroup> chatGroups,
                 boolean online, Mode mode) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -37,6 +41,7 @@ public class User implements Serializable {
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
         this.BIO = BIO;
+        this.image = image;
         this.friends = friends;
         this.chatGroups = chatGroups;
         this.online = online;
@@ -156,6 +161,22 @@ public class User implements Serializable {
         this.BIO = BIO;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    /**
+     * user image with maximum size of 16 MB
+     * it stored on database as MEDIUMBLOB
+     *
+     * @param image user image
+     */
+    public void setImage(byte[] image) {
+        if (image.length < 16777215) {
+            this.image = image;
+        }
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -169,7 +190,7 @@ public class User implements Serializable {
                 ", contacts=" + friends.size() +
                 ", online=" + online +
                 ", mode=" + mode +
-                ", Date of Birth "+ dateOfBirth +
+                ", Date of Birth " + dateOfBirth +
                 '}';
     }
 }
