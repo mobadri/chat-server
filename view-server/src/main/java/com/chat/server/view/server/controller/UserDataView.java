@@ -4,25 +4,29 @@ import com.chat.server.controller.server.user.UserController;
 import com.chat.server.model.user.Gender;
 import com.chat.server.model.user.Mode;
 import com.chat.server.model.user.User;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.rmi.RemoteException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class UserDataView implements Initializable {
-
-
+    @FXML
+    public JFXButton add;
     @FXML
     public JFXPasswordField password;
     @FXML
@@ -52,7 +56,6 @@ public class UserDataView implements Initializable {
     private JFXTextField dateOfBirth;
     @FXML
     private JFXTextField bio;
-    private Gender gender = Gender.MALE;
     @FXML
     private Label InvalidFirstName;
     @FXML
@@ -63,23 +66,30 @@ public class UserDataView implements Initializable {
     private Label InvalidEmail;
     @FXML
     private Label InvalidCountry;
+    @FXML
+    private Label title;
     private Stage stage;
-
-    {
-        try {
-            userController = new UserController();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
+    private Gender gender = Gender.MALE;
+    private User user;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         loadAllCountries();
+        addPhoneActionListner();
+    }
+
+    private void addPhoneActionListner() {
+        phone.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("^(?:\\+?2)?01[0-9]{9}$")) {
+                    phone.setText(newValue.replaceAll("[\\D]", ""));
+                }
+            }
+        });
+
     }
 
     private void loadAllCountries() {
@@ -92,13 +102,13 @@ public class UserDataView implements Initializable {
     }
 
 
-    private User setUserData() {
-        User user = new User();
+    private User getUserData() {
+        if (user.getId() > 0) {
+            user.setId(user.getId());
+        }
         user.setFirstName(firstName.getText());
         user.setLastName(lastName.getText());
-        //   if (password.getText().equals(confirmPassword.getText())) {
         user.setPassword(password.getText());
-
         user.setEmail(email.getText());
         user.setPhone(phone.getText());
         user.setCountry(country.getSelectionModel().getSelectedItem().toString());
@@ -110,18 +120,26 @@ public class UserDataView implements Initializable {
         user.setGender(Gender.FEMALE);
         user.setOnline(false);
         user.setMode(Mode.AVAILABLE);
-
         return user;
-        //} else {
-        //  InvalidConfirmPassword.setText("* Invalid Password");
-        //  password.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
-        //   return null;
+    }
+
+    private void setViewData(User user) {
+        if (user.getId() > 0) {
+            title.setText("Update user " + user.getFirstName() + " " + user.getLastName());
+            add.setText("Update");
+        }
+        firstName.setText(user.getFirstName());
+        lastName.setText(user.getLastName());
+        password.setText(user.getPassword());
+        email.setText(user.getEmail());
+        phone.setText(user.getPhone());
+        country.setValue(user.getCountry());
+        dateOfBirth.setText("" + user.getDateOfBirth());
+        bio.setText(user.getBIO());
     }
 
 
     private void clearValidation() {
-
-
         InvalidFirstName.setText("");
         InvalidLastName.setText("");
         InvalidPhone.setText("");
@@ -137,7 +155,6 @@ public class UserDataView implements Initializable {
 
     }
 
-
     private void setError(String key, Boolean value) {
         switch (key) {
             case "InvalidFirstName":
@@ -152,6 +169,7 @@ public class UserDataView implements Initializable {
                 InvalidPhone.setText("*Invalid Phone");
                 phone.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
                 break;
+
             case "InvalidPassword":
                 InvalidPassword.setText("* Weak Pass At least 8 character");
                 password.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
@@ -170,15 +188,56 @@ public class UserDataView implements Initializable {
 
     }
 
+    public void insertNewUser() {
+        clearValidation();
+        if (password.getText().equals(confirmPassword.getText())) {
+            Map<String, Boolean> validationMap = new HashMap<>();
+            User user = getUserData();
+            if (user != null) {
+                Map<String, Boolean> validateMap = userController.validateUser(user);
+                validateMap.forEach((key, valid) -> {
+                    if (!valid) {
+                        validationMap.put(key, valid);
+                    }
+                });
+                if (validationMap.size() > 0) {
+                    validationMap.forEach((key, value) -> {
+                        setError(key, value);
+                    });
+                } else {
+                    User insertedUser = userController.insertUser(user);
+                    if (insertedUser.getId() > 0) {
+                        showMessageDialog(Alert.AlertType.INFORMATION, "user has been added successfully");
+                        returnToParent();
+                    } else {
+                        showMessageDialog(Alert.AlertType.ERROR, "error on register user call us !");
+                    }
+                }
+            }
+        } else {
+            InvalidPassword.setText("* Invalid Password");
+            password.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+        }
+    }
 
-    public void addUserAction(ActionEvent actionEvent) {
+    private void updateUser() {
+        user = getUserData();
+        User update = userController.updateUser(user);
+        if (update != null) {
+            showMessageDialog(Alert.AlertType.INFORMATION, "user has been updated successfully");
+            returnToParent();
+        } else {
+            showMessageDialog(Alert.AlertType.ERROR, "error on update user call us !");
+        }
+    }
+
+    private boolean validateUser(User user) {
         clearValidation();
         if (password.getText().equals(confirmPassword.getText())) {
 
             Map<String, Boolean> validationMap = new HashMap<>();
-            User user = setUserData();
+            user = getUserData();
             if (user != null) {
-
                 Map<String, Boolean> validateMap = userController.validateUser(user);
                 validateMap.forEach((key, valid) -> {
                     if (!valid) {
@@ -190,15 +249,51 @@ public class UserDataView implements Initializable {
                         setError(key, value);
                         System.out.println(key + "" + value);
                     });
-                } else {
-                    userController.insertUser(user);
-                    System.out.println("user added");
                 }
             }
         } else {
             InvalidPassword.setText("* Invalid Password");
             password.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
         }
+        return false;
+
+    }
+
+    @FXML
+    public void addUserAction(ActionEvent actionEvent) {
+        System.out.println("update inuseraction");
+        System.out.println(user);
+        if (user != null && user.getId() > 0) {
+            System.out.println("update");
+            if (!validateUser(getUserData())) {
+                updateUser();
+            }
+        } else {
+            insertNewUser();
+        }
+    }
+
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public void setUserController(UserController userController) {
+        this.userController = userController;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        setViewData(user);
+    }
+
+    private void showMessageDialog(Alert.AlertType alertType, String message) {
+        Alert alert = new Alert(alertType, message, ButtonType.OK);
+        alert.showAndWait();
+    }
+
+    private void returnToParent() {
+        stage.close();
     }
 
 }

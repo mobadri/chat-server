@@ -29,21 +29,23 @@ public class UserRepositoryImpl implements UserRepository {
             " AND USER.ID <> ? AND USER_FRIENDS.FRIEND_STATUS = ?";
     private final String SELECT_BY_PHONE = "SELECT * FROM USER WHERE PHONE like '%' ? '%'";
     private final String INSERT_USER = "INSERT INTO USER (FIRST_NAME,LAST_NAME,PHONE,PASSWORD,EMAIL," +
-            "COUNTRY,GENDER,DATE_OF_BIRTH,BIO,ONLINE,MODE)" +
-            "  VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+            "COUNTRY,GENDER,DATE_OF_BIRTH,BIO,ONLINE,MODE,IMAGE)" +
+            "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
     private final String UPDATE_USER = "UPDATE USER SET FIRST_NAME= ?," +
             "LAST_NAME = ?,PHONE = ?,PASSWORD = ? ,EMAIL = ?," +
-            " COUNTRY =? ,GENDER = ?,DATE_OF_BIRTH =?,BIO = ?,ONLINE = ?,MODE = ?" +
+            " COUNTRY =? ,GENDER = ?,DATE_OF_BIRTH =?,BIO = ?,ONLINE = ?,MODE = ?,IMAGE=?" +
             " WHERE ID = ?";
     private final String DELETE_USER = "DELETE FROM USER WHERE ID = ?";
     private Connection connection = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
     private ChatGroupRepository chatGroupRepository = new ChatGroupRepositoryImpl();
+    private Encryption encryption;
 
-    public UserRepositoryImpl() {
+    public UserRepositoryImpl() throws Exception {
 
         connection = ConnectToDBFactory.creatConnectionManualy();
+        encryption = new Encryption();
     }
 
     @Override
@@ -101,21 +103,27 @@ public class UserRepositoryImpl implements UserRepository {
         User user = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        try {
-            preparedStatement = connection.prepareStatement(SELECT_BY_PHONE_PASSWORD);
-            preparedStatement.setString(1, phone);
-            preparedStatement.setString(2, password);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int userId = resultSet.getInt("ID");
-                user = ModelAdapter.mapResultSetToUser(resultSet, findAllUserFriends(userId, FriendStatus.APPROVED)
-                        , chatGroupRepository.getAllChatGroupsForUser(userId));
+
+        String hashedPassword = findUserByPhone(phone).getPassword();
+        boolean exist = encryption.checkIfExist(password, hashedPassword);
+
+        if(exist) {
+            try {
+                preparedStatement = connection.prepareStatement(SELECT_BY_PHONE_PASSWORD);
+                preparedStatement.setString(1, phone);
+                preparedStatement.setString(2, hashedPassword);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    int userId = resultSet.getInt("ID");
+                    user = ModelAdapter.mapResultSetToUser(resultSet, findAllUserFriends(userId, FriendStatus.APPROVED)
+                            , chatGroupRepository.getAllChatGroupsForUser(userId));
+                }
+                return user;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                closeResultSetAndPreparedStatement(resultSet, preparedStatement);
             }
-            return user;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return user;
     }
@@ -143,9 +151,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User insertUser(User user) {
+    public User insertUser(User user, String password) {
+
         int id = -1;
         try {
+            user.setPassword(encryption.encrypt(password));
             preparedStatement = connection.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
             ModelAdapter.mapUsertoPreparedStatement(preparedStatement, user);
             preparedStatement.executeUpdate();
@@ -168,13 +178,14 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User updateUser(User user) {
+    public User updateUser(User user, String password) {
 
         User updated = null;
+        user.setPassword(encryption.encrypt(password));
         try {
             preparedStatement = connection.prepareStatement(UPDATE_USER);
             ModelAdapter.mapUsertoPreparedStatement(preparedStatement, user);
-            preparedStatement.setLong(12, user.getId());
+            preparedStatement.setLong(13, user.getId());
             int res = preparedStatement.executeUpdate();
             if (res > 0)
                 updated = user;
@@ -219,7 +230,7 @@ public class UserRepositoryImpl implements UserRepository {
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 User user = ModelAdapter.mapResultSetToUser(resultSet);
-                System.out.println("REsultSet.next" + user.getPhone());
+                System.out.println("ResultSet.next" + user.getPhone());
                 users.add(user);
             }
             return users;

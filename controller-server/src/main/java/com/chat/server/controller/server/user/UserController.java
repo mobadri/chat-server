@@ -47,7 +47,7 @@ public class UserController {
 
     public User insertUser(User user) {
         try {
-            return service.insertUser(user);
+            return service.insertUser(user, user.getPassword());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -64,4 +64,13 @@ public class UserController {
         return validateUserData;
     }
 
+
+    public User updateUser(User user, String password) {
+        try {
+            return service.updateUser(user, password);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -7,41 +7,46 @@ import java.util.List;
 
 public interface UserFriendRepository {
 
-
-
     /**
      * get all friends by user_id
      *
-     * @param user_id
+     * @param userId
      * @return list<User>
      */
-    List<User> getAllFriends(int user_id);
+    List<User> getAllFriends(int userId);
 
     /**
      * insert a friend to user friend list
      *
-     * @param user_id who send friend req
-     * @param friend_id who receive req friend
+     * @param userId who send friend req
+     * @param friendId who receive req friend
      * @param friendStatus pending
      * @return int no of rows inserted
      */
-    int addNewFriend(int user_id, int friend_id, FriendStatus friendStatus);
+    int addNewFriend(int userId, int friendId, FriendStatus friendStatus);
 
     /**
      * update a friend status
      *
-     * @param user_id      who send friend req
-     * @param friend_id    who receive req friend
+     * @param userId      who send friend req
+     * @param friendId    who receive req friend
      * @param friendStatus approve or reject
      * @return int no of rows updated
      */
-    int updateFriend(int user_id, int friend_id, FriendStatus friendStatus);
+    int updateFriend(int userId, int friendId, FriendStatus friendStatus);
 
     /**
      * delete a friend from user friend list
      *
-     * @param user_id , friend_id
+     * @param userId , friendId
      */
-    int deleteFriend(int user_id, int friend_id);
-    int getUserStatus(int user_id,int friend_id);
+    int deleteFriend(int userId, int friendId);
+
+    /**
+     * get friend status for current user
+     * @param userId current user id
+     * @param friendId friend to to search for
+     * @return status
+     */
+    int getUserStatus(int userId,int friendId);
 }
