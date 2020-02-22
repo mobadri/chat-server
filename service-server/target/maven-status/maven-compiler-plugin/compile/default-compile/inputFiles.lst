@@ -1,17 +1,17 @@
-C:\Users\DELL\Desktop\ITI\Project\New folder\newClone\chat-server\service-server\src\main\java\com\chat\server\service\server\user\impl\ServerUserServiceImpl.java
-C:\Users\DELL\Desktop\ITI\Project\New folder\newClone\chat-server\service-server\src\main\java\com\chat\server\service\server\fileTransfer\ServerFileTranseferService.java
-C:\Users\DELL\Desktop\ITI\Project\New folder\newClone\chat-server\service-server\src\main\java\com\chat\server\service\server\Main.java
-C:\Users\DELL\Desktop\ITI\Project\New folder\newClone\chat-server\service-server\src\main\java\com\chat\server\service\server\chatgroup\ServerChatGroupService.java
-C:\Users\DELL\Desktop\ITI\Project\New folder\newClone\chat-server\service-server\src\main\java\com\chat\server\service\server\notification\ServerNotificationService.java
-C:\Users\DELL\Desktop\ITI\Project\New folder\newClone\chat-server\service-server\src\main\java\com\chat\server\service\server\package-info.java
-C:\Users\DELL\Desktop\ITI\Project\New folder\newClone\chat-server\service-server\src\main\java\com\chat\server\service\server\fileTransfer\impl\ServerFileTranseferServiceImpl.java
-C:\Users\DELL\Desktop\ITI\Project\New folder\newClone\chat-server\service-server\src\main\java\com\chat\server\service\server\message\impl\ServerMessageServiceImpl.java
-C:\Users\DELL\Desktop\ITI\Project\New folder\newClone\chat-server\service-server\src\main\java\com\chat\server\service\server\socket_factories\RMISSLClientSocketFactory.java
-C:\Users\DELL\Desktop\ITI\Project\New folder\newClone\chat-server\service-server\src\main\java\module-info.java
-C:\Users\DELL\Desktop\ITI\Project\New folder\newClone\chat-server\service-server\src\main\java\com\chat\server\service\server\validation\UserValidation.java
-C:\Users\DELL\Desktop\ITI\Project\New folder\newClone\chat-server\service-server\src\main\java\com\chat\server\service\server\user\ServerUserService.java
-C:\Users\DELL\Desktop\ITI\Project\New folder\newClone\chat-server\service-server\src\main\java\com\chat\server\service\server\message\ServerMessageService.java
-C:\Users\DELL\Desktop\ITI\Project\New folder\newClone\chat-server\service-server\src\main\java\com\chat\server\service\server\socket_factories\RMISSLServerSocketFactory.java
-C:\Users\DELL\Desktop\ITI\Project\New folder\newClone\chat-server\service-server\src\main\java\com\chat\server\service\server\chatgroup\impl\ServerChatGroupServiceImpl.java
-C:\Users\DELL\Desktop\ITI\Project\New folder\newClone\chat-server\service-server\src\main\java\com\chat\server\service\server\factory\ServiceFactory.java
-C:\Users\DELL\Desktop\ITI\Project\New folder\newClone\chat-server\service-server\src\main\java\com\chat\server\service\server\notification\impl\ServerNotificationServiceImpl.java
+C:\Users\Noura\Desktop\JavaProject\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\user\ServerUserService.java
+C:\Users\Noura\Desktop\JavaProject\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\socket_factories\RMISSLServerSocketFactory.java
+C:\Users\Noura\Desktop\JavaProject\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\user\impl\ServerUserServiceImpl.java
+C:\Users\Noura\Desktop\JavaProject\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\validation\UserValidation.java
+C:\Users\Noura\Desktop\JavaProject\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\Main.java
+C:\Users\Noura\Desktop\JavaProject\Server\chat-server\service-server\src\main\java\module-info.java
+C:\Users\Noura\Desktop\JavaProject\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\fileTransfer\impl\ServerFileTranseferServiceImpl.java
+C:\Users\Noura\Desktop\JavaProject\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\notification\ServerNotificationService.java
+C:\Users\Noura\Desktop\JavaProject\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\chatgroup\impl\ServerChatGroupServiceImpl.java
+C:\Users\Noura\Desktop\JavaProject\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\message\impl\ServerMessageServiceImpl.java
+C:\Users\Noura\Desktop\JavaProject\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\notification\impl\ServerNotificationServiceImpl.java
+C:\Users\Noura\Desktop\JavaProject\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\fileTransfer\ServerFileTranseferService.java
+C:\Users\Noura\Desktop\JavaProject\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\chatgroup\ServerChatGroupService.java
+C:\Users\Noura\Desktop\JavaProject\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\factory\ServiceFactory.java
+C:\Users\Noura\Desktop\JavaProject\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\package-info.java
+C:\Users\Noura\Desktop\JavaProject\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\message\ServerMessageService.java
+C:\Users\Noura\Desktop\JavaProject\Server\chat-server\service-server\src\main\java\com\chat\server\service\server\socket_factories\RMISSLClientSocketFactory.java

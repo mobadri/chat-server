@@ -8,5 +8,6 @@ public enum NotificationType implements Serializable {
     FRIEND_REQUEST,
     FRIEND_ACCEPT,
     FILE_TRANSFER_REQUEST,
-    FILE_TRANSFER_ACCEPT
+    FILE_TRANSFER_ACCEPT,
+    FRIEND_CHANGE_MODE;
 }

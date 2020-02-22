@@ -29,6 +29,4 @@ public class ServiceFactory {
         return ServerChatGroupServiceImpl.getInstance();
 
     }
-
-
 }

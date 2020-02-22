@@ -222,7 +222,7 @@ public class UserDataView implements Initializable {
 
     private void updateUser() {
         user = getUserData();
-        User update = userController.updateUser(user);
+        User update = userController.updateUser(user, user.getPassword());
         if (update != null) {
             showMessageDialog(Alert.AlertType.INFORMATION, "user has been updated successfully");
             returnToParent();

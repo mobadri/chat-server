@@ -3,6 +3,7 @@ package com.chat.server.service.server.notification.impl;
 import com.chat.client.service.client.callback.NotificationServiceCallback;
 import com.chat.server.model.chat.Notification;
 import com.chat.server.model.chat.NotificationType;
+import com.chat.server.model.user.Mode;
 import com.chat.server.model.user.User;
 import com.chat.server.repository.server.factory.RepositoryServerFactory;
 import com.chat.server.repository.server.notification.NotificationRepository;
@@ -73,6 +74,32 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
                 e.printStackTrace();
             }
         }
+    }
+
+    public Notification createChangeModeNotification(User user, Mode mode, User friend){
+
+        Notification notification = new Notification();
+        notification.setNotificationType(NotificationType.FRIEND_CHANGE_MODE);
+
+        String modeMessage;
+        switch (mode){
+            case AWAY:
+                modeMessage = "away";
+                break;
+            case BUSY:
+                modeMessage = "busy";
+                break;
+            case AVAILABLE:
+                modeMessage = "available";
+                break;
+            default:
+                modeMessage = "";
+        }
+
+        notification.setNotificationMessage(user.getFirstName() + " " + user.getLastName() + " is now "  + modeMessage);
+        notification.setUserFrom(user);
+        notification.setUserTo(friend);
+        return notification;
     }
 
     public synchronized static ServerNotificationServiceImpl getInstance() {

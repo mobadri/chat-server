@@ -1,6 +1,7 @@
 package com.chat.server.repository.server.user;
 
 import com.chat.server.model.user.FriendStatus;
+import com.chat.server.model.user.Mode;
 import com.chat.server.model.user.User;
 
 import java.util.List;
@@ -96,4 +97,11 @@ public interface UserRepository {
      */
     public  User findUserByPhone(String pbone);
 
+    /**
+     * User to be updated
+     * @param user to update his mode
+     * @param mode new mode
+     * @return updated user
+     */
+    User updateUserMode(User user, Mode mode);
 }

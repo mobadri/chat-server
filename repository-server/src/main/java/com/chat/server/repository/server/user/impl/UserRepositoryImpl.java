@@ -3,6 +3,7 @@ package com.chat.server.repository.server.user.impl;
 
 import com.chat.server.config.database.ConnectToDBFactory;
 import com.chat.server.model.user.FriendStatus;
+import com.chat.server.model.user.Mode;
 import com.chat.server.model.user.User;
 import com.chat.server.repository.server.adapters.ModelAdapter;
 import com.chat.server.repository.server.chat.ChatGroupRepository;
@@ -36,6 +37,7 @@ public class UserRepositoryImpl implements UserRepository {
             " COUNTRY =? ,GENDER = ?,DATE_OF_BIRTH =?,BIO = ?,ONLINE = ?,MODE = ?,IMAGE=?" +
             " WHERE ID = ?";
     private final String DELETE_USER = "DELETE FROM USER WHERE ID = ?";
+    private final String UPDATE_USER_MODE = "";
     private Connection connection = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
@@ -261,6 +263,24 @@ public class UserRepositoryImpl implements UserRepository {
             closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
         return user;
+    }
+
+    @Override
+    public User updateUserMode(User user, Mode mode) {
+
+        try {
+            preparedStatement = connection.prepareStatement(UPDATE_USER_MODE);
+            preparedStatement.setInt(1, mode.ordinal());
+            int res = preparedStatement.executeUpdate();
+            if(res > 0){
+                user.setMode(mode);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            closeResultSetAndPreparedStatement(resultSet, preparedStatement);
+        }
+       return user;
     }
 
     @Override

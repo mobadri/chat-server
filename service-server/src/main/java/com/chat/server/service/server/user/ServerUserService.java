@@ -1,6 +1,7 @@
 package com.chat.server.service.server.user;
 
 import com.chat.server.model.user.FriendStatus;
+import com.chat.server.model.user.Mode;
 import com.chat.server.model.user.User;
 
 import java.rmi.Remote;
@@ -120,4 +121,11 @@ public interface ServerUserService extends Remote {
      */
     Map<String, Boolean> validateUsr(User user) throws RemoteException;
 
+    /**
+     * User to be updated
+     * @param user to update his mode
+     * @param mode new mode
+     * @return updated user
+     */
+    User updateUserMode(User user, Mode mode);
 }
