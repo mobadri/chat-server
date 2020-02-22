@@ -43,5 +43,5 @@ public interface UserFriendRepository {
      * @param user_id , friend_id
      */
     int deleteFriend(int user_id, int friend_id);
-
+    int getUserStatus(int user_id,int friend_id);
 }

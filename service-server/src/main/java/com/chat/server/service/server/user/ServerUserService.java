@@ -120,4 +120,15 @@ public interface ServerUserService extends Remote {
      */
     Map<String, Boolean> validateUsr(User user) throws RemoteException;
 
+    /**
+     * get Status for the the 2 users
+     *
+     * @param currentUser id of the user
+     * @param friend id for the friend
+     * @return number of status it depends on his status
+     * @throws RemoteException
+     */
+    public int getStatus(int currentUser, int friend) throws RemoteException;
+
+
 }

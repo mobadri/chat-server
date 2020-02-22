@@ -7,4 +7,5 @@ module repository.server {
     exports com.chat.server.repository.server.chat to service.server;
     exports com.chat.server.repository.server.message to service.server;
     exports com.chat.server.repository.server.notification to service.server;
+    exports com.chat.server.repository.server.user.impl;
 }
