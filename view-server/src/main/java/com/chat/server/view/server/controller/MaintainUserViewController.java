@@ -191,6 +191,8 @@ public class MaintainUserViewController implements Initializable {
             stage.setTitle("ADD USER");
             stage.setScene(new Scene(root));
             userDataView.setStage(stage);
+            userDataView.setUser(new User());
+            userDataView.setUserController(new UserController());
             stage.showAndWait();
 
 
@@ -202,7 +204,30 @@ public class MaintainUserViewController implements Initializable {
     }
 
 
+    @FXML
     public void updateAction(ActionEvent actionEvent) {
+        User user = usersTable.getSelectionModel().getSelectedItem();
+        if (user != null) {
+            try {
 
+                FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/templates/userdata-view.fxml"));
+                Parent root = loader.load();
+                UserDataView userDataView = loader.getController();
+                Stage stage = new Stage();
+                stage.setResizable(false);
+                stage.setTitle("ADD USER");
+                stage.setScene(new Scene(root));
+                userDataView.setStage(stage);
+                userDataView.setUser(user);
+                userDataView.setUserController(new UserController());
+                stage.showAndWait();
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
+
 }
