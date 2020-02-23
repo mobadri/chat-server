@@ -120,7 +120,7 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
 
     @Override
     public int getStatus(int currentUser, int friend) throws RemoteException {
-        return userFriendRepository.getUserStatus(currentUser, friend);
+        return userFriendRepository.getUserStatus(currentUser,friend);
     }
 
     @Override
