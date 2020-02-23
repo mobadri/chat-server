@@ -104,7 +104,7 @@ public class Style implements Serializable {
     public String toString() {
         return " -fx-font-name:" + fontName + ';' +
                 " -fx-font-family:" + fontFamily + ';' +
-                " -fx-fill:" + fontColor + ';' +
+                " -fx-text-fill:" + fontColor + ';' +
                 " -fx-background-color:" + background + ';' +
                 " -fx-font-size:" + fontSize + ";" + (
                 bold || italic || underline ?

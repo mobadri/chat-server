@@ -102,10 +102,12 @@ public interface ServerUserService extends Remote {
      * @throws RemoteException
      */
     public int addFriend(User currentUser, User friend) throws RemoteException;
+
     public int removeFriend(int currentUser, int friend) throws RemoteException;
 
     /**
-     *  get specific user by phone
+     * get specific user by phone
+     *
      * @param phone user phone
      * @return user if it found or nnll if not found
      * @throws RemoteException
@@ -125,7 +127,7 @@ public interface ServerUserService extends Remote {
      * get Status for the the 2 users
      *
      * @param currentUser id of the user
-     * @param friend id for the friend
+     * @param friend      id for the friend
      * @return number of status it depends on his status
      * @throws RemoteException
      */
@@ -134,9 +136,10 @@ public interface ServerUserService extends Remote {
 
     /**
      * User to be updated
+     *
      * @param user to update his mode
      * @param mode new mode
      * @return updated user
      */
-    User updateUserMode(User user, Mode mode);
+    User updateUserMode(User user, Mode mode) throws RemoteException;
 }

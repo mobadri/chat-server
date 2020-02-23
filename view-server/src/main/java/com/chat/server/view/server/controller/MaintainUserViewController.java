@@ -4,6 +4,7 @@ import com.chat.server.controller.server.user.UserController;
 import com.chat.server.model.user.User;
 import com.chat.server.view.server.controller.confirmation.ConfirmType;
 import com.chat.server.view.server.controller.confirmation.ConfirmationController;
+import javafx.application.Platform;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -71,13 +72,19 @@ public class MaintainUserViewController implements Initializable {
         usersTable.itemsProperty().bindBidirectional(userListProperty);
         usersTable.setItems(userListProperty);
 
-        loadAllUsers();
+        Platform.runLater(() -> {
+            loadAllUsers();
+            FilteredList<User> filteredData = new FilteredList<>(userList, p -> true);
 
-        FilteredList<User> filteredData = new FilteredList<>(userList, p -> true);
-        searchTextListner(filteredData);
-        SortedList<User> sortedData = new SortedList<>(filteredData);
-        sortedData.comparatorProperty().bind(usersTable.comparatorProperty());
-        usersTable.setItems(sortedData);
+            searchTextListner(filteredData);
+
+            SortedList<User> sortedData = new SortedList<>(filteredData);
+            sortedData.comparatorProperty().
+                    bind(usersTable.comparatorProperty());
+            usersTable.setItems(sortedData);
+
+        });
+
         setDataOnView();
 
 

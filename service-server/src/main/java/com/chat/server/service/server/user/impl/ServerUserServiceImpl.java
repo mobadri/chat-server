@@ -10,8 +10,6 @@ import com.chat.server.repository.server.user.UserFriendRepository;
 import com.chat.server.repository.server.user.UserRepository;
 import com.chat.server.service.server.factory.ServiceFactory;
 import com.chat.server.service.server.notification.ServerNotificationService;
-import com.chat.server.service.server.socket_factories.RMISSLClientSocketFactory;
-import com.chat.server.service.server.socket_factories.RMISSLServerSocketFactory;
 import com.chat.server.service.server.user.ServerUserService;
 import com.chat.server.service.server.validation.UserValidation;
 
@@ -122,7 +120,7 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
 
     @Override
     public int getStatus(int currentUser, int friend) throws RemoteException {
-        return userFriendRepository.getUserStatus(currentUser,friend);
+        return userFriendRepository.getUserStatus(currentUser, friend);
     }
 
     @Override
@@ -130,15 +128,15 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
 
         User updatedUser = userRepository.updateUserMode(user, mode);
         new Thread(() -> {
-           updatedUser.getFriends().parallelStream()
-                   .forEach((friend)-> {
-                       Notification notification = serverNotificationService.createChangeModeNotification(user,mode,friend);
-                       try {
-                           serverNotificationService.sendNotification(notification);
-                       } catch (RemoteException e) {
-                           e.printStackTrace();
-                       }
-                   });
+            updatedUser.getFriends().parallelStream()
+                    .forEach((friend) -> {
+                        try {
+                            Notification notification = serverNotificationService.createChangeModeNotification(user, mode, friend);
+                            serverNotificationService.sendNotification(notification);
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
+                    });
         }).start();
         return updatedUser;
     }
