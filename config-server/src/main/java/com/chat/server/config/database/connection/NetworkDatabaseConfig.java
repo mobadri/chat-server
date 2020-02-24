@@ -1,4 +1,4 @@
-package com.chat.server.config.database;
+package com.chat.server.config.database.connection;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

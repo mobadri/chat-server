@@ -1,4 +1,4 @@
-package com.chat.server.config.database;
+package com.chat.server.config.database.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,17 +6,21 @@ import java.sql.SQLException;
 
 public class ConnectToMysql {
 
-
+    NetworkDatabaseConfig databaseConfig;
     private static ConnectToMysql instance;
     private Connection connection;
-    private String url = "jdbc:mysql://localhost:3306/chatDB";
-    private String username = "root";
-    private String password = "root";
 
     private ConnectToMysql() {
+        databaseConfig = NetworkDatabaseConfig.getInstance();
+        String databaseIP = databaseConfig.getDatabaseIP();
+        String databasePortNumber = databaseConfig.getDatabasePortNumber();
+        String databaseName = databaseConfig.getDatabaseName();
+        String userName = databaseConfig.getUserName();
+        String userPassword = databaseConfig.getUserPassword();
+        String databaseURL = "jdbc:mysql://" + databaseIP + ":" + databasePortNumber + "/" + databaseName;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            this.connection = DriverManager.getConnection(url, username, password);
+            this.connection = DriverManager.getConnection(databaseURL, userName, userPassword);
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

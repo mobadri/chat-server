@@ -1,6 +1,6 @@
 package com.chat.server.network.server;
 
-import com.chat.server.config.database.NetworkDatabaseConfig;
+import com.chat.server.config.database.connection.NetworkDatabaseConfig;
 import com.chat.server.service.server.chatgroup.ServerChatGroupService;
 import com.chat.server.service.server.factory.ServiceFactory;
 import com.chat.server.service.server.message.ServerMessageService;

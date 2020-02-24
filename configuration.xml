@@ -5,7 +5,7 @@
         <server-port>11223</server-port>
     </networkConfig>
     <databaseConfig>
-        <database-ip>localHost</database-ip>
+        <database-ip>localhost</database-ip>
         <database-port>3306</database-port>
         <database-name>chatDB</database-name>
         <user-name>root</user-name>
