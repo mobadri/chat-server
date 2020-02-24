@@ -3,6 +3,7 @@ package com.chat.server.network.server;
 import com.chat.server.config.database.NetworkDatabaseConfig;
 import com.chat.server.service.server.chatgroup.ServerChatGroupService;
 import com.chat.server.service.server.factory.ServiceFactory;
+import com.chat.server.service.server.fileTransfer.ServerFileTranseferService;
 import com.chat.server.service.server.message.ServerMessageService;
 import com.chat.server.service.server.notification.ServerNotificationService;
 import com.chat.server.service.server.user.ServerUserService;
@@ -52,7 +53,7 @@ public class Server {
                 ServerChatGroupService chatGroupService = ServiceFactory.createServerChatGroupService();
                 ServerMessageService messageService = ServiceFactory.createServerMessageService();
                 ServerNotificationService notificationService = ServiceFactory.createServerNotificationService();
-
+                ServerFileTranseferService fileTranseferService = ServiceFactory.createServerFileTranseferService();
 
                 System.out.println("server is running");
 
@@ -60,6 +61,7 @@ public class Server {
                 registry.rebind("chatGroupService", chatGroupService);
                 registry.rebind("messageService", messageService);
                 registry.rebind("notificationService", notificationService);
+                registry.rebind("fileTranseferService", fileTranseferService);
                 running = !running;
             }
         } catch (RemoteException ex) {
@@ -76,6 +78,7 @@ public class Server {
                 registry.unbind("chatGroupService");
                 registry.unbind("messageService");
                 registry.unbind("notificationService");
+                registry.unbind("fileTranseferService");
                 running = !running;
             }
         } catch (RemoteException | NotBoundException ex) {
