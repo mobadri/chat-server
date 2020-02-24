@@ -26,14 +26,14 @@ public class Server {
 
     private Server() {
         configuration = NetworkDatabaseConfig.getInstance();
-        String portNumber = configuration.getServerPortNumber();
+        int portNumber = configuration.getServerPortNumber();
         String serverIP = configuration.getServerIp();
         try {
             /*all commented segments of code is connection security trail */
           /*  if (System.getSecurityManager() == null) {
                 System.setSecurityManager(new RMISecurityManager());
             }*/
-            registry = LocateRegistry.createRegistry(Integer.valueOf(portNumber));/*, new RMISSLClientSocketFactory(), new RMISSLServerSocketFactory());*/
+            registry = LocateRegistry.createRegistry(portNumber);/*, new RMISSLClientSocketFactory(), new RMISSLServerSocketFactory());*/
         } catch (Exception e) {
             e.printStackTrace();
         }
