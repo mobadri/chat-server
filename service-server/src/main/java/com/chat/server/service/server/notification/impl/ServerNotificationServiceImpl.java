@@ -8,8 +8,6 @@ import com.chat.server.model.user.User;
 import com.chat.server.repository.server.factory.RepositoryServerFactory;
 import com.chat.server.repository.server.notification.NotificationRepository;
 import com.chat.server.service.server.notification.ServerNotificationService;
-import com.chat.server.service.server.socket_factories.RMISSLClientSocketFactory;
-import com.chat.server.service.server.socket_factories.RMISSLServerSocketFactory;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -25,8 +23,8 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
     private static ServerNotificationServiceImpl instance;
 
     private ServerNotificationServiceImpl() throws Exception {
-        super(11223/*, new RMISSLClientSocketFactory(),
-                new RMISSLServerSocketFactory()*/);
+//        super(11223, new RMISSLClientSocketFactory(),
+//                new RMISSLServerSocketFactory());
         notificationRepository = RepositoryServerFactory.createNotificationRepository();
     }
 
@@ -76,13 +74,13 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
         }
     }
 
-    public Notification createChangeModeNotification(User user, Mode mode, User friend){
+    public Notification createChangeModeNotification(User user, Mode mode, User friend) {
 
         Notification notification = new Notification();
         notification.setNotificationType(NotificationType.FRIEND_CHANGE_MODE);
 
         String modeMessage;
-        switch (mode){
+        switch (mode) {
             case AWAY:
                 modeMessage = "away";
                 break;
@@ -96,7 +94,7 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
                 modeMessage = "";
         }
 
-        notification.setNotificationMessage(user.getFirstName() + " " + user.getLastName() + " is now "  + modeMessage);
+        notification.setNotificationMessage(user.getFirstName() + " " + user.getLastName() + " is now " + modeMessage);
         notification.setUserFrom(user);
         notification.setUserTo(friend);
         return notification;

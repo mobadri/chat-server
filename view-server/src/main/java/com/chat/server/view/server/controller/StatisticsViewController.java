@@ -1,6 +1,8 @@
 package com.chat.server.view.server.controller;
 
 import com.chat.server.controller.server.user.UserController;
+import com.chat.server.controller.server.user.UserControllerIntf;
+import com.chat.server.model.user.Mode;
 import com.chat.server.model.user.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,10 +12,9 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 
 import java.net.URL;
-import java.rmi.RemoteException;
 import java.util.*;
 
-public class StatisticsViewController implements Initializable {
+public class StatisticsViewController implements Initializable, UserControllerIntf {
     List<User> onlineUsersList = new ArrayList<>();
     List<User> offlineUsersList = new ArrayList<>();
     List<User> availableUsersList = new ArrayList<>();
@@ -39,20 +40,15 @@ public class StatisticsViewController implements Initializable {
 
     private Map<String, Double> countries = new HashMap<>();
 
-    UserController controller = new UserController();
+    UserController controller;
 
-    public StatisticsViewController() throws RemoteException {
+
+    public StatisticsViewController() {
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setOnlineUsers();
-        setOfflineUsers();
-        fillAllUserMode(onlineUsersList);
-        maleOrFemale(onlineUsersList);
-        fillCountries(onlineUsersList);
-        fillGenderChart();
-        fillCountryChart();
 
     }
 
@@ -138,6 +134,49 @@ public class StatisticsViewController implements Initializable {
                 = FXCollections.observableArrayList(dataList);
 
         countryChart.setData(countryData);
+
+    }
+
+    @Override
+    public void userChangedHisMode(User user, Mode mode) {
+        // loop for all lists , remve user from the list , add user to suitable list
+        //
+        removeFromList(availableUsersList, user);
+        removeFromList(awayUsersList, user);
+        removeFromList(busyUsersList, user);
+
+        switch (mode) {
+            case AVAILABLE:
+                availableUsersList.add(user);
+                break;
+            case AWAY:
+                awayUsersList.add(user);
+                break;
+
+            case BUSY:
+                busyUsersList.add(user);
+                break;
+
+        }
+        setModeView();
+    }
+
+    private void removeFromList(List<User> list, User user) {
+        if (list.contains(user)) {
+            list.remove(user);
+        }
+    }
+
+    public void setUserController(UserController userController) {
+        this.controller = userController;
+        controller.setUserControllerIntf(this);
+        setOnlineUsers();
+        setOfflineUsers();
+        fillAllUserMode(onlineUsersList);
+        maleOrFemale(onlineUsersList);
+        fillCountries(onlineUsersList);
+        fillGenderChart();
+        fillCountryChart();
 
     }
 }

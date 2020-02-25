@@ -5,6 +5,8 @@ import com.chat.server.service.server.chatgroup.ServerChatGroupService;
 import com.chat.server.service.server.factory.ServiceFactory;
 import com.chat.server.service.server.message.ServerMessageService;
 import com.chat.server.service.server.notification.ServerNotificationService;
+import com.chat.server.service.server.socket_factories.SslClientSocketFactory;
+import com.chat.server.service.server.socket_factories.SslServerSocketFactory;
 import com.chat.server.service.server.user.ServerUserService;
 
 import java.rmi.NotBoundException;
@@ -30,10 +32,17 @@ public class Server {
         String serverIP = configuration.getServerIp();
         try {
             /*all commented segments of code is connection security trail */
-          /*  if (System.getSecurityManager() == null) {
-                System.setSecurityManager(new RMISecurityManager());
-            }*/
-            registry = LocateRegistry.createRegistry(Integer.valueOf(portNumber));/*, new RMISSLClientSocketFactory(), new RMISSLServerSocketFactory());*/
+//            if (System.getSecurityManager() == null) {
+//                System.setSecurityManager(new RMISecurityManager());
+//            }
+            System.setProperty("java.rmi.server.hostname", serverIP); // Uses the loopback address, 127.0.0.1, if yo
+
+            //todo encrypt password
+            SslClientSocketFactory csf = new SslClientSocketFactory("security/client", "ahm741741");
+            SslServerSocketFactory ssf = new SslServerSocketFactory("security/registry", "ahm741741");
+
+            registry = LocateRegistry.createRegistry(Integer.parseInt(portNumber), csf, ssf);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -46,7 +55,6 @@ public class Server {
 
     public void startServer() {
         try {
-//            System.setProperty("java.rmi.server.hostname", "10.145.7.174"); // Uses the loopback address, 127.0.0.1, if yo
             if (!running) {
                 ServerUserService userService = ServiceFactory.createServerUserService();
                 ServerChatGroupService chatGroupService = ServiceFactory.createServerChatGroupService();

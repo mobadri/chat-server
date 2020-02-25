@@ -84,7 +84,7 @@ public class NetworkDatabaseConfig {
         return userPassword;
     }
 
-    public synchronized static NetworkDatabaseConfig getInstance() {
+    public static synchronized NetworkDatabaseConfig getInstance() {
         if (instance == null) {
             return new NetworkDatabaseConfig();
         }

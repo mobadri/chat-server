@@ -35,9 +35,7 @@ public class ConnectToMysql {
 
     public static synchronized ConnectToMysql getInsetance() {
         try {
-            if (instance == null) {
-                instance = new ConnectToMysql();
-            } else if (instance.getConnection().isClosed()) {
+            if (instance == null || instance.getConnection().isClosed()) {
                 instance = new ConnectToMysql();
             }
         } catch (SQLException e) {
