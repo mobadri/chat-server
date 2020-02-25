@@ -38,4 +38,11 @@ public interface ServerNotificationService extends Remote {
 
     void unregister(NotificationServiceCallback notificationServiceCallback) throws RemoteException;
 
+    /**
+     * notify server that user change his mode
+     *
+     * @param user that change his mode
+     * @throws RemoteException
+     */
+    void notifyServerStatistics(User user) throws RemoteException;
 }

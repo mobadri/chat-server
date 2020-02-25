@@ -113,4 +113,24 @@ public class ServerViewController implements Initializable, ServerController {
         this.stage = stage;
     }
 
+    @FXML
+    public void showAnouncementView(ActionEvent actionEvent) {
+        new Thread(() -> {
+            try {
+                Parent root = FXMLLoader.load(this.getClass().getResource("/templates/dialog/message-announcement-view.fxml"));
+
+                Platform.runLater(() -> {
+
+                    Stage stage = new Stage();
+                    stage.setResizable(false);
+                    stage.setTitle("Send Announcement");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+    }
 }

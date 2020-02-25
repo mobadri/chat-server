@@ -1,5 +1,6 @@
 package com.chat.server.service.server.user.impl;
 
+import com.chat.client.service.client.callback.NotificationServiceCallback;
 import com.chat.server.model.chat.Notification;
 import com.chat.server.model.chat.NotificationType;
 import com.chat.server.model.user.FriendStatus;
@@ -133,13 +134,22 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
                         try {
                             Notification notification = serverNotificationService.createChangeModeNotification(user, mode, friend);
 
+
                             serverNotificationService.sendNotification(notification);
+
+                            // notify server for user change mode ;
+
                         } catch (RemoteException e) {
                             e.printStackTrace();
                         }
                     });
         }).start();
         return updatedUser;
+    }
+
+    @Override
+    public void registerServerStatistics(NotificationServiceCallback notificationServiceCallback) throws RemoteException {
+        serverNotificationService.register(notificationServiceCallback);
     }
 
 

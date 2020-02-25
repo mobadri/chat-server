@@ -8,8 +8,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -76,21 +74,21 @@ public class UserDataView implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         loadAllCountries();
-        addPhoneActionListner();
+//        addPhoneActionListner();
     }
 
-    private void addPhoneActionListner() {
-        phone.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue,
-                                String newValue) {
-                if (!newValue.matches("^(?:\\+?2)?01[0-9]{9}$")) {
-                    phone.setText(newValue.replaceAll("[\\D]", ""));
-                }
-            }
-        });
-
-    }
+//    private void addPhoneActionListner() {
+////        phone.textProperty().addListener(new ChangeListener<String>() {
+////            @Override
+////            public void changed(ObservableValue<? extends String> observable, String oldValue,
+////                                String newValue) {
+////                if (!newValue.matches("^(?:\\+?2)?01[0-9]{9}$")) {
+////                    phone.setText(newValue.replaceAll("[\\D]", ""));
+////                }
+////            }
+////        });
+//
+//    }
 
     private void loadAllCountries() {
         List<String> collect = Arrays.asList(Locale.getAvailableLocales())

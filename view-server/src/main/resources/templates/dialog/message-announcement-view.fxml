@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/10.0.2-internal"
+            fx:controller="com.chat.server.view.server.controller.MessageAnnouncementView">
+    <children>
+
+        <AnchorPane prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: #0066ff;"
+                    BorderPane.alignment="CENTER">
+            <children>
+                <Label id="title" fx:id="title" layoutX="48.0" layoutY="25.0" text="Announcement Messages"
+                       textFill="WHITE" AnchorPane.leftAnchor="48.0">
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+
+        <Pane layoutY="80.0" prefHeight="228.0" prefWidth="600.0">
+            <children>
+                <JFXTextField fx:id="announcementMessage" focusColor="#000713" layoutX="67.0" layoutY="54.0"
+                              prefHeight="25.0" prefWidth="430.0" promptText="announcement message"
+                              style="-fx-text-fill: #000;" unFocusColor="#827373"/>
+                <!--                <JFXTextField fx:id="firstName1" focusColor="#000713" layoutX="67.0" layoutY="125.0" prefHeight="25.0" prefWidth="430.0" promptText="FirstName" style="-fx-text-fill: #000;" unFocusColor="#827373" />-->
+            </children>
+        </Pane>
+
+        <JFXButton buttonType="RAISED" layoutX="209.0" layoutY="308.0" mnemonicParsing="false"
+                   onAction="#sendAnnouncement" prefHeight="54.0" prefWidth="128.0" ripplerFill="#0f94bd"
+                   style="-fx-background-color: #0066ff;" text="Send" textFill="WHITE"/>
+
+    </children>
+</AnchorPane>
