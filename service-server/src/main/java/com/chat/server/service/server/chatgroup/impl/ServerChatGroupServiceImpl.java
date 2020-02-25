@@ -6,8 +6,6 @@ import com.chat.server.repository.server.chat.ChatGroupRepository;
 import com.chat.server.repository.server.factory.RepositoryServerFactory;
 import com.chat.server.repository.server.user.UserRepository;
 import com.chat.server.service.server.chatgroup.ServerChatGroupService;
-import com.chat.server.service.server.socket_factories.RMISSLClientSocketFactory;
-import com.chat.server.service.server.socket_factories.RMISSLServerSocketFactory;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -62,9 +60,10 @@ public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements S
     }
 
     @Override
-    public ChatGroup addFriend(ChatGroup chatGroup, User friend) {
-        return chatGroupRepository.addFriend(chatGroup, friend);
+    public boolean addFriend(int chatGroup, int friend) throws RemoteException {
+        return chatGroupRepository.addFriend(chatGroup,friend);
     }
+
 
     @Override
     public ChatGroup removeFriend(ChatGroup chatGroup, User friend) {

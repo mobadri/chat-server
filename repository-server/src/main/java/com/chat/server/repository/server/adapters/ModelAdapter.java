@@ -163,6 +163,9 @@ public class ModelAdapter {
         return message;
     }
 
+
+
+
     public static Notification mapResultSetToNotification(ResultSet resultSet) {
 
         Notification notification = new Notification();
@@ -253,6 +256,9 @@ public class ModelAdapter {
         }
     }
 
+
+
+
     public static Date mapDateToSqlDate(java.util.Date date) {
 
         return new Date(date.getTime());
@@ -262,4 +268,6 @@ public class ModelAdapter {
 
         return new java.util.Date(date.getTime());
     }
+
+
 }
