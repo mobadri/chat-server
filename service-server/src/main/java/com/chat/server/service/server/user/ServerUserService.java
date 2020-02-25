@@ -1,5 +1,6 @@
 package com.chat.server.service.server.user;
 
+import com.chat.client.service.client.callback.NotificationServiceCallback;
 import com.chat.server.model.user.FriendStatus;
 import com.chat.server.model.user.Mode;
 import com.chat.server.model.user.User;
@@ -142,4 +143,13 @@ public interface ServerUserService extends Remote {
      * @return updated user
      */
     User updateUserMode(User user, Mode mode) throws RemoteException;
+
+    /**
+     * register ServerStatistics as a call back
+     * to be notified when user change his status
+     * @param notificationServiceCallback call back service
+     * @throws RemoteException
+     */
+    void registerServerStatistics(NotificationServiceCallback notificationServiceCallback) throws RemoteException;
+
 }

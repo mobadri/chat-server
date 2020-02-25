@@ -1,5 +1,6 @@
 package com.chat.server.service.server.user.impl;
 
+import com.chat.client.service.client.callback.NotificationServiceCallback;
 import com.chat.server.model.chat.Notification;
 import com.chat.server.model.chat.NotificationType;
 import com.chat.server.model.user.FriendStatus;
@@ -141,7 +142,10 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
         return updatedUser;
     }
 
-
+    @Override
+    public void registerServerStatistics(NotificationServiceCallback notificationServiceCallback) throws RemoteException {
+        serverNotificationService.register(notificationServiceCallback);
+    }
     public synchronized static ServerUserServiceImpl getInstance() {
         if (instance == null) {
             try {
