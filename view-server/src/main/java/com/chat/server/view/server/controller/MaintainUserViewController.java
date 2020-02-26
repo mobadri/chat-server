@@ -35,8 +35,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class MaintainUserViewController implements Initializable {
-
-    UserController controller;
     @FXML
     AnchorPane rootPane;
     @FXML
@@ -125,7 +123,7 @@ public class MaintainUserViewController implements Initializable {
     }
 
     private void loadAllUsers() {
-        List<User> users = controller.getAllUsers();
+        List<User> users = userController.getAllUsers();
         for (User u : users) {
             userList.add(u);
         }
@@ -161,7 +159,7 @@ public class MaintainUserViewController implements Initializable {
     }
 
     private void deleteUser(User user) {
-        int i = controller.deleteUser(user);
+        int i = userController.deleteUser(user);
         if (i > 0) {
             userList.remove(user);
         }
@@ -180,7 +178,7 @@ public class MaintainUserViewController implements Initializable {
             stage.setScene(new Scene(root));
             userDataView.setStage(stage);
             userDataView.setUser(new User());
-            userDataView.setUserController(new UserController());
+            userDataView.setUserController(userController);
             stage.showAndWait();
 
 
@@ -207,6 +205,7 @@ public class MaintainUserViewController implements Initializable {
                 stage.setScene(new Scene(root));
                 userDataView.setStage(stage);
                 userDataView.setUser(user);
+
                 userDataView.setUserController(userController);
                 stage.showAndWait();
 
@@ -219,7 +218,7 @@ public class MaintainUserViewController implements Initializable {
     }
 
     public void setController(UserController controller) {
-        this.controller = controller;
+        this.userController = controller;
         userListProperty.set(userList);
         usersTable.itemsProperty().bindBidirectional(userListProperty);
         usersTable.setItems(userListProperty);
@@ -238,9 +237,5 @@ public class MaintainUserViewController implements Initializable {
         });
 
         setDataOnView();
-    }
-
-    public void setUserController(UserController userController) {
-        this.userController = userController;
     }
 }

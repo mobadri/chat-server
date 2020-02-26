@@ -197,7 +197,10 @@ public class UserDataView implements Initializable {
 
     public void insertNewUser() {
         clearValidation();
-        if (password.getText().equals(confirmPassword.getText())) {
+        if (password.getText() != null &&
+                confirmPassword.getText() != null &&
+                password.getText().equals(confirmPassword.getText())) {
+
             Map<String, Boolean> validationMap = new HashMap<>();
             User user = getUserData();
             if (user != null) {
@@ -240,11 +243,14 @@ public class UserDataView implements Initializable {
 
     private boolean validateUser(User user) {
         clearValidation();
-        if (password.getText().equals(confirmPassword.getText())) {
+        if (password.getText() != null &&
+                confirmPassword.getText() != null &&
+                password.getText().equals(confirmPassword.getText())) {
 
             Map<String, Boolean> validationMap = new HashMap<>();
             user = getUserData();
             if (user != null) {
+                System.out.println(userController);
                 Map<String, Boolean> validateMap = userController.validateUser(user);
                 validateMap.forEach((key, valid) -> {
                     if (!valid) {
