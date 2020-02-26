@@ -2,18 +2,18 @@ package com.chat.server.service.server.fileTransfer.impl;
 
 import com.chat.client.service.client.callback.FileTransferServiceCallBack;
 import com.chat.server.service.server.fileTransfer.ServerFileTranseferService;
-import com.healthmarketscience.rmiio.RemoteInputStream;
-import com.healthmarketscience.rmiio.RemoteInputStreamClient;
+import com.healthmarketscience.rmiio.*;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ServerFileTranseferServiceImpl extends UnicastRemoteObject implements ServerFileTranseferService {
+
+   // RemoteInputStreamServer istream = null;
+    String storagePath = "C:/Users/pc/Downloads/server/";
 
     private static ServerFileTranseferService instance = null;
     Vector<FileTransferServiceCallBack> fileTransferServiceCallBackVector = new Vector<>();
@@ -22,7 +22,7 @@ public class ServerFileTranseferServiceImpl extends UnicastRemoteObject implemen
     }
 
     @Override
-    public void register(FileTransferServiceCallBack fileTransferServiceCallBack) throws RuntimeException {
+    public void register(FileTransferServiceCallBack fileTransferServiceCallBack) throws RemoteException {
         fileTransferServiceCallBackVector.add(fileTransferServiceCallBack);
     }
 
@@ -33,35 +33,77 @@ public class ServerFileTranseferServiceImpl extends UnicastRemoteObject implemen
 
     @Override
     public void sendFile(String nameFile, RemoteInputStream inFile) throws RemoteException {
+        System.out.println("data in the server: " + nameFile + "    : " + inFile);
         InputStream istream = null;
+
         try {
             istream = RemoteInputStreamClient.wrap(inFile);
+            System.out.println(istream);
+            System.out.println("the file Path is : " + storagePath+nameFile);
+            FileOutputStream fileOutputStream = new FileOutputStream(new File(storagePath + nameFile),true);
+            byte[] data = new byte[1024 * 1024];
 
-//            int letter = istream.read();
-//            while (letter != -1) {
-//                System.out.print((char) letter);
-//                letter = istream.read();
-//            }
+            int len = istream.read(data);
+            System.out.println(len);
+            while (len != -1) {
+                fileOutputStream.write(data);
+                len = istream.read(data);
+            }
+            System.out.println("file on server");
+
+           // notify(nameFile, outStream);
+            acceptClient(nameFile);
+
+           /* istream.close();
+            fileOutputStream.flush();
+            fileOutputStream.close();*/
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
-    public void downloadFile() {
+    public void notify(String nameFile, RemoteOutputStream remoteOutputStream) {
+        System.out.println(fileTransferServiceCallBackVector.size());
+        for (FileTransferServiceCallBack fileTransferServiceCallBack : fileTransferServiceCallBackVector) {
 
+            System.out.println("this client is notified");
+            new Thread(() -> {
+//                try {
+//                  //  fileTransferServiceCallBack.downLoad(nameFile, remoteOutputStream);
+//                } catch (RemoteException e) {
+//                    e.printStackTrace();
+//                }
+            }).start();
+        }
     }
 
-//    private void notify(String fileName, byte[] data, int length) {
-//        for (FileTransferServiceCallBack fileTransferServiceCallBack : vector) {
-//            try {
-//                fileTransferServiceCallBack.downLoad(fileName, data, length);
-//            } catch (RemoteException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
+    public void acceptClient(String filename ) {
 
+        for (FileTransferServiceCallBack fileTransferServiceCallBack : fileTransferServiceCallBackVector) {
+            try ( BufferedInputStream bufferedInputStream = new BufferedInputStream
+                    (new FileInputStream(new File(storagePath + filename)));){
+                InputStream inputStream = new FileInputStream(new File(storagePath + filename));
+                RemoteInputStreamServer remoteInputStreamServer = new SimpleRemoteInputStream(inputStream);
+
+                //System.out.println(istream);
+                new Thread(() -> {
+                    try {
+                        fileTransferServiceCallBack.downLoad(filename, remoteInputStreamServer);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                //if (istream != null) istream.close();
+            }
+        }
+    }
 
 
     public synchronized static ServerFileTranseferService getInstance() {
