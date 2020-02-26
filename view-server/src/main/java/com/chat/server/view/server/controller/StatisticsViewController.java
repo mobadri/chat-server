@@ -40,32 +40,23 @@ public class StatisticsViewController implements Initializable, UserControllerIn
     private double femaleCount;
 
     private Map<String, Double> countries = new HashMap<>();
-
-    UserController controller = new UserController();
+    UserController userController;
 
     public StatisticsViewController() throws RemoteException {
-        controller.setUserControllerIntf(this);
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setOnlineUsers();
-        setOfflineUsers();
-        fillAllUserMode(onlineUsersList);
-        maleOrFemale(onlineUsersList);
-        fillCountries(onlineUsersList);
-        fillGenderChart();
-        fillCountryChart();
-
     }
 
 
     private void setOnlineUsers() {
-        onlineUsersList = controller.getAllOnlineUsers(true);
+        onlineUsersList = userController.getAllOnlineUsers(true);
     }
 
     private void setOfflineUsers() {
-        offlineUsersList = controller.getAllOnlineUsers(false);
+        offlineUsersList = userController.getAllOnlineUsers(false);
     }
 
     private void fillAllUserMode(List<User> onlineUsersList) {
@@ -172,5 +163,17 @@ public class StatisticsViewController implements Initializable, UserControllerIn
         if (list.contains(user)) {
             list.remove(user);
         }
+    }
+
+    public void setUserController(UserController userController) {
+        this.userController = userController;
+        userController.setUserControllerIntf(this);
+        setOnlineUsers();
+        setOfflineUsers();
+        fillAllUserMode(onlineUsersList);
+        maleOrFemale(onlineUsersList);
+        fillCountries(onlineUsersList);
+        fillGenderChart();
+        fillCountryChart();
     }
 }

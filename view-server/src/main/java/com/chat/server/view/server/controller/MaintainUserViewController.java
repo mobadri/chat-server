@@ -29,15 +29,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class MaintainUserViewController implements Initializable {
 
-    UserController controller = new UserController();
+    UserController controller;
     @FXML
     AnchorPane rootPane;
     @FXML
@@ -65,29 +64,11 @@ public class MaintainUserViewController implements Initializable {
     ObservableList<User> userList = FXCollections.observableArrayList();
     ListProperty<User> userListProperty = new SimpleListProperty<>();
 
+    private UserController userController;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        userListProperty.set(userList);
-        usersTable.itemsProperty().bindBidirectional(userListProperty);
-        usersTable.setItems(userListProperty);
-
-        Platform.runLater(() -> {
-            loadAllUsers();
-            FilteredList<User> filteredData = new FilteredList<>(userList, p -> true);
-
-            searchTextListner(filteredData);
-
-            SortedList<User> sortedData = new SortedList<>(filteredData);
-            sortedData.comparatorProperty().
-                    bind(usersTable.comparatorProperty());
-            usersTable.setItems(sortedData);
-
-        });
-
-        setDataOnView();
-
-
     }
 
     public MaintainUserViewController() throws RemoteException {
@@ -125,11 +106,11 @@ public class MaintainUserViewController implements Initializable {
     }
 
     private void formatDataOnDobCol() {
-        Format formatter = new SimpleDateFormat("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
         dobCol.setCellFactory(column -> {
-            return new TableCell<User, Date>() {
+            return new TableCell<User, LocalDate>() {
                 @Override
-                protected void updateItem(Date item, boolean empty) {
+                protected void updateItem(LocalDate item, boolean empty) {
                     super.updateItem(item, empty);
                     if (item == null || empty) {
                         setText(null);
@@ -226,7 +207,7 @@ public class MaintainUserViewController implements Initializable {
                 stage.setScene(new Scene(root));
                 userDataView.setStage(stage);
                 userDataView.setUser(user);
-                userDataView.setUserController(new UserController());
+                userDataView.setUserController(userController);
                 stage.showAndWait();
 
 
@@ -237,4 +218,29 @@ public class MaintainUserViewController implements Initializable {
         }
     }
 
+    public void setController(UserController controller) {
+        this.controller = controller;
+        userListProperty.set(userList);
+        usersTable.itemsProperty().bindBidirectional(userListProperty);
+        usersTable.setItems(userListProperty);
+
+        Platform.runLater(() -> {
+            loadAllUsers();
+            FilteredList<User> filteredData = new FilteredList<>(userList, p -> true);
+
+            searchTextListner(filteredData);
+
+            SortedList<User> sortedData = new SortedList<>(filteredData);
+            sortedData.comparatorProperty().
+                    bind(usersTable.comparatorProperty());
+            usersTable.setItems(sortedData);
+
+        });
+
+        setDataOnView();
+    }
+
+    public void setUserController(UserController userController) {
+        this.userController = userController;
+    }
 }

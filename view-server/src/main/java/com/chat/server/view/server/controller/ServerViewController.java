@@ -1,6 +1,7 @@
 package com.chat.server.view.server.controller;
 
 import com.chat.server.controller.server.ServerController;
+import com.chat.server.controller.server.user.UserController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
 public class ServerViewController implements Initializable, ServerController {
@@ -23,6 +25,7 @@ public class ServerViewController implements Initializable, ServerController {
     private Button startButton;
 
     private ServerController serverController;
+    private UserController userController;
     private boolean running = false;
     private Stage stage;
 
@@ -32,13 +35,24 @@ public class ServerViewController implements Initializable, ServerController {
 
     }
 
+    public ServerViewController() {
+        try {
+            userController = new UserController();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     private void showStatistics(ActionEvent actionEvent) throws IOException {
         new Thread(() -> {
             try {
                 System.out.println("showStatistics");
-                Parent root = FXMLLoader.load(this.getClass().getResource("/templates/statistics-view.fxml"));
-
+                FXMLLoader loader = new FXMLLoader(this.getClass()
+                        .getResource("/templates/statistics-view.fxml"));
+                Parent root = loader.load();
+                StatisticsViewController controller = loader.getController();
+                controller.setUserController(userController);
                 Platform.runLater(() -> {
                     Stage stage = new Stage();
                     stage.setResizable(false);
@@ -56,8 +70,10 @@ public class ServerViewController implements Initializable, ServerController {
     private void showMaintainUsers(ActionEvent actionEvent) throws IOException {
         new Thread(() -> {
             try {
-                Parent root = FXMLLoader.load(this.getClass().getResource("/templates/maintain-user-view.fxml"));
-
+                FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/templates/maintain-user-view.fxml"));
+                Parent root = loader.load();
+                MaintainUserViewController controller = loader.getController();
+                controller.setController(userController);
                 Platform.runLater(() -> {
 
                     Stage stage = new Stage();

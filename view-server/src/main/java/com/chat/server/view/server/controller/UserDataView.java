@@ -4,10 +4,7 @@ import com.chat.server.controller.server.user.UserController;
 import com.chat.server.model.user.Gender;
 import com.chat.server.model.user.Mode;
 import com.chat.server.model.user.User;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +16,8 @@ import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,6 +34,8 @@ public class UserDataView implements Initializable {
     public Label InvalidConfirmPassword;
     @FXML
     public Label InvalidDateOfBirth;
+
+
     UserController userController;
     @FXML
     RadioButton male;
@@ -50,8 +51,10 @@ public class UserDataView implements Initializable {
     private JFXComboBox country;
     @FXML
     private JFXTextField email;
+
     @FXML
-    private JFXTextField dateOfBirth;
+    public JFXDatePicker dateOfBirthh;
+
     @FXML
     private JFXTextField bio;
     @FXML
@@ -99,6 +102,12 @@ public class UserDataView implements Initializable {
         country.setItems(FXCollections.observableList(collect));
     }
 
+    public static final LocalDate LOCAL_DATE(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate localDate = LocalDate.parse(dateString, formatter);
+        return localDate;
+    }
+
 
     private User getUserData() {
         if (user.getId() > 0) {
@@ -110,7 +119,7 @@ public class UserDataView implements Initializable {
         user.setEmail(email.getText());
         user.setPhone(phone.getText());
         user.setCountry(country.getSelectionModel().getSelectedItem().toString());
-        user.setDateOfBirth(new Date(dateOfBirth.getText()));
+        user.setDateOfBirth(LOCAL_DATE("01-05-2016"));
         user.setBIO(bio.getText());
         if (male.isSelected()) {
             user.setGender(Gender.MALE);
@@ -132,7 +141,7 @@ public class UserDataView implements Initializable {
         email.setText(user.getEmail());
         phone.setText(user.getPhone());
         country.setValue(user.getCountry());
-        dateOfBirth.setText("" + user.getDateOfBirth());
+        dateOfBirthh.setValue(user.getDateOfBirth());
         bio.setText(user.getBIO());
     }
 
