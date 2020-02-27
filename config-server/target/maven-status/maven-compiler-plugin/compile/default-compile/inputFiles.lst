@@ -1,6 +1,4 @@
-C:\Users\Noura\Desktop\JavaProject\Server\chat-server\config-server\src\main\java\module-info.java
-C:\Users\Noura\Desktop\JavaProject\Server\chat-server\config-server\src\main\java\com\chat\server\config\database\DataSourceFactory.java
-C:\Users\Noura\Desktop\JavaProject\Server\chat-server\config-server\src\main\java\com\chat\server\config\database\NetworkDatabaseConfig.java
-C:\Users\Noura\Desktop\JavaProject\Server\chat-server\config-server\src\main\java\com\chat\server\config\database\ConnectToMysql.java
-C:\Users\Noura\Desktop\JavaProject\Server\chat-server\config-server\src\main\java\com\chat\server\config\database\FileProperties.java
-C:\Users\Noura\Desktop\JavaProject\Server\chat-server\config-server\src\main\java\com\chat\server\config\database\ConnectToDBFactory.java
+E:\Code\javaProject\chat-server\config-server\src\main\java\com\chat\server\config\database\ConnectToDBFactory.java
+E:\Code\javaProject\chat-server\config-server\src\main\java\com\chat\server\config\database\connection\ConnectToMysql.java
+E:\Code\javaProject\chat-server\config-server\src\main\java\com\chat\server\config\database\connection\NetworkDatabaseConfig.java
+E:\Code\javaProject\chat-server\config-server\src\main\java\module-info.java
