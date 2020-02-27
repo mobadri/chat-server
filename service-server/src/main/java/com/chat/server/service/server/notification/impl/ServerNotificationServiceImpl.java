@@ -8,8 +8,6 @@ import com.chat.server.model.user.User;
 import com.chat.server.repository.server.factory.RepositoryServerFactory;
 import com.chat.server.repository.server.notification.NotificationRepository;
 import com.chat.server.service.server.notification.ServerNotificationService;
-import com.chat.server.service.server.socket_factories.RMISSLClientSocketFactory;
-import com.chat.server.service.server.socket_factories.RMISSLServerSocketFactory;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -19,6 +17,7 @@ import java.util.Vector;
 public class ServerNotificationServiceImpl extends UnicastRemoteObject implements ServerNotificationService {
 
     static Vector<NotificationServiceCallback> notificationServiceCallbackVector = new Vector<>();
+    NotificationServiceCallback serverStatisticsCallBack;
     // todo
     private NotificationRepository notificationRepository;
 
@@ -44,6 +43,7 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
     public void sendNotification(Notification notification) {
         try {
             notifyAll(notification);
+
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -52,7 +52,17 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
     @Override
     public void register(NotificationServiceCallback notificationServiceCallback) {
         System.out.println("try reg" + notificationServiceCallback);
-        notificationServiceCallbackVector.add(notificationServiceCallback);
+        try {
+            if (notificationServiceCallback.getUserId() == 1) {
+                serverStatisticsCallBack = notificationServiceCallback;
+            } else {
+                notificationServiceCallbackVector.add(notificationServiceCallback);
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override
@@ -60,14 +70,22 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
         notificationServiceCallbackVector.remove(notificationServiceCallback);
     }
 
+    @Override
+    public void notifyServerStatistics(User user) throws RemoteException {
+
+        serverStatisticsCallBack.changeFriendsStatus(user);
+    }
+
     private void notifyAll(Notification notification) throws RemoteException {
         for (NotificationServiceCallback notificationServiceCallback : notificationServiceCallbackVector) {
+
             try {
 //                if (notification.getUserTo().getId() == notificationServiceCallback.getUserId()
                 if (notification.getUserTo().getId() == notificationServiceCallback.getUserId()
                         && notification.getUserTo().isOnline()
                         && notification.getUserFrom().getId() != notificationServiceCallback.getUserId()
                 ) {
+
                     notificationServiceCallback.receiveNotification(notification);
                 }
             } catch (RemoteException e) {
@@ -76,13 +94,13 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
         }
     }
 
-    public Notification createChangeModeNotification(User user, Mode mode, User friend){
+    public Notification createChangeModeNotification(User user, Mode mode, User friend) {
 
         Notification notification = new Notification();
         notification.setNotificationType(NotificationType.FRIEND_CHANGE_MODE);
 
         String modeMessage;
-        switch (mode){
+        switch (mode) {
             case AWAY:
                 modeMessage = "away";
                 break;
@@ -96,7 +114,7 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
                 modeMessage = "";
         }
 
-        notification.setNotificationMessage(user.getFirstName() + " " + user.getLastName() + " is now "  + modeMessage);
+        notification.setNotificationMessage(user.getFirstName() + " " + user.getLastName() + " is now " + modeMessage);
         notification.setUserFrom(user);
         notification.setUserTo(friend);
         return notification;

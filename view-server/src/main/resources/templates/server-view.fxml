@@ -61,8 +61,8 @@
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="160.0" prefWidth="268.0"
-                                text="Send Announcement" GridPane.rowIndex="1">
+                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#showAnouncementView"
+                                prefHeight="160.0" prefWidth="268.0" text="Send Announcement" GridPane.rowIndex="1">
                             <graphic>
                                 <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                                     <image>

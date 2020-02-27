@@ -5,4 +5,5 @@ module controller.server {
     requires model.server;
     requires java.rmi;
     requires network.server;
+    requires serviceclientcallback;
 }

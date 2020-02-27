@@ -43,11 +43,11 @@
                                   prefWidth="223.0" promptText="LastName" style="-fx-text-fill: #000;"
                                   unFocusColor="#827373" GridPane.rowIndex="1"/>
 
-                    <JFXPasswordField fx:id="password" focusColor="WHITE" layoutX="10.0" layoutY="168.0"
+                    <JFXPasswordField fx:id="password" focusColor="#000713" layoutX="10.0" layoutY="168.0"
                                       prefHeight="26.0" prefWidth="224.0" promptText="Password"
                                       style="-fx-text-fill: #000;" unFocusColor="#675858"/>
 
-                    <JFXPasswordField fx:id="confirmPassword" focusColor="WHITE" layoutX="10.0" layoutY="226.0"
+                    <JFXPasswordField fx:id="confirmPassword" focusColor="#000713" layoutX="10.0" layoutY="226.0"
                                       prefHeight="26.0" prefWidth="224.0" promptText="Confirm Password"
                                       style="-fx-text-fill: #000;" unFocusColor="#675858"/>
                     <JFXTextField fx:id="email" focusColor="#000713" layoutX="14.0" layoutY="279.0" prefHeight="25.0"
@@ -59,9 +59,9 @@
                     <JFXComboBox fx:id="country" focusColor="#000713" layoutX="262.0" layoutY="118.0" prefHeight="25.0"
                                  prefWidth="223.0" promptText="Country" style="-fx-text-fill: #000;"
                                  unFocusColor="#827373"/>
-                    <JFXTextField fx:id="dateOfBirth" focusColor="#000713" layoutX="262.0" layoutY="169.0"
-                                  prefHeight="25.0" prefWidth="223.0" promptText="Date Of Birth"
-                                  style="-fx-text-fill: #000;" unFocusColor="#827373" GridPane.rowIndex="5"/>
+                    <!--                    <JFXTextField fx:id="dateOfBirth" focusColor="#000713" layoutX="262.0" layoutY="169.0"-->
+                    <!--                                  prefHeight="25.0" prefWidth="223.0" promptText="Date Of Birth"-->
+                    <!--                                  style="-fx-text-fill: #000;" unFocusColor="#827373" GridPane.rowIndex="5"/>-->
                     <JFXTextField fx:id="bio" focusColor="#000713" layoutX="262.0" layoutY="226.0" prefHeight="25.0"
                                   prefWidth="223.0" promptText="BIO" style="-fx-text-fill: #000;" unFocusColor="#827373"
                                   GridPane.rowIndex="6"/>
@@ -105,16 +105,12 @@
                         <!--                     <URL value="@../../resources/static/css/loginandsignup.css" />-->
                         <!--                  </stylesheets>-->
                     </Label>
-                    <Label fx:id="InvalidDateOfBirth" alignment="CENTER_RIGHT" layoutX="262.0" layoutY="193.0"
-                           prefHeight="27.0" prefWidth="223.0" textAlignment="RIGHT" textFill="#fa0505">
-                        <!--                  <stylesheets>-->
-                        <!--                     <URL value="@../../resources/static/css/loginandsignup.css" />-->
-                        <!--                  </stylesheets>-->
-                    </Label>
                     <Label fx:id="InvalidPhone" alignment="CENTER_RIGHT" layoutX="262.0" layoutY="81.0"
                            prefHeight="27.0" prefWidth="223.0" textAlignment="RIGHT" textFill="#fa0505"/>
                     <Label fx:id="InvalidCountry" alignment="CENTER_RIGHT" layoutX="262.0" layoutY="142.0"
                            prefHeight="27.0" prefWidth="223.0" textAlignment="RIGHT" textFill="#fa0505"/>
+                    <JFXDatePicker fx:id="dateOfBirthh" defaultColor="#0078d4" layoutX="262.0" layoutY="167.0"
+                                   prefHeight="28.0" prefWidth="211.0" promptText="Date Of Birth"/>
 
 
                 </Pane>
