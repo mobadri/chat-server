@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/10.0.2-internal"
+            fx:controller="com.chat.server.view.server.controller.MessageAnnouncementView">
+    <children>
+
+        <AnchorPane prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: #0066ff;"
+                    BorderPane.alignment="CENTER">
+            <children>
+                <Label id="title" fx:id="title" layoutX="48.0" layoutY="25.0" text="Announcement Messages"
+                       textFill="WHITE" AnchorPane.leftAnchor="48.0">
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+
+        <Pane layoutY="80.0" prefHeight="228.0" prefWidth="600.0">
+            <children>
+                <TextArea fx:id="announcementMessagee" layoutX="36.0" layoutY="41.0" prefHeight="144.0"
+                          prefWidth="528.0"/>
+
+            </children>
+        </Pane>
+
+        <JFXButton buttonType="RAISED" layoutX="225.0" layoutY="308.0" mnemonicParsing="false"
+                   onAction="#sendAnnouncement" prefHeight="54.0" prefWidth="150.0" ripplerFill="#0f94bd"
+                   style="-fx-background-color: #0066ff;" text="Send" textFill="WHITE"/>
+
+    </children>
+</AnchorPane>
