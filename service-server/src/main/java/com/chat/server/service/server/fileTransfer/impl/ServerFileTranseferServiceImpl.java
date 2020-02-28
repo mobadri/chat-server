@@ -5,12 +5,12 @@ import com.chat.server.service.server.fileTransfer.ServerFileTranseferService;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Vector;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class ServerFileTranseferServiceImpl extends UnicastRemoteObject implements ServerFileTranseferService {
 
     public ServerFileTranseferServiceImpl() throws RemoteException {
+//        super(11223, SslClientSocketFactory.getInstance(),
+//                SslServerSocketFactory.getInstance());
     }
 
     @Override

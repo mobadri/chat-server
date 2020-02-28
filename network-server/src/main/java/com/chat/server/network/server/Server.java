@@ -5,8 +5,6 @@ import com.chat.server.service.server.chatgroup.ServerChatGroupService;
 import com.chat.server.service.server.factory.ServiceFactory;
 import com.chat.server.service.server.message.ServerMessageService;
 import com.chat.server.service.server.notification.ServerNotificationService;
-import com.chat.server.service.server.socket_factories.SslClientSocketFactory;
-import com.chat.server.service.server.socket_factories.SslServerSocketFactory;
 import com.chat.server.service.server.user.ServerUserService;
 
 import java.rmi.NotBoundException;
@@ -38,10 +36,11 @@ public class Server {
             System.setProperty("java.rmi.server.hostname", serverIP); // Uses the loopback address, 127.0.0.1, if yo
 
             //todo encrypt password
-            SslClientSocketFactory csf = new SslClientSocketFactory("security/client", "ahm741741");
-            SslServerSocketFactory ssf = new SslServerSocketFactory("security/registry", "ahm741741");
+//            SslClientSocketFactory csf = new SslClientSocketFactory("security/client", "ahm741741");
+//            SslServerSocketFactory ssf = new SslServerSocketFactory("security/registry", "ahm741741");
 
-            registry = LocateRegistry.createRegistry(portNumber, csf, ssf);
+            registry = LocateRegistry.createRegistry(portNumber);
+//            SslClientSocketFactory.getInstance(), SslServerSocketFactory.getInstance());
 
         } catch (Exception e) {
             e.printStackTrace();

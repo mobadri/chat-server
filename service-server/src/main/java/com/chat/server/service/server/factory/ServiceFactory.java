@@ -9,24 +9,23 @@ import com.chat.server.service.server.notification.impl.ServerNotificationServic
 import com.chat.server.service.server.user.ServerUserService;
 import com.chat.server.service.server.user.impl.ServerUserServiceImpl;
 
-import java.rmi.RemoteException;
-
 public class ServiceFactory {
 
-    public static ServerUserService createServerUserService() throws RemoteException {
+    public static ServerUserService createServerUserService() {
         return ServerUserServiceImpl.getInstance();
     }
 
-    public static ServerMessageService createServerMessageService() throws RemoteException {
+    public static ServerMessageService createServerMessageService() {
         return ServerMessageServiceImpl.getInstance();
     }
 
-    public static ServerNotificationService createServerNotificationService() throws RemoteException {
+    public static ServerNotificationService createServerNotificationService() {
         return ServerNotificationServiceImpl.getInstance();
     }
 
-    public static ServerChatGroupService createServerChatGroupService() throws RemoteException {
+    public static ServerChatGroupService createServerChatGroupService() {
         return ServerChatGroupServiceImpl.getInstance();
 
     }
+
 }

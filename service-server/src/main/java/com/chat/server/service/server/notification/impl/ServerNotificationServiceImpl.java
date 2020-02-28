@@ -25,6 +25,7 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
     private ServerNotificationServiceImpl() throws Exception {
 //        super(11223, new RMISSLClientSocketFactory(),
 //                new RMISSLServerSocketFactory());
+//        super(11223, SslClientSocketFactory.getInstance(), SslServerSocketFactory.getInstance());
         notificationRepository = RepositoryServerFactory.createNotificationRepository();
     }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configuration>
     <networkConfig>
-        <server-ip>10.145.6.87</server-ip>
+        <server-ip>localhost</server-ip>
         <server-port>11223</server-port>
     </networkConfig>
     <databaseConfig>

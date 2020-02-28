@@ -20,8 +20,7 @@ public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements S
     private UserRepository userRepository;
 
     private ServerChatGroupServiceImpl() throws RemoteException {
-//        super(11223, new RMISSLClientSocketFactory(),
-//                new RMISSLServerSocketFactory());
+//        super(11223, SslClientSocketFactory.getInstance(), SslServerSocketFactory.getInstance());
 
         chatGroupRepository = RepositoryServerFactory.creatChatRepository();
         userRepository = RepositoryServerFactory.creatUserRepository();

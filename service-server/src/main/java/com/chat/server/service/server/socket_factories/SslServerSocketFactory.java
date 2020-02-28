@@ -10,8 +10,9 @@ import java.security.cert.CertificateException;
 public class SslServerSocketFactory implements RMIServerSocketFactory, Serializable {
 
     private SSLServerSocketFactory ssf = null;
+    private static SslServerSocketFactory instance = null;
 
-    public SslServerSocketFactory(String filename, String password) throws FileNotFoundException, IOException, NoSuchAlgorithmException, CertificateException, KeyStoreException, UnrecoverableKeyException, KeyManagementException {
+    private SslServerSocketFactory(String filename, String password) throws FileNotFoundException, IOException, NoSuchAlgorithmException, CertificateException, KeyStoreException, UnrecoverableKeyException, KeyManagementException {
         KeyStore ks = KeyStore.getInstance("jks");
         ks.load(new FileInputStream(new File(filename + ".ks")), password.toCharArray());
         KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
@@ -32,4 +33,27 @@ public class SslServerSocketFactory implements RMIServerSocketFactory, Serializa
         return sslSock;
     }
 
+    public static synchronized SslServerSocketFactory getInstance() {
+        if (instance == null) {
+            try {
+                instance = new SslServerSocketFactory("security/registry", "ahm741741");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (KeyManagementException e) {
+                e.printStackTrace();
+            } catch (CertificateException e) {
+                e.printStackTrace();
+            } catch (KeyStoreException e) {
+                e.printStackTrace();
+            } catch (UnrecoverableKeyException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return instance;
+
+    }
 }

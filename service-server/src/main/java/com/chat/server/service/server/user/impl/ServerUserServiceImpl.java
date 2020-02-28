@@ -30,6 +30,7 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
     private ServerUserServiceImpl() throws RemoteException {
 //        super(11223, new RMISSLClientSocketFactory(), new SslRMIServerSocketFactory());
 
+//        super(11223, SslClientSocketFactory.getInstance(), SslServerSocketFactory.getInstance());
         System.out.println("creat service");
     }
 
