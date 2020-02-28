@@ -28,7 +28,7 @@ public class Server {
 
     private Server() {
         configuration = NetworkDatabaseConfig.getInstance();
-        String portNumber = configuration.getServerPortNumber();
+        int portNumber = configuration.getServerPortNumber();
         String serverIP = configuration.getServerIp();
         try {
             /*all commented segments of code is connection security trail */
@@ -41,7 +41,7 @@ public class Server {
             SslClientSocketFactory csf = new SslClientSocketFactory("security/client", "ahm741741");
             SslServerSocketFactory ssf = new SslServerSocketFactory("security/registry", "ahm741741");
 
-            registry = LocateRegistry.createRegistry(Integer.parseInt(portNumber), csf, ssf);
+            registry = LocateRegistry.createRegistry(portNumber, csf, ssf);
 
         } catch (Exception e) {
             e.printStackTrace();

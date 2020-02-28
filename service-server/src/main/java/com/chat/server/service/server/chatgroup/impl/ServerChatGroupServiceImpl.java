@@ -19,7 +19,7 @@ public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements S
     private ChatGroupRepository chatGroupRepository;
     private UserRepository userRepository;
 
-    private ServerChatGroupServiceImpl() throws Exception {
+    private ServerChatGroupServiceImpl() throws RemoteException {
 //        super(11223, new RMISSLClientSocketFactory(),
 //                new RMISSLServerSocketFactory());
 
@@ -61,7 +61,7 @@ public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements S
 
     @Override
     public boolean addFriend(int chatGroup, int friend) throws RemoteException {
-        return chatGroupRepository.addFriend(chatGroup,friend);
+        return chatGroupRepository.addFriend(chatGroup, friend);
     }
 
 
