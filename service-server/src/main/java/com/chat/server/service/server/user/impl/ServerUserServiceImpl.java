@@ -1,7 +1,6 @@
 package com.chat.server.service.server.user.impl;
 
 import com.chat.client.service.client.callback.NotificationServiceCallback;
-
 import com.chat.server.model.chat.Notification;
 import com.chat.server.model.chat.NotificationType;
 import com.chat.server.model.user.FriendStatus;
@@ -29,7 +28,7 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
 
 
     private ServerUserServiceImpl() throws RemoteException {
-        super(11223);
+//        super(11223, new RMISSLClientSocketFactory(), new SslRMIServerSocketFactory());
         System.out.println("creat service");
     }
 
@@ -119,10 +118,13 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
         Map<String, Boolean> validate = validator.validUser(user);
         return validate;
     }
-
     @Override
-    public int getStatus(int currentUser, int friend) throws RemoteException {
-        return userFriendRepository.getUserStatus(currentUser, friend);
+    public int updateFriend(int userId, int friendId, FriendStatus friendStatus) throws RemoteException{
+        return userFriendRepository.updateFriend(userId,friendId,friendStatus);
+    }
+    @Override
+    public FriendStatus getStatus(int currentUser, int friend) throws RemoteException {
+        return userFriendRepository.getUserStatus(currentUser,friend);
     }
 
     @Override
@@ -134,11 +136,7 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
                     .forEach((friend) -> {
                         try {
                             Notification notification = serverNotificationService.createChangeModeNotification(user, mode, friend);
-
                             serverNotificationService.sendNotification(notification);
-
-                            // notify server for user change mode ;
-
                         } catch (RemoteException e) {
                             e.printStackTrace();
                         }
@@ -151,6 +149,7 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
     public void registerServerStatistics(NotificationServiceCallback notificationServiceCallback) throws RemoteException {
         serverNotificationService.register(notificationServiceCallback);
     }
+
 
 
     public synchronized static ServerUserServiceImpl getInstance() {

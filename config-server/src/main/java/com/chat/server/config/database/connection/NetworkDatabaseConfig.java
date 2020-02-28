@@ -14,9 +14,9 @@ import java.io.IOException;
 
 public class NetworkDatabaseConfig {
     private String serverIp;
-    private int serverPortNumber;
+    private String serverPortNumber;
     private String databaseIP;
-    private int databasePortNumber;
+    private String databasePortNumber;
     private String databaseName;
     private String userName;
     private String userPassword;
@@ -36,15 +36,13 @@ public class NetworkDatabaseConfig {
                 Node item = networkConfig1.item(i);
                 Element eElement = (Element) item;
                 this.serverIp = eElement.getElementsByTagName("server-ip").item(i).getTextContent().trim();
-                String trim = eElement.getElementsByTagName("server-port").item(i).getTextContent().trim();
-                this.serverPortNumber = Integer.valueOf(trim);
+                this.serverPortNumber = eElement.getElementsByTagName("server-port").item(i).getTextContent().trim();
             }
             for (int i = 0; i < databaseConfig1.getLength(); i++) {
                 Node item = databaseConfig1.item(i);
                 Element eElement = (Element) item;
                 this.databaseIP = eElement.getElementsByTagName("database-ip").item(i).getTextContent().trim();
-                String trim = eElement.getElementsByTagName("database-port").item(i).getTextContent().trim();
-                this.databasePortNumber = Integer.valueOf(trim);
+                this.databasePortNumber = eElement.getElementsByTagName("database-port").item(i).getTextContent().trim();
                 this.databaseName = eElement.getElementsByTagName("database-name").item(i).getTextContent().trim();
                 this.userName = eElement.getElementsByTagName("user-name").item(i).getTextContent().trim();
                 this.userPassword = eElement.getElementsByTagName("user-password").item(i).getTextContent().trim();
@@ -62,7 +60,7 @@ public class NetworkDatabaseConfig {
         return serverIp;
     }
 
-    public int getServerPortNumber() {
+    public String getServerPortNumber() {
         return serverPortNumber;
     }
 
@@ -70,7 +68,7 @@ public class NetworkDatabaseConfig {
         return databaseIP;
     }
 
-    public int getDatabasePortNumber() {
+    public String getDatabasePortNumber() {
         return databasePortNumber;
     }
 
@@ -86,7 +84,7 @@ public class NetworkDatabaseConfig {
         return userPassword;
     }
 
-    public synchronized static NetworkDatabaseConfig getInstance() {
+    public static synchronized NetworkDatabaseConfig getInstance() {
         if (instance == null) {
             return new NetworkDatabaseConfig();
         }
