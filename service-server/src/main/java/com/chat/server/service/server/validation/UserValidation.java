@@ -18,7 +18,11 @@ public class UserValidation {
 
     public UserValidation(User user) {
 
-        serverUserService = ServiceFactory.createServerUserService();
+        try {
+            serverUserService = ServiceFactory.createServerUserService();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
 
         this.user = user;
     }

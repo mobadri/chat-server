@@ -14,7 +14,11 @@ public class AnnouncementController {
     ServerNotificationService serverNotificationService;
 
     public AnnouncementController() {
-        serverNotificationService = ServiceFactory.createServerNotificationService();
+        try {
+            serverNotificationService = ServiceFactory.createServerNotificationService();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     public void sendAnnouncementNotification(Notification notification) {

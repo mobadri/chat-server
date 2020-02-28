@@ -8,11 +8,15 @@ import com.chat.server.model.user.User;
 import com.chat.server.service.server.factory.ServiceFactory;
 import com.chat.server.service.server.fileTransfer.ServerFileTranseferService;
 import com.chat.server.service.server.notification.ServerNotificationService;
-import com.healthmarketscience.rmiio.*;
+import com.healthmarketscience.rmiio.RemoteInputStream;
+import com.healthmarketscience.rmiio.RemoteInputStreamClient;
+import com.healthmarketscience.rmiio.RemoteInputStreamServer;
+import com.healthmarketscience.rmiio.SimpleRemoteInputStream;
 
 import java.io.*;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Vector;
 
 public class ServerFileTranseferServiceImpl extends UnicastRemoteObject implements ServerFileTranseferService {
 
