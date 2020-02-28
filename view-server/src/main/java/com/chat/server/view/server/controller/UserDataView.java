@@ -32,8 +32,6 @@ public class UserDataView implements Initializable {
     public Label InvalidPassword;
     @FXML
     public Label InvalidConfirmPassword;
-    @FXML
-    public Label InvalidDateOfBirth;
 
 
     UserController userController;
@@ -103,7 +101,9 @@ public class UserDataView implements Initializable {
     }
 
     public static final LocalDate LOCAL_DATE(String dateString) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
         LocalDate localDate = LocalDate.parse(dateString, formatter);
         return localDate;
     }
@@ -119,7 +119,8 @@ public class UserDataView implements Initializable {
         user.setEmail(email.getText());
         user.setPhone(phone.getText());
         user.setCountry(country.getSelectionModel().getSelectedItem().toString());
-        user.setDateOfBirth(LOCAL_DATE("01-05-2016"));
+        System.out.println("date of birth " + dateOfBirthh.getValue());
+        user.setDateOfBirth(LOCAL_DATE(dateOfBirthh.getValue().toString()));
         user.setBIO(bio.getText());
         if (male.isSelected()) {
             user.setGender(Gender.MALE);
@@ -153,12 +154,13 @@ public class UserDataView implements Initializable {
         InvalidPassword.setText("");
         InvalidEmail.setText("");
         InvalidCountry.setText("");
-        firstName.setStyle("-fx-border-color: gray; -fx-border-width: 1px ;");
-        lastName.setStyle("-fx-border-color: gray ; -fx-border-width: 1px ;");
-        phone.setStyle("-fx-border-color: gray ; -fx-border-width: 1px ;");
-        password.setStyle("-fx-border-color: gray ; -fx-border-width: 1px ;");
-        email.setStyle("-fx-border-color: gray ; -fx-border-width: 1px ;");
-        country.setStyle("-fx-border-color: gray ; -fx-border-width: 1px ;");
+//        firstName.setStyle("-fx-border-color: red; -fx-border-width: 1px ;");
+//        lastName.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+//        phone.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+//        password.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+//        confirmPassword.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+//        email.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+//        country.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
 
     }
 
@@ -203,8 +205,10 @@ public class UserDataView implements Initializable {
 
             Map<String, Boolean> validationMap = new HashMap<>();
             User user = getUserData();
+            Map<String, Boolean> validateMap = userController.validateUser(user);
+
             if (user != null) {
-                Map<String, Boolean> validateMap = userController.validateUser(user);
+//                Map<String, Boolean> validateMap = userController.validateUser(user);
                 validateMap.forEach((key, valid) -> {
                     if (!valid) {
                         validationMap.put(key, valid);
@@ -227,6 +231,7 @@ public class UserDataView implements Initializable {
         } else {
             InvalidPassword.setText("* Invalid Password");
             password.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+
         }
     }
 
@@ -267,6 +272,7 @@ public class UserDataView implements Initializable {
         } else {
             InvalidPassword.setText("* Invalid Password");
             password.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+            //erooor
         }
         return false;
 

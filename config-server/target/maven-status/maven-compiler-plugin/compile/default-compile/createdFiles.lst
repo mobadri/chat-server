@@ -1,6 +1,0 @@
-com\chat\server\config\database\FileProperties.class
-com\chat\server\config\database\ConnectToDBFactory.class
-com\chat\server\config\database\DataSourceFactory.class
-com\chat\server\config\database\NetworkDatabaseConfig.class
-module-info.class
-com\chat\server\config\database\ConnectToMysql.class
