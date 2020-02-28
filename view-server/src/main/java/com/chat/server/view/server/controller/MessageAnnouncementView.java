@@ -9,11 +9,13 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextArea;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MessageAnnouncementView implements Initializable {
+    public TextArea announcementMessagee;
     @FXML
     private JFXTextField announcementMessage;
 
@@ -28,7 +30,7 @@ public class MessageAnnouncementView implements Initializable {
         Notification notification = new Notification();
         // add notification data
         notification.setNotificationType(NotificationType.ANNOUNCEMENT_RECEIVED);
-        notification.setNotificationMessage(announcementMessage.getText());
+        notification.setNotificationMessage(announcementMessagee.getText());
 
         // add user data
         User user = new User();
