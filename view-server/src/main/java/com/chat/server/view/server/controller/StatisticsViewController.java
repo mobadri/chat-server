@@ -12,6 +12,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.*;
 
 public class StatisticsViewController implements Initializable, UserControllerIntf {
@@ -39,26 +40,23 @@ public class StatisticsViewController implements Initializable, UserControllerIn
     private double femaleCount;
 
     private Map<String, Double> countries = new HashMap<>();
+    UserController userController;
 
-    UserController controller;
-
-
-    public StatisticsViewController() {
+    public StatisticsViewController() throws RemoteException {
 
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
 
     private void setOnlineUsers() {
-        onlineUsersList = controller.getAllOnlineUsers(true);
+        onlineUsersList = userController.getAllOnlineUsers(true);
     }
 
     private void setOfflineUsers() {
-        offlineUsersList = controller.getAllOnlineUsers(false);
+        offlineUsersList = userController.getAllOnlineUsers(false);
     }
 
     private void fillAllUserMode(List<User> onlineUsersList) {
@@ -168,8 +166,8 @@ public class StatisticsViewController implements Initializable, UserControllerIn
     }
 
     public void setUserController(UserController userController) {
-        this.controller = userController;
-        controller.setUserControllerIntf(this);
+        this.userController = userController;
+        userController.setUserControllerIntf(this);
         setOnlineUsers();
         setOfflineUsers();
         fillAllUserMode(onlineUsersList);
@@ -177,6 +175,5 @@ public class StatisticsViewController implements Initializable, UserControllerIn
         fillCountries(onlineUsersList);
         fillGenderChart();
         fillCountryChart();
-
     }
 }

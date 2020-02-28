@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ModelAdapter {
@@ -163,9 +164,6 @@ public class ModelAdapter {
         return message;
     }
 
-
-
-
     public static Notification mapResultSetToNotification(ResultSet resultSet) {
 
         Notification notification = new Notification();
@@ -256,18 +254,11 @@ public class ModelAdapter {
         }
     }
 
-
-
-
-    public static Date mapDateToSqlDate(java.util.Date date) {
-
-        return new Date(date.getTime());
+    public static Date mapDateToSqlDate(LocalDate date) {
+        return Date.valueOf(date);
     }
 
-    public static java.util.Date mapDateFromSqlDate(Date date) {
-
-        return new java.util.Date(date.getTime());
+    public static LocalDate mapDateFromSqlDate(Date date) {
+        return date.toLocalDate();
     }
-
-
 }

@@ -3,8 +3,8 @@ package com.chat.server.model.user;
 import com.chat.server.model.chat.ChatGroup;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class User implements Serializable {
@@ -16,7 +16,7 @@ public class User implements Serializable {
     private String email;
     private String country;
     private Gender gender;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     private String BIO;
     private byte[] image;
     private List<User> friends = new ArrayList<>();
@@ -29,7 +29,7 @@ public class User implements Serializable {
 
     public User(String firstName, String lastName, String phone,
                 String password, String email, String country,
-                Gender gender, Date dateOfBirth, String BIO, byte[] image,
+                Gender gender, LocalDate dateOfBirth, String BIO, byte[] image,
                 List<User> friends, List<ChatGroup> chatGroups,
                 boolean online, Mode mode) {
         this.firstName = firstName;
@@ -145,11 +145,11 @@ public class User implements Serializable {
         this.chatGroups = chatGroups;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

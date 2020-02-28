@@ -48,8 +48,8 @@ public class ServerViewController implements Initializable, ServerController {
         new Thread(() -> {
             try {
                 System.out.println("showStatistics");
-
-                FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/templates/statistics-view.fxml"));
+                FXMLLoader loader = new FXMLLoader(this.getClass()
+                        .getResource("/templates/statistics-view.fxml"));
                 Parent root = loader.load();
                 StatisticsViewController controller = loader.getController();
                 controller.setUserController(userController);
@@ -70,8 +70,10 @@ public class ServerViewController implements Initializable, ServerController {
     private void showMaintainUsers(ActionEvent actionEvent) throws IOException {
         new Thread(() -> {
             try {
-                Parent root = FXMLLoader.load(this.getClass().getResource("/templates/maintain-user-view.fxml"));
-
+                FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/templates/maintain-user-view.fxml"));
+                Parent root = loader.load();
+                MaintainUserViewController controller = loader.getController();
+                controller.setController(userController);
                 Platform.runLater(() -> {
 
                     Stage stage = new Stage();
@@ -127,4 +129,24 @@ public class ServerViewController implements Initializable, ServerController {
         this.stage = stage;
     }
 
+    @FXML
+    public void showAnouncementView(ActionEvent actionEvent) {
+        new Thread(() -> {
+            try {
+                Parent root = FXMLLoader.load(this.getClass().getResource("/templates/dialog/message-announcement-view.fxml"));
+
+                Platform.runLater(() -> {
+
+                    Stage stage = new Stage();
+                    stage.setResizable(false);
+                    stage.setTitle("Send Announcement");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+    }
 }
