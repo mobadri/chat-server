@@ -18,8 +18,9 @@ public interface ServerFileTranseferService extends Remote {
 
     void sendFile(String nameFile, RemoteInputStream inFile, ChatGroup currentChatGroup, User currentUser) throws RemoteException;
 
-    void clientAcceptFile(String filename, int currentChatGroupId, User currentUser) throws RemoteException;
+    void clientAcceptFile(RemoteInputStream remoteInputStream,String filename, ChatGroup currentChatGroup, User currentUser) throws RemoteException;
 
+    public void send(String nameFile, ChatGroup currentChatGroup, User currentUser) throws RemoteException;
 }
 
 
