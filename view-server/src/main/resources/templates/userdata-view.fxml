@@ -31,42 +31,42 @@
             <center>
                 <Pane prefHeight="582.0" prefWidth="476.0" style="-fx-background-color: #fff;"
                       AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <JFXTextField fx:id="firstName" focusColor="#000713" layoutX="10.0" layoutY="56.0" prefHeight="25.0"
+                    <JFXTextField fx:id="firstName" focusColor="#000713" layoutX="10.0" layoutY="31.0" prefHeight="25.0"
                                   prefWidth="223.0" promptText="FirstName" style="-fx-text-fill: #000;"
                                   unFocusColor="#827373"/>
-                    <Label fx:id="InvalidFirstName" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="81.0"
+                    <Label fx:id="InvalidFirstName" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="56.0"
                            prefHeight="27.0" prefWidth="223.0" textAlignment="RIGHT" textFill="#fa0505">
                     </Label>
 
 
-                    <JFXTextField fx:id="lastName" focusColor="#000713" layoutX="9.0" layoutY="118.0" prefHeight="25.0"
+                    <JFXTextField fx:id="lastName" focusColor="#000713" layoutX="9.0" layoutY="106.0" prefHeight="25.0"
                                   prefWidth="223.0" promptText="LastName" style="-fx-text-fill: #000;"
                                   unFocusColor="#827373" GridPane.rowIndex="1"/>
 
-                    <JFXPasswordField fx:id="password" focusColor="#000713" layoutX="10.0" layoutY="168.0"
+                    <JFXPasswordField fx:id="password" focusColor="#000713" layoutX="11.0" layoutY="180.0"
                                       prefHeight="26.0" prefWidth="224.0" promptText="Password"
                                       style="-fx-text-fill: #000;" unFocusColor="#675858"/>
 
-                    <JFXPasswordField fx:id="confirmPassword" focusColor="#000713" layoutX="10.0" layoutY="226.0"
+                    <JFXPasswordField fx:id="confirmPassword" focusColor="#000713" layoutX="11.0" layoutY="250.0"
                                       prefHeight="26.0" prefWidth="224.0" promptText="Confirm Password"
                                       style="-fx-text-fill: #000;" unFocusColor="#675858"/>
-                    <JFXTextField fx:id="email" focusColor="#000713" layoutX="14.0" layoutY="279.0" prefHeight="25.0"
+                    <JFXTextField fx:id="email" focusColor="#000713" layoutX="11.0" layoutY="319.0" prefHeight="25.0"
                                   prefWidth="223.0" promptText="Email" style="-fx-text-fill: #000;"
                                   unFocusColor="#827373" GridPane.rowIndex="4"/>
-                    <JFXTextField fx:id="phone" focusColor="#000713" layoutX="262.0" layoutY="56.0" prefHeight="25.0"
+                    <JFXTextField fx:id="phone" focusColor="#000713" layoutX="262.0" layoutY="31.0" prefHeight="25.0"
                                   prefWidth="223.0" promptText="Phone" style="-fx-text-fill: #000;"
                                   unFocusColor="#827373"/>
-                    <JFXComboBox fx:id="country" focusColor="#000713" layoutX="262.0" layoutY="118.0" prefHeight="25.0"
+                    <JFXComboBox fx:id="country" focusColor="#000713" layoutX="262.0" layoutY="106.0" prefHeight="25.0"
                                  prefWidth="223.0" promptText="Country" style="-fx-text-fill: #000;"
                                  unFocusColor="#827373"/>
                     <!--                    <JFXTextField fx:id="dateOfBirth" focusColor="#000713" layoutX="262.0" layoutY="169.0"-->
                     <!--                                  prefHeight="25.0" prefWidth="223.0" promptText="Date Of Birth"-->
                     <!--                                  style="-fx-text-fill: #000;" unFocusColor="#827373" GridPane.rowIndex="5"/>-->
-                    <JFXTextField fx:id="bio" focusColor="#000713" layoutX="262.0" layoutY="226.0" prefHeight="25.0"
+                    <JFXTextField fx:id="bio" focusColor="#000713" layoutX="262.0" layoutY="250.0" prefHeight="25.0"
                                   prefWidth="223.0" promptText="BIO" style="-fx-text-fill: #000;" unFocusColor="#827373"
                                   GridPane.rowIndex="6"/>
 
-                    <JFXRadioButton fx:id="male" layoutX="85.0" layoutY="363.0" mnemonicParsing="false"
+                    <JFXRadioButton fx:id="male" layoutX="90.0" layoutY="389.0" mnemonicParsing="false"
                                     prefHeight="17.0" prefWidth="94.0" text="Male" viewOrder="1.0">
                         <toggleGroup>
                             <ToggleGroup fx:id="genderToggel"/>
@@ -75,42 +75,44 @@
                             <Color red="0.05882352963089943" green="0.5803921818733215" blue="0.7411764860153198"/>
                         </selectedColor>
                     </JFXRadioButton>
-                    <JFXRadioButton fx:id="female" layoutX="229.0" layoutY="363.0" mnemonicParsing="false"
+                    <JFXRadioButton fx:id="female" layoutX="229.0" layoutY="389.0" mnemonicParsing="false"
                                     selected="true" text="Female" toggleGroup="$genderToggel">
                         <selectedColor>
                             <Color red="0.05882352963089943" green="0.5803921818733215" blue="0.7411764860153198"/>
                         </selectedColor>
                     </JFXRadioButton>
-                    <Label fx:id="InvalidLastName" alignment="CENTER_RIGHT" layoutX="9.0" layoutY="142.0"
+                    <Label fx:id="InvalidLastName" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="129.0"
                            prefHeight="27.0" prefWidth="223.0" textAlignment="RIGHT" textFill="#fa0505">
                         <!--                  <stylesheets>-->
                         <!--                     <URL value="@../../resources/static/css/loginandsignup.css" />-->
                         <!--                  </stylesheets>-->
                     </Label>
-                    <Label fx:id="InvalidPassword" alignment="CENTER_RIGHT" layoutX="9.0" layoutY="193.0"
+                    <Label fx:id="InvalidPassword" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="207.0"
                            prefHeight="27.0" prefWidth="223.0" textAlignment="RIGHT" textFill="#fa0505">
                         <!--                  <stylesheets>-->
                         <!--                     <URL value="@../../resources/static/css/loginandsignup.css" />-->
                         <!--                  </stylesheets>-->
                     </Label>
-                    <Label fx:id="InvalidConfirmPassword" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="252.0"
+                    <Label fx:id="InvalidConfirmPassword" alignment="CENTER_RIGHT" layoutX="11.0" layoutY="274.0"
                            prefHeight="27.0" prefWidth="223.0" textAlignment="RIGHT" textFill="#fa0505">
                         <!--                  <stylesheets>-->
                         <!--                     <URL value="@../../resources/static/css/loginandsignup.css" />-->
                         <!--                  </stylesheets>-->
                     </Label>
-                    <Label fx:id="InvalidEmail" alignment="CENTER_RIGHT" layoutX="14.0" layoutY="305.0"
-                           prefHeight="27.0" prefWidth="223.0" textAlignment="RIGHT" textFill="#fa0505">
+                    <Label fx:id="InvalidEmail" alignment="CENTER_RIGHT" layoutX="9.0" layoutY="344.0" prefHeight="27.0"
+                           prefWidth="223.0" textAlignment="RIGHT" textFill="#fa0505">
                         <!--                  <stylesheets>-->
                         <!--                     <URL value="@../../resources/static/css/loginandsignup.css" />-->
                         <!--                  </stylesheets>-->
                     </Label>
-                    <Label fx:id="InvalidPhone" alignment="CENTER_RIGHT" layoutX="262.0" layoutY="81.0"
+                    <Label fx:id="InvalidPhone" alignment="CENTER_RIGHT" layoutX="262.0" layoutY="56.0"
                            prefHeight="27.0" prefWidth="223.0" textAlignment="RIGHT" textFill="#fa0505"/>
-                    <Label fx:id="InvalidCountry" alignment="CENTER_RIGHT" layoutX="262.0" layoutY="142.0"
+                    <Label fx:id="InvalidCountry" alignment="CENTER_RIGHT" layoutX="262.0" layoutY="131.0"
                            prefHeight="27.0" prefWidth="223.0" textAlignment="RIGHT" textFill="#fa0505"/>
-                    <JFXDatePicker fx:id="dateOfBirthh" defaultColor="#0078d4" layoutX="262.0" layoutY="167.0"
+                    <JFXDatePicker fx:id="dateOfBirthh" defaultColor="#0078d4" layoutX="268.0" layoutY="179.0"
                                    prefHeight="28.0" prefWidth="211.0" promptText="Date Of Birth"/>
+                    <!--                    <ChoiceBox fx:id="countryy" layoutX="268.0" layoutY="331.0" prefHeight="25.0" prefWidth="203.0"-->
+                    <!--                               style="-fx-background-color: transparent;"/>-->
 
 
                 </Pane>

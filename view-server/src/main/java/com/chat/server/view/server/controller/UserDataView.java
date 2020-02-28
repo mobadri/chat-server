@@ -5,6 +5,9 @@ import com.chat.server.model.user.Gender;
 import com.chat.server.model.user.Mode;
 import com.chat.server.model.user.User;
 import com.jfoenix.controls.*;
+import com.jfoenix.validation.RequiredFieldValidator;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,17 +27,15 @@ import java.util.stream.Collectors;
 public class UserDataView implements Initializable {
     @FXML
     public JFXButton add;
-    @FXML
-    public JFXPasswordField password;
-    @FXML
-    public JFXPasswordField confirmPassword;
+
     @FXML
     public Label InvalidPassword;
     @FXML
     public Label InvalidConfirmPassword;
     @FXML
     public Label InvalidDateOfBirth;
-    UserController userController;
+    @FXML
+    public JFXPasswordField password;
     @FXML
     RadioButton male;
     @FXML
@@ -44,7 +45,11 @@ public class UserDataView implements Initializable {
     @FXML
     private JFXTextField lastName;
     @FXML
-    private JFXTextField phone;
+    public JFXPasswordField confirmPassword;
+    @FXML
+//    public ChoiceBox country2;
+            UserController userController;
+    RequiredFieldValidator requiredFieldValidator = new RequiredFieldValidator();
     @FXML
     private JFXComboBox country;
     @FXML
@@ -69,13 +74,27 @@ public class UserDataView implements Initializable {
     private Stage stage;
     private Gender gender = Gender.MALE;
     private User user;
+    @FXML
+    private JFXTextField phone;
+
+    //*****third method******
+    public static final LocalDate LOCAL_DATE(String dateString) {
+        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.parse(dateString, formatter);
+        return localDate;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         loadAllCountries();
+        checkAllField();
+
+
 //        addPhoneActionListner();
     }
+
 
 //    private void addPhoneActionListner() {
 ////        phone.textProperty().addListener(new ChangeListener<String>() {
@@ -90,6 +109,102 @@ public class UserDataView implements Initializable {
 //
 //    }
 
+    //*****first method******
+    private void checkAllField() {
+        requiredFieldValidator.setMessage("*No Input Field");
+        firstName.getValidators().add(requiredFieldValidator);
+        firstName.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if (!t1) {
+                    firstName.validate();
+                }
+            }
+        });
+
+        lastName.getValidators().add(requiredFieldValidator);
+        lastName.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if (!t1) {
+                    lastName.validate();
+                }
+            }
+        });
+
+        password.getValidators().add(requiredFieldValidator);
+        password.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if (!t1) {
+                    password.validate();
+                }
+            }
+        });
+
+        confirmPassword.getValidators().add(requiredFieldValidator);
+        confirmPassword.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if (!t1) {
+                    confirmPassword.validate();
+                }
+            }
+        });
+
+        email.getValidators().add(requiredFieldValidator);
+        email.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if (!t1) {
+                    email.validate();
+                }
+            }
+        });
+
+        phone.getValidators().add(requiredFieldValidator);
+        phone.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if (!t1) {
+                    phone.validate();
+                }
+            }
+        });
+
+        country.getValidators().add(requiredFieldValidator);
+        country.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if (!t1) {
+                    country.validate();
+                }
+            }
+        });
+
+        dateOfBirthh.getValidators().add(requiredFieldValidator);
+        dateOfBirthh.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if (!t1) {
+                    dateOfBirthh.validate();
+                }
+            }
+        });
+
+        bio.getValidators().add(requiredFieldValidator);
+        bio.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if (!t1) {
+                    bio.validate();
+                }
+            }
+        });
+
+    }
+
+    //*****second  method******
     private void loadAllCountries() {
         List<String> collect = Arrays.asList(Locale.getAvailableLocales())
                 .parallelStream().map(Locale::getDisplayCountry)
@@ -97,18 +212,10 @@ public class UserDataView implements Initializable {
                 .sorted()
                 .collect(Collectors.toList());
         country.setItems(FXCollections.observableList(collect));
+        country.setValue("Egypt");
     }
 
-    public static final LocalDate LOCAL_DATE(String dateString) {
-        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-        LocalDate localDate = LocalDate.parse(dateString, formatter);
-        return localDate;
-    }
-
-
-    private User getUserData() {
+    private User setUserData() {
         if (user.getId() > 0) {
             user.setId(user.getId());
         }
@@ -117,9 +224,17 @@ public class UserDataView implements Initializable {
         user.setPassword(password.getText());
         user.setEmail(email.getText());
         user.setPhone(phone.getText());
-        user.setCountry(country.getSelectionModel().getSelectedItem().toString());
-        System.out.println("date of birth " + dateOfBirthh.getValue());
-        user.setDateOfBirth(LOCAL_DATE(dateOfBirthh.getValue().toString()));
+        System.out.println(country.getValue());
+        if (country.getValue() == null) {
+            country.setValue("Egypt");
+        } else {
+            user.setCountry(country.getSelectionModel().getSelectedItem().toString());
+        }
+        if (dateOfBirthh.getValue() == null) {
+            dateOfBirthh.setValue(LocalDate.now());
+        } else {
+            user.setDateOfBirth(LOCAL_DATE(dateOfBirthh.getValue().toString()));
+        }
         user.setBIO(bio.getText());
         if (male.isSelected()) {
             user.setGender(Gender.MALE);
@@ -198,23 +313,22 @@ public class UserDataView implements Initializable {
 
     public void insertNewUser() {
         clearValidation();
-        if (password.getText() != null &&
-                confirmPassword.getText() != null &&
-                password.getText().equals(confirmPassword.getText())) {
 
-            Map<String, Boolean> validationMap = new HashMap<>();
-            User user = getUserData();
+        if (password.getText() != null && confirmPassword.getText() != null && password.getText().equals(confirmPassword.getText())) {
+
+            Map<String, Boolean> newValidationMap = new HashMap<>();
+            User user = setUserData();
             Map<String, Boolean> validateMap = userController.validateUser(user);
 
             if (user != null) {
 //                Map<String, Boolean> validateMap = userController.validateUser(user);
                 validateMap.forEach((key, valid) -> {
                     if (!valid) {
-                        validationMap.put(key, valid);
+                        newValidationMap.put(key, valid);
                     }
                 });
-                if (validationMap.size() > 0) {
-                    validationMap.forEach((key, value) -> {
+                if (newValidationMap.size() > 0) {
+                    newValidationMap.forEach((key, value) -> {
                         setError(key, value);
                     });
                 } else {
@@ -228,13 +342,15 @@ public class UserDataView implements Initializable {
                 }
             }
         } else {
+
+
             InvalidPassword.setText("* Invalid Password");
             password.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
         }
     }
 
     private void updateUser() {
-        user = getUserData();
+        user = setUserData();
         User update = userController.updateUser(user, user.getPassword());
         if (update != null) {
             showMessageDialog(Alert.AlertType.INFORMATION, "user has been updated successfully");
@@ -246,12 +362,9 @@ public class UserDataView implements Initializable {
 
     private boolean validateUser(User user) {
         clearValidation();
-        if (password.getText() != null &&
-                confirmPassword.getText() != null &&
-                password.getText().equals(confirmPassword.getText())) {
-
+        if (password.getText() != null && confirmPassword.getText() != null && password.getText().equals(confirmPassword.getText())) {
             Map<String, Boolean> validationMap = new HashMap<>();
-            user = getUserData();
+            user = setUserData();
             if (user != null) {
                 System.out.println(userController);
                 Map<String, Boolean> validateMap = userController.validateUser(user);
@@ -268,21 +381,23 @@ public class UserDataView implements Initializable {
                 }
             }
         } else {
+
             InvalidPassword.setText("* Invalid Password");
-            password.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+//            password.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
             //erooor
         }
         return false;
 
     }
 
+    //step1
     @FXML
     public void addUserAction(ActionEvent actionEvent) {
         System.out.println("update inuseraction");
         System.out.println(user);
         if (user != null && user.getId() > 0) {
             System.out.println("update");
-            if (!validateUser(getUserData())) {
+            if (!validateUser(setUserData())) {
                 updateUser();
             }
         } else {
@@ -312,6 +427,7 @@ public class UserDataView implements Initializable {
     private void returnToParent() {
         stage.close();
     }
+
 
 }
 
