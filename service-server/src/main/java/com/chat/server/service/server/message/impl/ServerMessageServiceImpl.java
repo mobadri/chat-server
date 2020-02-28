@@ -73,7 +73,6 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
                 System.out.println("message from = " + message.getUserFrom().getId());
                 System.out.println("call back from =" + messageServiceCallBack.getCurrentUserId());
                 if (messageServiceCallBack.getChatGroupId() == message.getChatGroup().getId()
-
                 ) {
                     messageServiceCallBack.receiveMessage(message);
                 }
@@ -100,5 +99,4 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
         }
         return instance;
     }
-
 }
