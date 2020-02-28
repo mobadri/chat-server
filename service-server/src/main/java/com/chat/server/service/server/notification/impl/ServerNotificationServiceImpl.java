@@ -17,15 +17,14 @@ import java.util.Vector;
 public class ServerNotificationServiceImpl extends UnicastRemoteObject implements ServerNotificationService {
 
     static Vector<NotificationServiceCallback> notificationServiceCallbackVector = new Vector<>();
-    NotificationServiceCallback serverStatisticsCallBack;
     // todo
     private NotificationRepository notificationRepository;
 
     private static ServerNotificationServiceImpl instance;
 
     private ServerNotificationServiceImpl() throws Exception {
-        super(11223/*, new RMISSLClientSocketFactory(),
-                new RMISSLServerSocketFactory()*/);
+//        super(11223, new RMISSLClientSocketFactory(),
+//                new RMISSLServerSocketFactory());
         notificationRepository = RepositoryServerFactory.createNotificationRepository();
     }
 
@@ -43,7 +42,6 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
     public void sendNotification(Notification notification) {
         try {
             notifyAll(notification);
-
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -52,17 +50,7 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
     @Override
     public void register(NotificationServiceCallback notificationServiceCallback) {
         System.out.println("try reg" + notificationServiceCallback);
-        try {
-            if (notificationServiceCallback.getUserId() == 1) {
-                serverStatisticsCallBack = notificationServiceCallback;
-            } else {
-                notificationServiceCallbackVector.add(notificationServiceCallback);
-            }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
-
+        notificationServiceCallbackVector.add(notificationServiceCallback);
     }
 
     @Override
@@ -70,22 +58,14 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
         notificationServiceCallbackVector.remove(notificationServiceCallback);
     }
 
-    @Override
-    public void notifyServerStatistics(User user) throws RemoteException {
-
-        serverStatisticsCallBack.changeFriendsStatus(user);
-    }
-
     private void notifyAll(Notification notification) throws RemoteException {
         for (NotificationServiceCallback notificationServiceCallback : notificationServiceCallbackVector) {
-
             try {
 //                if (notification.getUserTo().getId() == notificationServiceCallback.getUserId()
                 if (notification.getUserTo().getId() == notificationServiceCallback.getUserId()
                         && notification.getUserTo().isOnline()
                         && notification.getUserFrom().getId() != notificationServiceCallback.getUserId()
                 ) {
-
                     notificationServiceCallback.receiveNotification(notification);
                 }
             } catch (RemoteException e) {

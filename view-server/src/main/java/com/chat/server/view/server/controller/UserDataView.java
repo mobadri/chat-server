@@ -32,8 +32,8 @@ public class UserDataView implements Initializable {
     public Label InvalidPassword;
     @FXML
     public Label InvalidConfirmPassword;
-
-
+    @FXML
+    public Label InvalidDateOfBirth;
     UserController userController;
     @FXML
     RadioButton male;
@@ -49,7 +49,6 @@ public class UserDataView implements Initializable {
     private JFXComboBox country;
     @FXML
     private JFXTextField email;
-
     @FXML
     public JFXDatePicker dateOfBirthh;
 
@@ -231,7 +230,6 @@ public class UserDataView implements Initializable {
         } else {
             InvalidPassword.setText("* Invalid Password");
             password.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-
         }
     }
 

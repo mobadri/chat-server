@@ -64,7 +64,7 @@ public interface ServerChatGroupService extends Remote {
      * @param friend    friend to add
      * @return added friend
      */
-    public ChatGroup addFriend(ChatGroup chatGroup, User friend) throws RemoteException;
+    public boolean addFriend(int chatGroup, int friend) throws RemoteException;
 
     /**
      * to remove friend to chat

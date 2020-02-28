@@ -72,7 +72,7 @@ public interface ChatGroupRepository {
      * @param friend    friend to add
      * @return added friend
      */
-    public ChatGroup addFriend(ChatGroup chatGroup, User friend);
+    public boolean addFriend(int chatGroup, int friend);
 
     /**
      * to remove friend to chat
@@ -91,4 +91,14 @@ public interface ChatGroupRepository {
      * @return list of my groups
      */
     List<ChatGroup> searchByName(String groupName, User user);
+
+    /**
+     * List of users to get friends to add in the Group
+     * @param currentUserId the user is current Logged in
+     * @return list of users
+     */
+
+
+
+
 }

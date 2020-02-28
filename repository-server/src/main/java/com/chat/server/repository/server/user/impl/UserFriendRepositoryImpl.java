@@ -20,8 +20,10 @@ public class UserFriendRepositoryImpl implements UserFriendRepository {
     String INSERT_FRIEND = "INSERT INTO USER_FRIENDS  (USER_ID , FRIEND_ID, FRIEND_STATUS) VALUES (?,?,?)";
     String DELETE_FRIEND = "DELETE FROM USER_FRIENDS WHERE (USER_ID = ? AND FRIEND_ID = ?) OR " +
             "(FRIEND_ID = ? AND USER_ID = ?)";
-    String UPDATE_FRIEND = "UPDATE USER_FRIENDS SET FRIEND_STATUS = ? WHERE (USER_ID = ? AND FRIEND_ID = ?) OR " +
-            "(FRIEND_ID = ? AND USER_ID = ?)";
+    String UPDATE_FRIEND = "UPDATE USER_FRIENDS SET FRIEND_STATUS = ? WHERE (USER_ID = ? AND FRIEND_ID = ?) /*OR " +
+            "(FRIEND_ID = ? AND USER_ID = ?)*/";
+
+
 
     private Connection connection = null;
     private PreparedStatement preparedStatement = null;
@@ -72,8 +74,8 @@ public class UserFriendRepositoryImpl implements UserFriendRepository {
             preparedStatement.setInt(1, friendStatus.ordinal());
             preparedStatement.setInt(2, userId);
             preparedStatement.setInt(3, friendId);
-            preparedStatement.setInt(4, friendId);
-            preparedStatement.setInt(5, userId);
+            //preparedStatement.setInt(4, friendId);
+            //preparedStatement.setInt(5, userId);
             int i = preparedStatement.executeUpdate();
             if (i > 0) {
                 return i;
@@ -104,28 +106,41 @@ public class UserFriendRepositoryImpl implements UserFriendRepository {
 
 
     @Override
-    public int getUserStatus(int userId, int friendId) {
+    public FriendStatus getUserStatus(int userId, int friendId) {
+        FriendStatus friendStatus =null;
         try
         {
+
             preparedStatement = connection.prepareStatement(SELECT_FRIEND_STATUS);
             preparedStatement.setInt(1,userId);
             preparedStatement.setInt(2,friendId);
             preparedStatement.setInt(3,userId);
             preparedStatement.setInt(4,friendId);
             resultSet = preparedStatement.executeQuery();
+
             while(resultSet.next())
             {
 //                System.out.println("result set is = " + resultSet.getInt("FRIEND_STATUS"));
-                return resultSet.getInt("FRIEND_STATUS");
+                int friend_status = resultSet.getInt("FRIEND_STATUS");
+                switch (friend_status){
+                    case 0:
+                        friendStatus = FriendStatus.PENDING;
+                        break;
+                    case 1:
+                        friendStatus =FriendStatus.APPROVED;
+                        break;
+                    case 2:
+                        friendStatus =FriendStatus.REJECT;
+                        break;
+                }
+
             }
-
-
         }
         catch(SQLException exception)
         {
             exception.printStackTrace();
         }
-        return 0;
+        return friendStatus;
     }
 
 
