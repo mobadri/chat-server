@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ChatGroupRepositoryImpl implements ChatGroupRepository {
     private final String SELECT_ALL_CHAT_GROUP = "SELECT * FROM CHAT_GROUP";
-
+  //  private final String SELEC_DIFFERENT_USER_TO_INVITE="SELECT * FROM   user_friends   WHERE  FRIEND_ID  NOT IN (SELECT user_id from group_user) And( user_id = ? OR friend_id =?)";
     private final String SELECT_CHAT_GROUP_BY_ID = "SELECT * FROM CHAT_GROUP WHERE ID = ?";
 
     private final String SELECT_ALL_CHAT_GROUPS_BY_USER_ID = "SELECT * FROM CHAT_GROUP " +
@@ -146,21 +146,21 @@ public class ChatGroupRepositoryImpl implements ChatGroupRepository {
     }
 
     @Override
-    public ChatGroup addFriend(ChatGroup chatGroup, User friend) {
+    public boolean addFriend(int chatGroup, int friend) {
 
         try {
-            chatGroup.getUsers().add(friend);
+           // chatGroup.getUsers().add(friend);
             preparedStatement = connection.prepareStatement(INSERT_USER_IN_CHAT_GROUP);
-            preparedStatement.setInt(1, chatGroup.getId());
-            preparedStatement.setInt(2, friend.getId());
+            preparedStatement.setInt(1, chatGroup);
+            preparedStatement.setInt(2, friend);
             preparedStatement.execute();
-
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
-        return chatGroup;
+    return false;
     }
 
     @Override
@@ -201,6 +201,7 @@ public class ChatGroupRepositoryImpl implements ChatGroupRepository {
         }
         return chatGroups;
     }
+
 
     private void closeResultSetAndPreparedStatement(ResultSet resultSet, PreparedStatement preparedStatement) {
         try {

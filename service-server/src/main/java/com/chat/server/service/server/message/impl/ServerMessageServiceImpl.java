@@ -8,8 +8,6 @@ import com.chat.server.model.user.User;
 import com.chat.server.service.server.factory.ServiceFactory;
 import com.chat.server.service.server.message.ServerMessageService;
 import com.chat.server.service.server.notification.ServerNotificationService;
-import com.chat.server.service.server.socket_factories.RMISSLClientSocketFactory;
-import com.chat.server.service.server.socket_factories.RMISSLServerSocketFactory;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -25,8 +23,8 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
     private static ServerMessageServiceImpl instance;
 
     private ServerMessageServiceImpl() throws Exception {
-        super(11223/*, new RMISSLClientSocketFactory(),
-                new RMISSLServerSocketFactory()*/);
+//        super(11223, new RMISSLClientSocketFactory(),
+//                new RMISSLServerSocketFactory());
     }
 
     @Override
