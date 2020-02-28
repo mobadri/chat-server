@@ -118,9 +118,12 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
         Map<String, Boolean> validate = validator.validUser(user);
         return validate;
     }
-
     @Override
-    public int getStatus(int currentUser, int friend) throws RemoteException {
+    public int updateFriend(int userId, int friendId, FriendStatus friendStatus) throws RemoteException{
+        return userFriendRepository.updateFriend(userId,friendId,friendStatus);
+    }
+    @Override
+    public FriendStatus getStatus(int currentUser, int friend) throws RemoteException {
         return userFriendRepository.getUserStatus(currentUser,friend);
     }
 
@@ -146,6 +149,9 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
     public void registerServerStatistics(NotificationServiceCallback notificationServiceCallback) throws RemoteException {
         serverNotificationService.register(notificationServiceCallback);
     }
+
+
+
     public synchronized static ServerUserServiceImpl getInstance() {
         if (instance == null) {
             try {

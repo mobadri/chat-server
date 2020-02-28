@@ -51,3 +51,4 @@ chat-server.iml
 pom.properties
 */target/**
 */target/*/pom.properties
+/security/

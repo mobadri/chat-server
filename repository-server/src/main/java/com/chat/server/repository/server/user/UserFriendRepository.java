@@ -48,5 +48,5 @@ public interface UserFriendRepository {
      * @param friendId friend to to search for
      * @return status
      */
-    int getUserStatus(int userId,int friendId);
+    FriendStatus getUserStatus(int userId,int friendId);
 }

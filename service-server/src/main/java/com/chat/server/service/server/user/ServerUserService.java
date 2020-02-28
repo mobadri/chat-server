@@ -132,7 +132,7 @@ public interface ServerUserService extends Remote {
      * @return number of status it depends on his status
      * @throws RemoteException
      */
-    public int getStatus(int currentUser, int friend) throws RemoteException;
+    public FriendStatus getStatus(int currentUser, int friend) throws RemoteException;
 
 
     /**
@@ -151,5 +151,14 @@ public interface ServerUserService extends Remote {
      * @throws RemoteException
      */
     void registerServerStatistics(NotificationServiceCallback notificationServiceCallback) throws RemoteException;
+
+    /**
+     *
+     * @param userId the current user
+     * @param friendId friend id
+     * @param friendStatus status will be 1
+     * @return
+     */
+    int updateFriend(int userId, int friendId, FriendStatus friendStatus) throws RemoteException;
 
 }
