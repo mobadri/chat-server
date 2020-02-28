@@ -8,7 +8,7 @@ public class Style implements Serializable {
     private String fontFamily;
     private String fontColor;
     private String background;
-    private float fontSize;
+    private int fontSize;
     private boolean bold;
     private boolean italic;
     private boolean underline;
@@ -17,7 +17,7 @@ public class Style implements Serializable {
     }
 
     public Style(String fontName, String fontFamily, String fontColor,
-                 String background, float fontSize, boolean bold, boolean italic, boolean underline) {
+                 String background, int fontSize, boolean bold, boolean italic, boolean underline) {
         this.fontName = fontName;
         this.fontFamily = fontFamily;
         this.fontColor = fontColor;
@@ -68,11 +68,11 @@ public class Style implements Serializable {
         this.background = background;
     }
 
-    public float getFontSize() {
+    public int getFontSize() {
         return fontSize;
     }
 
-    public void setFontSize(float fontSize) {
+    public void setFontSize(int fontSize) {
         this.fontSize = fontSize;
     }
 

@@ -13,7 +13,7 @@ public class ConnectToMysql {
     private ConnectToMysql() {
         databaseConfig = NetworkDatabaseConfig.getInstance();
         String databaseIP = databaseConfig.getDatabaseIP();
-        String databasePortNumber = databaseConfig.getDatabasePortNumber();
+        int databasePortNumber = databaseConfig.getDatabasePortNumber();
         String databaseName = databaseConfig.getDatabaseName();
         String userName = databaseConfig.getUserName();
         String userPassword = databaseConfig.getUserPassword();

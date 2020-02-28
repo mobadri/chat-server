@@ -2,6 +2,8 @@ package com.chat.server.service.server.factory;
 
 import com.chat.server.service.server.chatgroup.ServerChatGroupService;
 import com.chat.server.service.server.chatgroup.impl.ServerChatGroupServiceImpl;
+import com.chat.server.service.server.fileTransfer.ServerFileTranseferService;
+import com.chat.server.service.server.fileTransfer.impl.ServerFileTranseferServiceImpl;
 import com.chat.server.service.server.message.ServerMessageService;
 import com.chat.server.service.server.message.impl.ServerMessageServiceImpl;
 import com.chat.server.service.server.notification.ServerNotificationService;
@@ -27,6 +29,10 @@ public class ServiceFactory {
 
     public static ServerChatGroupService createServerChatGroupService() throws RemoteException {
         return ServerChatGroupServiceImpl.getInstance();
+
+    }
+    public static ServerFileTranseferService createServerFileTranseferService() throws RemoteException {
+        return ServerFileTranseferServiceImpl.getInstance();
 
     }
 }

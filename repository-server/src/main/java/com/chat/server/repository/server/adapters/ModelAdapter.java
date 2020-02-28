@@ -227,7 +227,7 @@ public class ModelAdapter {
             style.setFontFamily(resultSet.getString(3));
             style.setFontColor(resultSet.getString(4));
             style.setBackground(resultSet.getString(5));
-            style.setFontSize(resultSet.getFloat(6));
+            style.setFontSize(resultSet.getInt(6));
             style.setBold(resultSet.getBoolean(7));
             style.setItalic(resultSet.getBoolean(8));
             style.setUnderline(resultSet.getBoolean(9));

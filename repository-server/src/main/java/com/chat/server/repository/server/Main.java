@@ -1,11 +1,13 @@
 package com.chat.server.repository.server;
 
+import com.chat.server.model.user.FriendStatus;
 import com.chat.server.model.user.User;
 import com.chat.server.repository.server.chat.impl.ChatGroupRepositoryImpl;
 import com.chat.server.repository.server.user.UserFriendRepository;
+import com.chat.server.repository.server.factory.RepositoryServerFactory;
 import com.chat.server.repository.server.user.UserRepository;
-import com.chat.server.repository.server.user.impl.UserFriendRepositoryImpl;
-import com.chat.server.repository.server.user.impl.UserRepositoryImpl;
+
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,7 +15,9 @@ public class Main {
 //        // @noura
 //        //todo test all user repo methods
 //
-//        UserRepository userRepository = RepositoryServerFactory.creatUserRepository();
+        UserRepository userRepository = RepositoryServerFactory.creatUserRepository();
+        List<User> allUserFriends = userRepository.findAllUserFriends(110, FriendStatus.PENDING);
+        System.out.println(allUserFriends.size());
 //        List<User> all = userRepository.findAll();
 //
 //        List<User> userFound = userRepository.findByPhone("0111");

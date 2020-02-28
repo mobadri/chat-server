@@ -3,10 +3,9 @@ package com.chat.server.network.server;
 import com.chat.server.config.database.connection.NetworkDatabaseConfig;
 import com.chat.server.service.server.chatgroup.ServerChatGroupService;
 import com.chat.server.service.server.factory.ServiceFactory;
+import com.chat.server.service.server.fileTransfer.ServerFileTranseferService;
 import com.chat.server.service.server.message.ServerMessageService;
 import com.chat.server.service.server.notification.ServerNotificationService;
-import com.chat.server.service.server.socket_factories.SslClientSocketFactory;
-import com.chat.server.service.server.socket_factories.SslServerSocketFactory;
 import com.chat.server.service.server.user.ServerUserService;
 
 import java.rmi.NotBoundException;
@@ -28,7 +27,7 @@ public class Server {
 
     private Server() {
         configuration = NetworkDatabaseConfig.getInstance();
-        String portNumber = configuration.getServerPortNumber();
+        int portNumber = configuration.getServerPortNumber();
         String serverIP = configuration.getServerIp();
         try {
             /*all commented segments of code is connection security trail */
@@ -38,10 +37,11 @@ public class Server {
             System.setProperty("java.rmi.server.hostname", serverIP); // Uses the loopback address, 127.0.0.1, if yo
 
             //todo encrypt password
-            SslClientSocketFactory csf = new SslClientSocketFactory("security/client", "ahm741741");
-            SslServerSocketFactory ssf = new SslServerSocketFactory("security/registry", "ahm741741");
+//            SslClientSocketFactory csf = new SslClientSocketFactory("security/client", "ahm741741");
+//            SslServerSocketFactory ssf = new SslServerSocketFactory("security/registry", "ahm741741");
 
-            registry = LocateRegistry.createRegistry(Integer.parseInt(portNumber), csf, ssf);
+            registry = LocateRegistry.createRegistry(portNumber);
+//            SslClientSocketFactory.getInstance(), SslServerSocketFactory.getInstance());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,7 +60,7 @@ public class Server {
                 ServerChatGroupService chatGroupService = ServiceFactory.createServerChatGroupService();
                 ServerMessageService messageService = ServiceFactory.createServerMessageService();
                 ServerNotificationService notificationService = ServiceFactory.createServerNotificationService();
-
+                ServerFileTranseferService fileTranseferService = ServiceFactory.createServerFileTranseferService();
 
                 System.out.println("server is running");
 
@@ -68,6 +68,7 @@ public class Server {
                 registry.rebind("chatGroupService", chatGroupService);
                 registry.rebind("messageService", messageService);
                 registry.rebind("notificationService", notificationService);
+                registry.rebind("fileTranseferService", fileTranseferService);
                 running = !running;
             }
         } catch (RemoteException ex) {
@@ -84,6 +85,7 @@ public class Server {
                 registry.unbind("chatGroupService");
                 registry.unbind("messageService");
                 registry.unbind("notificationService");
+                registry.unbind("fileTranseferService");
                 running = !running;
             }
         } catch (RemoteException | NotBoundException ex) {

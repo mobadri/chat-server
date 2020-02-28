@@ -29,6 +29,8 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
 
     private ServerUserServiceImpl() throws RemoteException {
 //        super(11223, new RMISSLClientSocketFactory(), new SslRMIServerSocketFactory());
+
+//        super(11223, SslClientSocketFactory.getInstance(), SslServerSocketFactory.getInstance());
         System.out.println("creat service");
     }
 
@@ -118,13 +120,15 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
         Map<String, Boolean> validate = validator.validUser(user);
         return validate;
     }
+
     @Override
-    public int updateFriend(int userId, int friendId, FriendStatus friendStatus) throws RemoteException{
-        return userFriendRepository.updateFriend(userId,friendId,friendStatus);
+    public int updateFriend(int userId, int friendId, FriendStatus friendStatus) throws RemoteException {
+        return userFriendRepository.updateFriend(userId, friendId, friendStatus);
     }
+
     @Override
     public FriendStatus getStatus(int currentUser, int friend) throws RemoteException {
-        return userFriendRepository.getUserStatus(currentUser,friend);
+        return userFriendRepository.getUserStatus(currentUser, friend);
     }
 
     @Override
@@ -149,7 +153,6 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
     public void registerServerStatistics(NotificationServiceCallback notificationServiceCallback) throws RemoteException {
         serverNotificationService.register(notificationServiceCallback);
     }
-
 
 
     public synchronized static ServerUserServiceImpl getInstance() {
