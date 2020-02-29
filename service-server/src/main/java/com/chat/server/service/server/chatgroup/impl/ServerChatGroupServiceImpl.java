@@ -14,9 +14,8 @@ import java.util.List;
 
 public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements ServerChatGroupService {
 
-    /*
-        Vector<ClientChatGroupService> clientChatGroupServices = new Vector<>();
-    */
+    Vector<ClientChatGroupService> clientChatGroupServices = new Vector<>();
+
     ChatGroupRepository chatGroupRepository = RepositoryServerFactory.creatChatRepository();
     MessageRepository messageRepository = RepositoryServerFactory.createMessageRepository();
 
