@@ -6,6 +6,7 @@ import com.chat.server.service.server.factory.ServiceFactory;
 import com.chat.server.service.server.user.ServerUserService;
 
 import java.rmi.RemoteException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,23 +29,31 @@ public class UserValidation {
     }
 
     public boolean validName(String name) {
-
-        return name.matches("[a-zA-z]+");
+        if (name != null) {
+            return name.matches("[a-zA-z]+");
+        }
+        return false;
     }
 
     public boolean validMail(String mail) {
-        return mail.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        if (mail != null) {
+            return mail.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        }
+        return false;
     }
 
     public boolean validPhone(String phone) {
-
-        return phone.matches("^(?:\\+?2)?01[0-9]{9}$");
+        if (phone != null) {
+            return phone.matches("^(?:\\+?2)?01[0125]{1}[0-9]{8}$");
+        }
+        return false;
     }
 
     public boolean gender(Gender gender) {
         return gender != null;
     }
+
 
     public boolean uniquePhone(String phone) {
         try {
@@ -62,8 +71,22 @@ public class UserValidation {
     }
 
     public boolean validCountry(String country) {
-        return !country.equals("");
+        if (country != null) {
+            return !country.equals("");
+        }
+        return false;
     }
+
+
+    private Boolean validDateOfBirth(LocalDate dateOfBirth) {
+        if (dateOfBirth != null) {
+            return !dateOfBirth.equals("");
+
+        }
+        return false;
+
+    }
+
 
     public boolean validPassword(String password) {
         return password.matches("^[a-zA-Z!@#$%-^&?_0-9]{8,40}$");
@@ -79,8 +102,11 @@ public class UserValidation {
         validUser.put("InvalidEmail", validMail(user.getEmail()));
         validUser.put("InvalidCountry", validCountry(user.getCountry()));
         validUser.put("InvalidGender", gender(user.getGender()));
+        validUser.put("InvalidDateOfBirth", validDateOfBirth(user.getDateOfBirth()));
+
 
         return validUser;
     }
+
 
 }

@@ -4,6 +4,7 @@ import com.chat.client.service.client.callback.NotificationServiceCallback;
 import com.chat.server.model.user.FriendStatus;
 import com.chat.server.model.user.Mode;
 import com.chat.server.model.user.User;
+import com.chat.server.model.user.UserFriend;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -132,7 +133,7 @@ public interface ServerUserService extends Remote {
      * @return number of status it depends on his status
      * @throws RemoteException
      */
-    public FriendStatus getStatus(int currentUser, int friend) throws RemoteException;
+    public UserFriend getStatus(int currentUser, int friend) throws RemoteException;
 
 
     /**
@@ -147,15 +148,15 @@ public interface ServerUserService extends Remote {
     /**
      * register ServerStatistics as a call back
      * to be notified when user change his status
+     *
      * @param notificationServiceCallback call back service
      * @throws RemoteException
      */
     void registerServerStatistics(NotificationServiceCallback notificationServiceCallback) throws RemoteException;
 
     /**
-     *
-     * @param userId the current user
-     * @param friendId friend id
+     * @param userId       the current user
+     * @param friendId     friend id
      * @param friendStatus status will be 1
      * @return
      */

@@ -2,6 +2,7 @@ package com.chat.server.repository.server.user;
 
 import com.chat.server.model.user.FriendStatus;
 import com.chat.server.model.user.User;
+import com.chat.server.model.user.UserFriend;
 
 import java.util.List;
 
@@ -18,8 +19,8 @@ public interface UserFriendRepository {
     /**
      * insert a friend to user friend list
      *
-     * @param userId who send friend req
-     * @param friendId who receive req friend
+     * @param userId       who send friend req
+     * @param friendId     who receive req friend
      * @param friendStatus pending
      * @return int no of rows inserted
      */
@@ -28,8 +29,8 @@ public interface UserFriendRepository {
     /**
      * update a friend status
      *
-     * @param userId      who send friend req
-     * @param friendId    who receive req friend
+     * @param userId       who send friend req
+     * @param friendId     who receive req friend
      * @param friendStatus approve or reject
      * @return int no of rows updated
      */
@@ -44,9 +45,10 @@ public interface UserFriendRepository {
 
     /**
      * get friend status for current user
-     * @param userId current user id
+     *
+     * @param userId   current user id
      * @param friendId friend to to search for
      * @return status
      */
-    FriendStatus getUserStatus(int userId,int friendId);
+    UserFriend getUserStatus(int userId, int friendId);
 }

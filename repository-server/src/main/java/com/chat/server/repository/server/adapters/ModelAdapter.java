@@ -255,10 +255,17 @@ public class ModelAdapter {
     }
 
     public static Date mapDateToSqlDate(LocalDate date) {
-        return Date.valueOf(date);
+        if (date != null) {
+            return Date.valueOf(date);
+        }
+        return null;
     }
 
     public static LocalDate mapDateFromSqlDate(Date date) {
-        return date.toLocalDate();
+        if (date != null) {
+            return date.toLocalDate();
+
+        }
+        return null;
     }
 }

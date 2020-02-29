@@ -10,5 +10,6 @@ public enum NotificationType implements Serializable {
     FILE_TRANSFER_REQUEST,
     FILE_TRANSFER_ACCEPT,
     FRIEND_CHANGE_MODE,
-    ANNOUNCEMENT_RECEIVED
+    ANNOUNCEMENT_RECEIVED,
+    SERVER_IS_CLOSED
 }

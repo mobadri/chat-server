@@ -58,6 +58,7 @@ public class UserRepositoryImpl implements UserRepository {
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 User user = ModelAdapter.mapResultSetToUser(resultSet);
+                user.setPassword("");
                 users.add(user);
             }
             return users;
@@ -109,7 +110,7 @@ public class UserRepositoryImpl implements UserRepository {
         String hashedPassword = findUserByPhone(phone).getPassword();
         boolean exist = encryption.checkIfExist(password, hashedPassword);
 
-        if(exist) {
+        if (exist) {
             try {
                 preparedStatement = connection.prepareStatement(SELECT_BY_PHONE_PASSWORD);
                 preparedStatement.setString(1, phone);
@@ -141,8 +142,11 @@ public class UserRepositoryImpl implements UserRepository {
             preparedStatement.setInt(4, friendStatus.ordinal());
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                users.add(ModelAdapter.mapResultSetToUser(resultSet));
+                User user = ModelAdapter.mapResultSetToUser(resultSet);
+                user.setPassword("");
+                users.add(user);
             }
+
             return users;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -166,6 +170,7 @@ public class UserRepositoryImpl implements UserRepository {
                 id = resultSet.getInt(1);
             }
             user.setId(id);
+            user.setPassword("");
             return user;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -191,7 +196,7 @@ public class UserRepositoryImpl implements UserRepository {
             int res = preparedStatement.executeUpdate();
             if (res > 0)
                 updated = user;
-
+            user.setPassword("");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -233,6 +238,7 @@ public class UserRepositoryImpl implements UserRepository {
             while (resultSet.next()) {
                 User user = ModelAdapter.mapResultSetToUser(resultSet);
                 System.out.println("ResultSet.next" + user.getPhone());
+                user.setPassword("");
                 users.add(user);
             }
             return users;
@@ -254,6 +260,7 @@ public class UserRepositoryImpl implements UserRepository {
             while (resultSet.next()) {
                 user = ModelAdapter.mapResultSetToUser(resultSet);
                 if (user.getPhone().equals(phone)) {
+                    user.setPassword("");
                     return user;
                 }
             }
@@ -272,15 +279,16 @@ public class UserRepositoryImpl implements UserRepository {
             preparedStatement = connection.prepareStatement(UPDATE_USER_MODE);
             preparedStatement.setInt(1, mode.ordinal());
             int res = preparedStatement.executeUpdate();
-            if(res > 0){
+            if (res > 0) {
                 user.setMode(mode);
+                user.setPassword("");
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             closeResultSetAndPreparedStatement(resultSet, preparedStatement);
         }
-       return user;
+        return user;
     }
 
     @Override
@@ -292,7 +300,9 @@ public class UserRepositoryImpl implements UserRepository {
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 User user = ModelAdapter.mapResultSetToUser(resultSet);
+                user.setPassword("");
                 users.add(user);
+
             }
             return users;
         } catch (SQLException e) {
@@ -312,6 +322,7 @@ public class UserRepositoryImpl implements UserRepository {
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 User user = ModelAdapter.mapResultSetToUser(resultSet);
+                user.setPassword("");
                 users.add(user);
             }
             return users;

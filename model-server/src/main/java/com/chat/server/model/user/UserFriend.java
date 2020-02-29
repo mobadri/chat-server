@@ -1,6 +1,8 @@
 package com.chat.server.model.user;
 
-public class UserFriend {
+import java.io.Serializable;
+
+public class UserFriend implements Serializable {
     private int user;
     private int friend;
     private FriendStatus friendStatus;
