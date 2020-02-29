@@ -23,11 +23,7 @@
         </dependency>
         <dependency>
             <groupId>com.chat.client</groupId>
-<<<<<<< HEAD
-            <artifactId>client-service-callback</artifactId>
-=======
             <artifactId>service-client-callback</artifactId>
->>>>>>> af7fefbb7152abd59a715fbffd63f5dd13118cad
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

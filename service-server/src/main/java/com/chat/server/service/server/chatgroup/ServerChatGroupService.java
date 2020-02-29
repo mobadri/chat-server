@@ -1,7 +1,6 @@
 package com.chat.server.service.server.chatgroup;
 
 import com.chat.server.model.chat.ChatGroup;
-import com.chat.server.model.chat.Message;
 import com.chat.server.model.user.User;
 
 import java.rmi.Remote;
@@ -84,17 +83,17 @@ public interface ServerChatGroupService extends Remote {
      */
     List<ChatGroup> searchByName(String groupName, User user) throws RemoteException;
 
-    /**
-     * to register client
-     * @param clientMessageService client service to register it
-     */
-
-    public void register( clientMessageService);
-
-    /**
-     * to unRegister client
-     * @param  clientMessageService client service to register it
-     */
-
-    public void unRegister(ClientMessageService clientMessageService);
+//    /**
+//     * to register client
+//     * @param clientMessageService client service to register it
+//     */
+//
+//    public void register( clientMessageService);
+//
+//    /**
+//     * to unRegister client
+//     * @param  clientMessageService client service to register it
+//     */
+//
+//    public void unRegister(ClientMessageService clientMessageService);
 }

@@ -12,14 +12,11 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
 public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements ServerChatGroupService {
-
-<<<<<<< HEAD
-    Vector<ClientChatGroupService> clientChatGroupServices = new Vector<>();
-
-    ChatGroupRepository chatGroupRepository = RepositoryServerFactory.creatChatRepository();
-    MessageRepository messageRepository = RepositoryServerFactory.createMessageRepository();
-=======
->>>>>>> af7fefbb7152abd59a715fbffd63f5dd13118cad
+//
+//    Vector<ClientChatGroupService> clientChatGroupServices = new Vector<>();
+//
+//    ChatGroupRepository chatGroupRepository = RepositoryServerFactory.creatChatRepository();
+//    MessageRepository messageRepository = RepositoryServerFactory.createMessageRepository();
 
     private static ServerChatGroupServiceImpl instance;
 
