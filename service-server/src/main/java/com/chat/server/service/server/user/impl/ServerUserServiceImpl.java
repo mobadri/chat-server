@@ -6,6 +6,7 @@ import com.chat.server.model.chat.NotificationType;
 import com.chat.server.model.user.FriendStatus;
 import com.chat.server.model.user.Mode;
 import com.chat.server.model.user.User;
+import com.chat.server.model.user.UserFriend;
 import com.chat.server.repository.server.factory.RepositoryServerFactory;
 import com.chat.server.repository.server.user.UserFriendRepository;
 import com.chat.server.repository.server.user.UserRepository;
@@ -86,7 +87,7 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
         int i = userFriendRepository.addNewFriend(currentUser.getId(), friend.getId(), FriendStatus.PENDING);
         if (i > 0) {
             Notification notification = new Notification();
-            notification.setNotificationMessage("you have a new friend request from user " + currentUser.getPhone());
+            notification.setNotificationMessage("friend request from " + currentUser.getPhone());
             notification.setNotificationType(NotificationType.FRIEND_REQUEST);
             notification.setUserFrom(currentUser);
             notification.setUserTo(friend);
@@ -127,7 +128,7 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
     }
 
     @Override
-    public FriendStatus getStatus(int currentUser, int friend) throws RemoteException {
+    public UserFriend getStatus(int currentUser, int friend) throws RemoteException {
         return userFriendRepository.getUserStatus(currentUser, friend);
     }
 

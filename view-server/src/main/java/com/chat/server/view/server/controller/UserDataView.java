@@ -5,6 +5,7 @@ import com.chat.server.model.user.Gender;
 import com.chat.server.model.user.Mode;
 import com.chat.server.model.user.User;
 import com.jfoenix.controls.*;
+import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,39 +22,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 public class UserDataView implements Initializable {
     @FXML
     public JFXButton add;
-    @FXML
-    public JFXPasswordField password;
-    @FXML
-    public JFXPasswordField confirmPassword;
+
     @FXML
     public Label InvalidPassword;
     @FXML
     public Label InvalidConfirmPassword;
     @FXML
     public Label InvalidDateOfBirth;
-    UserController userController;
-    @FXML
-    RadioButton male;
-    @FXML
-    RadioButton female;
-    @FXML
-    private JFXTextField firstName;
-    @FXML
-    private JFXTextField lastName;
-    @FXML
-    private JFXTextField phone;
-    @FXML
-    private JFXComboBox country;
-    @FXML
-    private JFXTextField email;
-    @FXML
-    public JFXDatePicker dateOfBirthh;
-
-    @FXML
-    private JFXTextField bio;
     @FXML
     private Label InvalidFirstName;
     @FXML
@@ -64,32 +43,126 @@ public class UserDataView implements Initializable {
     private Label InvalidEmail;
     @FXML
     private Label InvalidCountry;
+
+    @FXML
+    public JFXPasswordField password;
+    @FXML
+    RadioButton male;
+    @FXML
+    RadioButton female;
+    @FXML
+    private JFXTextField firstName;
+    @FXML
+    private JFXTextField lastName;
+    @FXML
+    public JFXPasswordField confirmPassword;
+
+
+    @FXML
+    private JFXComboBox country;
+    @FXML
+    private JFXTextField email;
+    @FXML
+    public JFXDatePicker dateOfBirthh;
+
+    @FXML
+    private JFXTextField bio;
     @FXML
     private Label title;
     private Stage stage;
     private Gender gender = Gender.MALE;
     private User user;
+    @FXML
+    private JFXTextField phone;
+
+    private UserController userController;
+    private RequiredFieldValidator requiredFieldValidator = new RequiredFieldValidator();
+    private boolean updateFlag = true;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         loadAllCountries();
-//        addPhoneActionListner();
+        checkAllField();
     }
 
-//    private void addPhoneActionListner() {
-////        phone.textProperty().addListener(new ChangeListener<String>() {
-////            @Override
-////            public void changed(ObservableValue<? extends String> observable, String oldValue,
-////                                String newValue) {
-////                if (!newValue.matches("^(?:\\+?2)?01[0-9]{9}$")) {
-////                    phone.setText(newValue.replaceAll("[\\D]", ""));
-////                }
-////            }
-////        });
-//
-//    }
+    public static final LocalDate LOCAL_DATE(String dateString) {
+        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate localDate = LocalDate.parse(dateString, formatter);
+        return localDate;
+    }
 
+
+    //*****first method******
+    private void checkAllField() {
+        requiredFieldValidator.setMessage("*No Input Field");
+        firstName.getValidators().add(requiredFieldValidator);
+        firstName.focusedProperty().addListener((observableValue, aBoolean, t1) -> {
+            if (!t1) {
+                firstName.validate();
+            }
+        });
+
+        lastName.getValidators().add(requiredFieldValidator);
+        lastName.focusedProperty().addListener((observableValue, aBoolean, t1) -> {
+            if (!t1) {
+                lastName.validate();
+            }
+        });
+
+        password.getValidators().add(requiredFieldValidator);
+        password.focusedProperty().addListener((observableValue, aBoolean, t1) -> {
+            if (!t1) {
+                password.validate();
+            }
+        });
+
+        confirmPassword.getValidators().add(requiredFieldValidator);
+        confirmPassword.focusedProperty().addListener((observableValue, aBoolean, t1) -> {
+            if (!t1) {
+                confirmPassword.validate();
+            }
+        });
+
+        email.getValidators().add(requiredFieldValidator);
+        email.focusedProperty().addListener((observableValue, aBoolean, t1) -> {
+            if (!t1) {
+                email.validate();
+            }
+        });
+
+        phone.getValidators().add(requiredFieldValidator);
+        phone.focusedProperty().addListener((observableValue, aBoolean, t1) -> {
+            if (!t1) {
+                phone.validate();
+            }
+        });
+
+        country.getValidators().add(requiredFieldValidator);
+        country.focusedProperty().addListener((observableValue, aBoolean, t1) -> {
+            if (!t1) {
+                country.validate();
+            }
+        });
+
+        dateOfBirthh.getValidators().add(requiredFieldValidator);
+        dateOfBirthh.focusedProperty().addListener((observableValue, aBoolean, t1) -> {
+            if (!t1) {
+                dateOfBirthh.validate();
+            }
+        });
+
+        bio.getValidators().add(requiredFieldValidator);
+        bio.focusedProperty().addListener((observableValue, aBoolean, t1) -> {
+            if (!t1) {
+                bio.validate();
+            }
+        });
+
+    }
+
+    //*****second  method******
     private void loadAllCountries() {
         List<String> collect = Arrays.asList(Locale.getAvailableLocales())
                 .parallelStream().map(Locale::getDisplayCountry)
@@ -97,18 +170,32 @@ public class UserDataView implements Initializable {
                 .sorted()
                 .collect(Collectors.toList());
         country.setItems(FXCollections.observableList(collect));
+
     }
+// set user data on view
+    // check if id > 0
+    // update button
+    // else
+    // insert
 
-    public static final LocalDate LOCAL_DATE(String dateString) {
-        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    //on update
+    // disable change phone
+    //on update click
+    // get user data from view
+    // validate user data
+    // error show error
+    // else
+    // update
 
-        LocalDate localDate = LocalDate.parse(dateString, formatter);
-        return localDate;
-    }
+
+    // on insert
+    // get data from view
+    // validate data
+    // if error show error
+    // else insert
 
 
-    private User getUserData() {
+    private User setUserData() {
         if (user.getId() > 0) {
             user.setId(user.getId());
         }
@@ -117,16 +204,39 @@ public class UserDataView implements Initializable {
         user.setPassword(password.getText());
         user.setEmail(email.getText());
         user.setPhone(phone.getText());
-        user.setCountry(country.getSelectionModel().getSelectedItem().toString());
-        System.out.println("date of birth " + dateOfBirthh.getValue());
-        user.setDateOfBirth(LOCAL_DATE(dateOfBirthh.getValue().toString()));
+        System.out.println(country.getValue() + " country");
+        user.setCountry(country.getValue() == null ? "Egypt" : country.getValue().toString());
+        user.setDateOfBirth(dateOfBirthh.getValue());
         user.setBIO(bio.getText());
+
         if (male.isSelected()) {
             user.setGender(Gender.MALE);
         } else if (female.isSelected()) ;
         user.setGender(Gender.FEMALE);
         user.setOnline(false);
         user.setMode(Mode.AVAILABLE);
+
+
+//        if (phone.getText() == null) {
+//
+//            InvalidPhone.setText("*Invalid Phone");
+//            phone.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+//        }
+
+//        System.out.println(country.getValue());
+//        if (country.getValue() == null) {
+//            country.setValue("Egypt");
+//        } else {
+//            user.setCountry(country.getSelectionModel().getSelectedItem().toString());
+//        }
+//        if (dateOfBirthh.getValue() == null) {
+//            dateOfBirthh.setValue(LocalDate.now());
+//        } else {
+//            user.setDateOfBirth(LOCAL_DATE(dateOfBirthh.getValue().toString()));
+//        }
+//        user.setBIO(bio.getText());
+
+
         return user;
     }
 
@@ -140,6 +250,9 @@ public class UserDataView implements Initializable {
         password.setText(user.getPassword());
         email.setText(user.getEmail());
         phone.setText(user.getPhone());
+        if (user.getId() > 0) {
+            phone.setEditable(false);
+        }
         country.setValue(user.getCountry());
         dateOfBirthh.setValue(user.getDateOfBirth());
         bio.setText(user.getBIO());
@@ -153,13 +266,13 @@ public class UserDataView implements Initializable {
         InvalidPassword.setText("");
         InvalidEmail.setText("");
         InvalidCountry.setText("");
-//        firstName.setStyle("-fx-border-color: red; -fx-border-width: 1px ;");
-//        lastName.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-//        phone.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-//        password.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-//        confirmPassword.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-//        email.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-//        country.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+        firstName.setStyle("-fx-border-color: white; -fx-border-width: 1px ;");
+        lastName.setStyle("-fx-border-color: white ; -fx-border-width: 1px ;");
+        phone.setStyle("-fx-border-color: white ; -fx-border-width: 1px ;");
+        password.setStyle("-fx-border-color: white ; -fx-border-width: 1px ;");
+        confirmPassword.setStyle("-fx-border-color: white ; -fx-border-width: 1px ;");
+        email.setStyle("-fx-border-color: white ; -fx-border-width: 1px ;");
+        country.setStyle("-fx-border-color: white ; -fx-border-width: 1px ;");
 
     }
 
@@ -167,29 +280,30 @@ public class UserDataView implements Initializable {
         switch (key) {
             case "InvalidFirstName":
                 InvalidFirstName.setText("* Invalid First Name");
-                firstName.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
                 break;
+
             case "InvalidLastName":
                 InvalidLastName.setText("* Invalid Last Name");
-                lastName.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
                 break;
+
             case "InvalidPhone":
                 InvalidPhone.setText("*Invalid Phone");
-                phone.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
                 break;
 
             case "InvalidPassword":
                 InvalidPassword.setText("* Weak Pass At least 8 character");
-                password.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
                 break;
+
             case "InvalidEmail":
                 InvalidEmail.setText("* Invalid Email");
-                email.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
-
                 break;
+
             case "InvalidCountry":
                 InvalidCountry.setText("*Invalid Country");
-                country.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+                break;
+
+            case "InvalidDateOfBirth":
+                InvalidDateOfBirth.setText("*Invalid DateOfBirth");
                 break;
 
         }
@@ -197,44 +311,18 @@ public class UserDataView implements Initializable {
     }
 
     public void insertNewUser() {
-        clearValidation();
-        if (password.getText() != null &&
-                confirmPassword.getText() != null &&
-                password.getText().equals(confirmPassword.getText())) {
-
-            Map<String, Boolean> validationMap = new HashMap<>();
-            User user = getUserData();
-            Map<String, Boolean> validateMap = userController.validateUser(user);
-
-            if (user != null) {
-//                Map<String, Boolean> validateMap = userController.validateUser(user);
-                validateMap.forEach((key, valid) -> {
-                    if (!valid) {
-                        validationMap.put(key, valid);
-                    }
-                });
-                if (validationMap.size() > 0) {
-                    validationMap.forEach((key, value) -> {
-                        setError(key, value);
-                    });
-                } else {
-                    User insertedUser = userController.insertUser(user);
-                    if (insertedUser.getId() > 0) {
-                        showMessageDialog(Alert.AlertType.INFORMATION, "user has been added successfully");
-                        returnToParent();
-                    } else {
-                        showMessageDialog(Alert.AlertType.ERROR, "error on register user call us !");
-                    }
-                }
-            }
+        User insertedUser = userController.insertUser(user);
+        if (insertedUser != null && insertedUser.getId() > 0) {
+            showMessageDialog(Alert.AlertType.INFORMATION, "user has been added successfully");
+            returnToParent();
         } else {
-            InvalidPassword.setText("* Invalid Password");
-            password.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+            showMessageDialog(Alert.AlertType.ERROR, "error on register user call us !");
         }
     }
 
+
     private void updateUser() {
-        user = getUserData();
+        user = setUserData();
         User update = userController.updateUser(user, user.getPassword());
         if (update != null) {
             showMessageDialog(Alert.AlertType.INFORMATION, "user has been updated successfully");
@@ -246,14 +334,9 @@ public class UserDataView implements Initializable {
 
     private boolean validateUser(User user) {
         clearValidation();
-        if (password.getText() != null &&
-                confirmPassword.getText() != null &&
-                password.getText().equals(confirmPassword.getText())) {
-
+        if (password.getText() != null && confirmPassword.getText() != null && password.getText().equals(confirmPassword.getText())) {
             Map<String, Boolean> validationMap = new HashMap<>();
-            user = getUserData();
             if (user != null) {
-                System.out.println(userController);
                 Map<String, Boolean> validateMap = userController.validateUser(user);
                 validateMap.forEach((key, valid) -> {
                     if (!valid) {
@@ -265,28 +348,34 @@ public class UserDataView implements Initializable {
                         setError(key, value);
                         System.out.println(key + "" + value);
                     });
+                } else {
+                    return true;
                 }
             }
         } else {
+
             InvalidPassword.setText("* Invalid Password");
             password.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-            //erooor
         }
         return false;
 
     }
 
+
     @FXML
     public void addUserAction(ActionEvent actionEvent) {
         System.out.println("update inuseraction");
         System.out.println(user);
+        boolean isValid = validateUser(setUserData());
         if (user != null && user.getId() > 0) {
             System.out.println("update");
-            if (!validateUser(getUserData())) {
+            if (isValid) {
                 updateUser();
             }
         } else {
-            insertNewUser();
+            if (isValid) {
+                insertNewUser();
+            }
         }
     }
 
@@ -314,12 +403,4 @@ public class UserDataView implements Initializable {
     }
 
 }
-
-
-
-
-
-
-
-
 
