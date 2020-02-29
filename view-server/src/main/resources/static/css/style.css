@@ -141,3 +141,11 @@
     -fx-border-width: 0px;
 }
 
+#buttons-blue {
+    -fx-background-color: #0078D4;
+    -fx-background-radius: 20;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 12px;
+    -fx-alignment: CENTER;
+}
+

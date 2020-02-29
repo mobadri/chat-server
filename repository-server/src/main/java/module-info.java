@@ -2,9 +2,11 @@ module repository.server {
     requires java.sql;
     requires model.server;
     requires config.server;
-    exports com.chat.server.repository.server.factory;
-    exports com.chat.server.repository.server.user;
-    exports com.chat.server.repository.server.chat;
-    exports com.chat.server.repository.server.adapters;
-    exports com.chat.server.repository.server.message;
+    requires spring.security.crypto;
+    exports com.chat.server.repository.server.factory to service.server;
+    exports com.chat.server.repository.server.user to service.server;
+    exports com.chat.server.repository.server.chat to service.server;
+    exports com.chat.server.repository.server.message to service.server;
+    exports com.chat.server.repository.server.notification to service.server;
+    exports com.chat.server.repository.server.user.impl;
 }

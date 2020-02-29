@@ -1,7 +1,6 @@
 package com.chat.server.repository.server.adapters;
 
-import com.chat.server.model.chat.ChatGroup;
-import com.chat.server.model.chat.Message;
+import com.chat.server.model.chat.*;
 import com.chat.server.model.user.Gender;
 import com.chat.server.model.user.Mode;
 import com.chat.server.model.user.User;
@@ -11,12 +10,13 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ModelAdapter {
 
 
-    public ModelAdapter() {
+    private ModelAdapter() {
     }
 
 
@@ -28,8 +28,7 @@ public class ModelAdapter {
      */
     public static User mapResultSetToUser(ResultSet resultSet, List<User> friends,
                                           List<ChatGroup> chatGroups) {
-        User user = new User();
-        mapResultSetToUser(resultSet);
+        User user = mapResultSetToUser(resultSet);
         user.setFriends(friends);
         user.setChatGroups(chatGroups);
 
@@ -57,6 +56,7 @@ public class ModelAdapter {
             user.setOnline(resultSet.getBoolean("ONLINE"));
             user.setMode(Mode.values()[resultSet.getInt("MODE")]);
             user.setBIO(resultSet.getString("BIO"));
+            user.setImage(resultSet.getBytes("image") != null ? resultSet.getBytes("image") : new byte[0]);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -93,6 +93,7 @@ public class ModelAdapter {
             preparedStatement.setString(9, user.getBIO());
             preparedStatement.setBoolean(10, user.isOnline());
             preparedStatement.setInt(11, user.getMode().ordinal());
+            preparedStatement.setBytes(12, user.getImage() != null ? user.getImage() : new byte[0]);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -163,6 +164,46 @@ public class ModelAdapter {
         return message;
     }
 
+    public static Notification mapResultSetToNotification(ResultSet resultSet) {
+
+        Notification notification = new Notification();
+        try {
+            notification.setId(resultSet.getInt("id"));
+            notification.setUserFrom((User) resultSet.getObject("user_from"));
+            notification.setUserTo((User) resultSet.getObject("user_to"));
+
+            int type = resultSet.getInt("notification_type");
+            NotificationType notificationType;
+            switch (type) {
+                case 1:
+                    notificationType = NotificationType.MESSAGE_RECEIVED;
+                    break;
+                case 2:
+                    notificationType = NotificationType.MESSAGE_SENT;
+                    break;
+                case 3:
+                    notificationType = NotificationType.FRIEND_REQUEST;
+                    break;
+                case 4:
+                    notificationType = NotificationType.FRIEND_ACCEPT;
+                    break;
+                case 5:
+                    notificationType = NotificationType.FILE_TRANSFER_REQUEST;
+                    break;
+                case 6:
+                    notificationType = NotificationType.FILE_TRANSFER_ACCEPT;
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + type);
+            }
+            notification.setNotificationType(notificationType);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return notification;
+    }
+
     /**
      * @param
      * @return
@@ -177,13 +218,54 @@ public class ModelAdapter {
         }
     }
 
-    public static Date mapDateToSqlDate(java.util.Date date) {
-
-        return new Date(date.getTime());
+    public static Style mapResulsetTosTyle(ResultSet resultSet) {
+        Style style = new Style();
+        try {
+            resultSet.next();
+            style.setId(resultSet.getInt(1));
+            style.setFontName(resultSet.getString(2));
+            style.setFontFamily(resultSet.getString(3));
+            style.setFontColor(resultSet.getString(4));
+            style.setBackground(resultSet.getString(5));
+            style.setFontSize(resultSet.getInt(6));
+            style.setBold(resultSet.getBoolean(7));
+            style.setItalic(resultSet.getBoolean(8));
+            style.setUnderline(resultSet.getBoolean(9));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return style;
     }
 
-    public static java.util.Date mapDateFromSqlDate(Date date) {
+    public static void mapStyleTopreparedStatement(PreparedStatement preparedStatement, Style style) {
+        try {
+            System.out.println("font name" + style.getFontName());
+            preparedStatement.setString(1, style.getFontName());
+            preparedStatement.setString(2, style.getFontFamily());
+            preparedStatement.setString(3, style.getFontColor());
+            preparedStatement.setString(4, style.getBackground());
+            preparedStatement.setFloat(5, style.getFontSize());
+            preparedStatement.setBoolean(6, style.isBold());
+            preparedStatement.setBoolean(7, style.isItalic());
+            preparedStatement.setBoolean(8, style.isUnderline());
 
-        return new java.util.Date(date.getTime());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Date mapDateToSqlDate(LocalDate date) {
+        if (date != null) {
+            return Date.valueOf(date);
+        }
+        return null;
+    }
+
+    public static LocalDate mapDateFromSqlDate(Date date) {
+        if (date != null) {
+            return date.toLocalDate();
+
+        }
+        return null;
     }
 }

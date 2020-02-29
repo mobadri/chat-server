@@ -1,35 +1,54 @@
 package com.chat.server.repository.server.user;
 
+import com.chat.server.model.user.FriendStatus;
 import com.chat.server.model.user.User;
+import com.chat.server.model.user.UserFriend;
 
 import java.util.List;
 
 public interface UserFriendRepository {
-    String SELECT_ALL_FRIENDS_BY_USER_ID = "SELECT * FROM USER_FRIENDS WHERE USER_ID = ?";
-    String INSERT_FRIEND = "INSERT INTO USER_FRIENDS VALUES (USER_ID = ? , FRIEND_ID = ? )";
-    String DELETE_FRIEND = "DELETE FROM USER_FRIENDS WHERE (USER_ID = ? AND FRIEND_ID = ?) OR " +
-            "(FRIEND_ID = ? AND USER_ID = ?)";
 
     /**
      * get all friends by user_id
      *
-     * @param user_id
+     * @param userId
      * @return list<User>
      */
-    List<User> getAllFriends(int user_id);
+    List<User> getAllFriends(int userId);
 
     /**
      * insert a friend to user friend list
      *
-     * @param user_id , friend_id
+     * @param userId       who send friend req
+     * @param friendId     who receive req friend
+     * @param friendStatus pending
+     * @return int no of rows inserted
      */
-    boolean addNewFriend(int user_id, int friend_id);
+    int addNewFriend(int userId, int friendId, FriendStatus friendStatus);
+
+    /**
+     * update a friend status
+     *
+     * @param userId       who send friend req
+     * @param friendId     who receive req friend
+     * @param friendStatus approve or reject
+     * @return int no of rows updated
+     */
+    int updateFriend(int userId, int friendId, FriendStatus friendStatus);
 
     /**
      * delete a friend from user friend list
      *
-     * @param user_id , friend_id
+     * @param userId , friendId
      */
-    boolean deleteFreind(int user_id, int friend_id);
+    int deleteFriend(int userId, int friendId);
 
+    /**
+     * get friend status for current user
+     *
+     * @param userId   current user id
+     * @param friendId friend to to search for
+     * @return status
+     */
+    UserFriend getUserStatus(int userId, int friendId);
 }

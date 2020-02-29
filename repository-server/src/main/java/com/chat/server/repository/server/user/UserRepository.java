@@ -1,26 +1,13 @@
 package com.chat.server.repository.server.user;
 
+import com.chat.server.model.user.FriendStatus;
+import com.chat.server.model.user.Mode;
 import com.chat.server.model.user.User;
 
 import java.util.List;
 
 public interface UserRepository {
-    String SELECT_ALL = "SELECT * FROM USER";
-    String SELECT_BY_ID = "SELECT * FROM USER WHERE ID = ?";
-    String SELECT_IF_ONLINE = "SELECT * FROM USER WHERE ONLINE = ?";
-    String SELECT_BY_PHONE_PASSWORD = "SELECT * FROM USER WHERE PHONE = ? " +
-            "AND PASSWORD = ?";
-    String SELECT_ALL_USER_FRIENDS = "SELECT * FROM USER INNER JOIN USER_FRIENDS " +
-            "ON USER.ID = USER_FRIENDS.FRIEND_ID WHERE USER.ID = ?";
-    String SELECT_BY_PHONE = "SELECT * FROM USER WHERE PHONE = ?";
-    String INSERT_USER = "INSERT INTO USER (FIRST_NAME,LAST_NAME,PHONE,PASSWORD,EMAIL," +
-            "COUNTRY,GENDER,DATE_OF_BIRTH,BIO,ONLINE,MODE)" +
-            "  VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-    String UPDATE_USER = "UPDATE USER SET FIRST_NAME= ?," +
-            "LAST_NAME = ?,PHONE = ?,PASSWORD = ? ,EMAIL = ?," +
-            " COUNTRY =? ,GENDER = ?,DATE_OF_BIRTH =?,BIO = ?,ONLINE = ?,MODE = ?" +
-            " WHERE ID = ?";
-    String DELETE_USER = "DELETE FROM USER WHERE ID = ?";
+
 
     /**
      * get all users form database
@@ -50,10 +37,10 @@ public interface UserRepository {
     /**
      * get all user friendsx
      *
-     * @param user user to get his/her friends
+     * @param userID user to get his/her friends
      * @return list of users as a friends for current user
      */
-    public List<User> findAllUserFriends(User user);
+    public List<User> findAllUserFriends(int userID, FriendStatus friendStatus);
 
     /**
      * insert user to database
@@ -61,7 +48,7 @@ public interface UserRepository {
      * @param user user to insert
      * @return id of inserted user or (-1) if failed to insert
      */
-    public int insertUser(User user);
+    public User insertUser(User user, String password);
 
     /**
      * update user to database
@@ -69,7 +56,7 @@ public interface UserRepository {
      * @param user user to update
      * @return integer number of row updated
      */
-    public int updateUser(User user);
+    public User updateUser(User user, String password);
 
     /**
      * delete user from database
@@ -80,12 +67,12 @@ public interface UserRepository {
     public int delete(int id);
 
     /**
-     * search to find user by his phone
+     * search to find List of users by there phone
      *
      * @param phone user phone
-     * @return user if founded or null if not founded
+     * @return list of users if founded or empty list if not founded
      */
-    public User findByPhone(String phone);
+    public List<User> findByPhone(String phone);
 
     /**
      * find all online users
@@ -94,4 +81,27 @@ public interface UserRepository {
      * @return list of online Or offline users
      */
     public List<User> findIfOnline(boolean online);
+
+    /**
+     * find all users on same chat group
+     *
+     * @param chatGroupId the id of chat group
+     * @return list of users on the same group
+     */
+    public List<User> findByChatGroup(int chatGroupId);
+
+    /**
+     * find user
+     * @param pbone user phone
+     * @return user or null if not found
+     */
+    public  User findUserByPhone(String pbone);
+
+    /**
+     * User to be updated
+     * @param user to update his mode
+     * @param mode new mode
+     * @return updated user
+     */
+    User updateUserMode(User user, Mode mode);
 }

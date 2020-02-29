@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 public class Notification implements Serializable {
     private int id;
+    private String notificationMessage;
     private User userFrom;
     private User userTo;
     private NotificationType notificationType;
@@ -18,7 +19,6 @@ public class Notification implements Serializable {
         this.userTo = userTo;
         this.notificationType = notificationType;
     }
-
 
     public int getId() {
         return id;
@@ -50,5 +50,22 @@ public class Notification implements Serializable {
 
     public void setNotificationType(NotificationType notificationType) {
         this.notificationType = notificationType;
+    }
+
+    public String getNotificationMessage() {
+        return notificationMessage;
+    }
+
+    public void setNotificationMessage(String notificationMessage) {
+        this.notificationMessage = notificationMessage;
+    }
+
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "id=" + id +
+                ", notificationMessage='" + notificationMessage + '\'' +
+                ", notificationType=" + notificationType +
+                '}';
     }
 }

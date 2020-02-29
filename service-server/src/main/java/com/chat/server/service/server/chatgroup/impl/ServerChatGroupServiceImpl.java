@@ -1,11 +1,10 @@
 package com.chat.server.service.server.chatgroup.impl;
 
 import com.chat.server.model.chat.ChatGroup;
-import com.chat.server.model.chat.Message;
 import com.chat.server.model.user.User;
 import com.chat.server.repository.server.chat.ChatGroupRepository;
 import com.chat.server.repository.server.factory.RepositoryServerFactory;
-import com.chat.server.repository.server.message.MessageRepository;
+import com.chat.server.repository.server.user.UserRepository;
 import com.chat.server.service.server.chatgroup.ServerChatGroupService;
 
 import java.rmi.RemoteException;
@@ -14,12 +13,24 @@ import java.util.List;
 
 public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements ServerChatGroupService {
 
+<<<<<<< HEAD
     Vector<ClientChatGroupService> clientChatGroupServices = new Vector<>();
 
     ChatGroupRepository chatGroupRepository = RepositoryServerFactory.creatChatRepository();
     MessageRepository messageRepository = RepositoryServerFactory.createMessageRepository();
+=======
+>>>>>>> af7fefbb7152abd59a715fbffd63f5dd13118cad
 
-    public ServerChatGroupServiceImpl() throws RemoteException {
+    private static ServerChatGroupServiceImpl instance;
+
+    private ChatGroupRepository chatGroupRepository;
+    private UserRepository userRepository;
+
+    private ServerChatGroupServiceImpl() throws RemoteException {
+//        super(11223, SslClientSocketFactory.getInstance(), SslServerSocketFactory.getInstance());
+
+        chatGroupRepository = RepositoryServerFactory.creatChatRepository();
+        userRepository = RepositoryServerFactory.creatUserRepository();
     }
 
     @Override
@@ -29,12 +40,14 @@ public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements S
 
     @Override
     public ChatGroup getChatGroupByID(int id) throws RemoteException {
-        return chatGroupRepository.getChatGroupByID(id);
+        ChatGroup chatGroup = chatGroupRepository.getChatGroupByID(id);
+        chatGroup.setUsers(userRepository.findByChatGroup(id));
+        return chatGroup;
     }
 
     @Override
     public List<ChatGroup> getAllChatGroupsForUser(User user) throws RemoteException {
-        return chatGroupRepository.getAllChatGroupsForUser(user);
+        return chatGroupRepository.getAllChatGroupsForUser(user.getId());
     }
 
     @Override
@@ -53,18 +66,13 @@ public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements S
     }
 
     @Override
-    public Message sendMessage(Message message) {
-
-        return messageRepository.insertMessage(message);
-    }
-
-    @Override
-    public User addFriend(ChatGroup chatGroup, User friend) {
+    public boolean addFriend(int chatGroup, int friend) throws RemoteException {
         return chatGroupRepository.addFriend(chatGroup, friend);
     }
 
+
     @Override
-    public int removeFriend(ChatGroup chatGroup, User friend) {
+    public ChatGroup removeFriend(ChatGroup chatGroup, User friend) {
         return chatGroupRepository.removeFriend(chatGroup, friend);
     }
 
@@ -73,13 +81,14 @@ public class ServerChatGroupServiceImpl extends UnicastRemoteObject implements S
         return chatGroupRepository.searchByName(groupName, user);
     }
 
-    /*@Override
-    public void register(ClientChatGroupService clientChatGroupService) {
-        clientChatGroupServices.add(clientChatGroupService);
+    public synchronized static ServerChatGroupServiceImpl getInstance() {
+        if (instance == null) {
+            try {
+                instance = new ServerChatGroupServiceImpl();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return instance;
     }
-
-    @Override
-    public void unRegister(ClientChatGroupService clientChatGroupService) {
-        clientChatGroupServices.remove(clientChatGroupService);
-    }*/
 }

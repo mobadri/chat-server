@@ -5,8 +5,12 @@ module view.server {
     requires javafx.fxml;
     requires javafx.controls;
     requires java.rmi;
+    requires com.jfoenix;
+
 
     opens com.chat.server.view.server.controller;
     opens com.chat.server.view.server.controller.confirmation;
     opens com.chat.server.view.server;
+    exports com.chat.server.view.server;
+    exports com.chat.server.view.server.controller;
 }
