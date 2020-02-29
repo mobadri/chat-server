@@ -71,6 +71,7 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
                 }
             } catch (RemoteException e) {
                 e.printStackTrace();
+                notificationServiceCallbackVector.remove(notificationServiceCallback);
             }
         }
     }

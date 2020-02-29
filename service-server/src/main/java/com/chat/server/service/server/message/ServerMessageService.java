@@ -9,19 +9,26 @@ import java.rmi.RemoteException;
 public interface ServerMessageService extends Remote {
     /**
      * send Message to group
+     *
      * @param message to send
      */
-        void sendMessage(Message message) throws RemoteException;
+    void sendMessage(Message message) throws RemoteException;
 
     /**
      * to register client
+     *
      * @param messageServiceCallBack client service to register it
      */
-     void register(MessageServiceCallBack messageServiceCallBack)throws RemoteException;
+    void register(MessageServiceCallBack messageServiceCallBack) throws RemoteException;
 
     /**
      * to unRegister client
-     * @param  messageServiceCallBack client service to register it
+     * /**
+     *
+     * @param messageServiceCallBack client
+     *                               service to
+     *                               register it
      */
-    public void unRegister(MessageServiceCallBack messageServiceCallBack)throws RemoteException;
+
+    public void unRegister(MessageServiceCallBack messageServiceCallBack) throws RemoteException;
 }

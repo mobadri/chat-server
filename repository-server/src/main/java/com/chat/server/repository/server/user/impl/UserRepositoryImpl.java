@@ -240,7 +240,7 @@ public class UserRepositoryImpl implements UserRepository {
             while (resultSet.next()) {
                 User user = ModelAdapter.mapResultSetToUser(resultSet);
                 System.out.println("ResultSet.next" + user.getPhone());
-                user.setPassword("");
+//                user.setPassword("");
                 users.add(user);
             }
             return users;
