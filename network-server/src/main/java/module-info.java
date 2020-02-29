@@ -5,4 +5,5 @@ module network.server {
     requires service.server;
     requires config.server;
     requires serviceclientcallback;
+    requires model.server;
 }
