@@ -122,7 +122,7 @@ public class UserRepositoryImpl implements UserRepository {
                     user = ModelAdapter.mapResultSetToUser(resultSet, findAllUserFriends(userId, FriendStatus.APPROVED)
                             , chatGroupRepository.getAllChatGroupsForUser(userId));
                 }
-                user.setPassword("");
+//                user.setPassword("");
                 return user;
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -262,7 +262,7 @@ public class UserRepositoryImpl implements UserRepository {
             while (resultSet.next()) {
                 user = ModelAdapter.mapResultSetToUser(resultSet);
                 if (user.getPhone().equals(phone)) {
-                    user.setPassword("");
+//                    user.setPassword("");
                     return user;
                 }
             }

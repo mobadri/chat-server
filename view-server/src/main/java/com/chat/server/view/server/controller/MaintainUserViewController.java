@@ -167,6 +167,7 @@ public class MaintainUserViewController implements Initializable {
         System.out.println(user + " should be deleted");
     }
 
+    @FXML
     public void newAction(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/templates/userdata-view.fxml"));
@@ -181,12 +182,9 @@ public class MaintainUserViewController implements Initializable {
             userDataView.setUserController(userController);
             stage.showAndWait();
 
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
 
@@ -205,7 +203,6 @@ public class MaintainUserViewController implements Initializable {
                 stage.setScene(new Scene(root));
                 userDataView.setStage(stage);
                 userDataView.setUser(user);
-
                 userDataView.setUserController(userController);
                 stage.showAndWait();
 

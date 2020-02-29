@@ -24,9 +24,9 @@ import java.util.stream.Collectors;
 
 
 public class UserDataView implements Initializable {
+
     @FXML
     public JFXButton add;
-
     @FXML
     public Label InvalidPassword;
     @FXML
@@ -56,26 +56,26 @@ public class UserDataView implements Initializable {
     private JFXTextField lastName;
     @FXML
     public JFXPasswordField confirmPassword;
-
-
     @FXML
     private JFXComboBox country;
     @FXML
     private JFXTextField email;
     @FXML
     public JFXDatePicker dateOfBirthh;
-
     @FXML
     private JFXTextField bio;
     @FXML
     private Label title;
-    private Stage stage;
-    private Gender gender = Gender.MALE;
-    private User user;
     @FXML
     private JFXTextField phone;
 
+
+    private Gender gender = Gender.MALE;
+    private User user;
+
+    private Stage stage;
     private UserController userController;
+
     private RequiredFieldValidator requiredFieldValidator = new RequiredFieldValidator();
     private boolean updateFlag = true;
 
@@ -94,7 +94,6 @@ public class UserDataView implements Initializable {
     }
 
 
-    //*****first method******
     private void checkAllField() {
         requiredFieldValidator.setMessage("*No Input Field");
         firstName.getValidators().add(requiredFieldValidator);
@@ -162,7 +161,6 @@ public class UserDataView implements Initializable {
 
     }
 
-    //*****second  method******
     private void loadAllCountries() {
         List<String> collect = Arrays.asList(Locale.getAvailableLocales())
                 .parallelStream().map(Locale::getDisplayCountry)
@@ -172,28 +170,6 @@ public class UserDataView implements Initializable {
         country.setItems(FXCollections.observableList(collect));
 
     }
-// set user data on view
-    // check if id > 0
-    // update button
-    // else
-    // insert
-
-    //on update
-    // disable change phone
-    //on update click
-    // get user data from view
-    // validate user data
-    // error show error
-    // else
-    // update
-
-
-    // on insert
-    // get data from view
-    // validate data
-    // if error show error
-    // else insert
-
 
     private User setUserData() {
         if (user.getId() > 0) {
@@ -215,26 +191,6 @@ public class UserDataView implements Initializable {
         user.setGender(Gender.FEMALE);
         user.setOnline(false);
         user.setMode(Mode.AVAILABLE);
-
-
-//        if (phone.getText() == null) {
-//
-//            InvalidPhone.setText("*Invalid Phone");
-//            phone.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
-//        }
-
-//        System.out.println(country.getValue());
-//        if (country.getValue() == null) {
-//            country.setValue("Egypt");
-//        } else {
-//            user.setCountry(country.getSelectionModel().getSelectedItem().toString());
-//        }
-//        if (dateOfBirthh.getValue() == null) {
-//            dateOfBirthh.setValue(LocalDate.now());
-//        } else {
-//            user.setDateOfBirth(LOCAL_DATE(dateOfBirthh.getValue().toString()));
-//        }
-//        user.setBIO(bio.getText());
 
 
         return user;
@@ -364,8 +320,6 @@ public class UserDataView implements Initializable {
 
     @FXML
     public void addUserAction(ActionEvent actionEvent) {
-        System.out.println("update inuseraction");
-        System.out.println(user);
         boolean isValid = validateUser(setUserData());
         if (user != null && user.getId() > 0) {
             System.out.println("update");

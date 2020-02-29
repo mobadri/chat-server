@@ -77,7 +77,6 @@ public class UserValidation {
         return false;
     }
 
-
     private Boolean validDateOfBirth(LocalDate dateOfBirth) {
         if (dateOfBirth != null) {
             return !dateOfBirth.equals("");
@@ -103,7 +102,6 @@ public class UserValidation {
         validUser.put("InvalidCountry", validCountry(user.getCountry()));
         validUser.put("InvalidGender", gender(user.getGender()));
         validUser.put("InvalidDateOfBirth", validDateOfBirth(user.getDateOfBirth()));
-
 
         return validUser;
     }

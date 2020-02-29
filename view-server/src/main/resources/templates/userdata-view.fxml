@@ -145,7 +145,7 @@
                             <children>
                                 <JFXButton fx:id="add" buttonType="RAISED" layoutX="300.0" layoutY="500.0"
                                            mnemonicParsing="false" onAction="#addUserAction" prefHeight="54.0"
-                                           prefWidth="128.0" ripplerFill="#0f94bd"
+                                           prefWidth="128.0" ripplerFill="#354578"
                                            style="-fx-background-color: #0066ff;" text="Add" textFill="WHITE"/>
                             </children>
                         </GridPane>
