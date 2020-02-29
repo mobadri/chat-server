@@ -37,7 +37,7 @@ public class UserRepositoryImpl implements UserRepository {
             " COUNTRY =? ,GENDER = ?,DATE_OF_BIRTH =?,BIO = ?,ONLINE = ?,MODE = ?,IMAGE=?" +
             " WHERE ID = ?";
     private final String DELETE_USER = "DELETE FROM USER WHERE ID = ?";
-    private final String UPDATE_USER_MODE = "";
+    private final String UPDATE_USER_MODE = "UPDATE USER SET Mode=? WHERE ID = ? ";
     private Connection connection = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
@@ -238,6 +238,7 @@ public class UserRepositoryImpl implements UserRepository {
             while (resultSet.next()) {
                 User user = ModelAdapter.mapResultSetToUser(resultSet);
                 System.out.println("ResultSet.next" + user.getPhone());
+                user.setPassword("");
                 users.add(user);
             }
             return users;
@@ -259,6 +260,7 @@ public class UserRepositoryImpl implements UserRepository {
             while (resultSet.next()) {
                 user = ModelAdapter.mapResultSetToUser(resultSet);
                 if (user.getPhone().equals(phone)) {
+                    user.setPassword("");
                     return user;
                 }
             }
@@ -276,6 +278,7 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             preparedStatement = connection.prepareStatement(UPDATE_USER_MODE);
             preparedStatement.setInt(1, mode.ordinal());
+            preparedStatement.setInt(2, user.getId());
             int res = preparedStatement.executeUpdate();
             if (res > 0) {
                 user.setMode(mode);
@@ -287,7 +290,6 @@ public class UserRepositoryImpl implements UserRepository {
         }
         return user;
     }
-
     @Override
     public List<User> findIfOnline(boolean online) {
         List<User> users = new ArrayList<>();
@@ -319,7 +321,7 @@ public class UserRepositoryImpl implements UserRepository {
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 User user = ModelAdapter.mapResultSetToUser(resultSet);
-                user.setPassword("");
+               // user.setPassword("");
                 users.add(user);
             }
             return users;

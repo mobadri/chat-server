@@ -162,4 +162,5 @@ public interface ServerUserService extends Remote {
      */
     int updateFriend(int userId, int friendId, FriendStatus friendStatus) throws RemoteException;
 
+    User uniquePhone(String phone) throws RemoteException;
 }
