@@ -27,6 +27,7 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
 //                new RMISSLServerSocketFactory());
 //        super(11223, SslClientSocketFactory.getInstance(),
 //                SslServerSocketFactory.getInstance());
+//        super(0, SslClientSocketFactory.getInstance(), SslServerSocketFactory.getInstance());
     }
 
     @Override
@@ -67,17 +68,25 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
     }
 
     public void notifyAll(Message message) {
-        for (MessageServiceCallBack messageServiceCallBack : messageServiceCallBackVector) {
 
+        Vector<MessageServiceCallBack> unreachableSevices = new Vector<>();
+        for (MessageServiceCallBack messageServiceCallBack : messageServiceCallBackVector) {
             try {
-                System.out.println("message from = " + message.getUserFrom().getId());
-                System.out.println("call back from =" + messageServiceCallBack.getCurrentUserId());
                 if (messageServiceCallBack.getChatGroupId() == message.getChatGroup().getId()
                 ) {
                     messageServiceCallBack.receiveMessage(message);
                 }
             } catch (RemoteException e) {
                 e.printStackTrace();
+                unreachableSevices.add(messageServiceCallBack);
+            }
+        }
+        // remove if user terminated
+        if (unreachableSevices.size() > 0) {
+            for (MessageServiceCallBack messageServiceCallBack : unreachableSevices) {
+                messageServiceCallBackVector.remove(messageServiceCallBack);
+                System.out.println("vector size" + messageServiceCallBackVector.size()
+                );
             }
         }
     }

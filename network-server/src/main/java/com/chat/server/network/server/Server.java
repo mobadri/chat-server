@@ -10,6 +10,8 @@ import com.chat.server.service.server.factory.ServiceFactory;
 import com.chat.server.service.server.fileTransfer.ServerFileTranseferService;
 import com.chat.server.service.server.message.ServerMessageService;
 import com.chat.server.service.server.notification.ServerNotificationService;
+import com.chat.server.service.server.socket_factories.SslClientSocketFactory;
+import com.chat.server.service.server.socket_factories.SslServerSocketFactory;
 import com.chat.server.service.server.user.ServerUserService;
 
 import java.rmi.NotBoundException;
@@ -48,11 +50,10 @@ public class Server {
             System.setProperty("java.rmi.server.hostname", serverIP); // Uses the loopback address, 127.0.0.1, if yo
 
             //todo encrypt password
-//            SslClientSocketFactory csf = new SslClientSocketFactory("security/client", "ahm741741");
-//            SslServerSocketFactory ssf = new SslServerSocketFactory("security/registry", "ahm741741");
+            SslClientSocketFactory csf = SslClientSocketFactory.getInstance();
+            SslServerSocketFactory ssf = SslServerSocketFactory.getInstance();
 
-            registry = LocateRegistry.createRegistry(portNumber);
-//            SslClientSocketFactory.getInstance(), SslServerSocketFactory.getInstance());
+            registry = LocateRegistry.createRegistry(portNumber, csf, ssf);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,7 +74,12 @@ public class Server {
                 messageService = ServiceFactory.createServerMessageService();
                 notificationService = ServiceFactory.createServerNotificationService();
                 fileTranseferService = ServiceFactory.createServerFileTranseferService();
-
+//
+//                ServerUserService userService2 = (ServerUserService) UnicastRemoteObject.exportObject(userService, 0);
+//                chatGroupService = (ServerChatGroupService) UnicastRemoteObject.exportObject(chatGroupService, 0);
+//                messageService = (ServerMessageService) UnicastRemoteObject.exportObject(messageService, 0);
+//                notificationService = (ServerNotificationService) UnicastRemoteObject.exportObject(notificationService, 0);
+//                fileTranseferService = (ServerFileTranseferService) UnicastRemoteObject.exportObject(fileTranseferService, 0);
                 System.out.println("server is running");
 
                 registry.rebind("userService", userService);
@@ -81,6 +87,7 @@ public class Server {
                 registry.rebind("messageService", messageService);
                 registry.rebind("notificationService", notificationService);
                 registry.rebind("fileTranseferService", fileTranseferService);
+
                 running = !running;
             }
         } catch (RemoteException ex) {
@@ -106,7 +113,7 @@ public class Server {
         }
     }
 
-    private void sendAnnouncement(){
+    private void sendAnnouncement() {
 
         Notification notification = new Notification();
 
