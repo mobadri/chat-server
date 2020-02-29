@@ -26,6 +26,7 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
 //        super(11223, new RMISSLClientSocketFactory(),
 //                new RMISSLServerSocketFactory());
 //        super(11223, SslClientSocketFactory.getInstance(), SslServerSocketFactory.getInstance());
+//        super(0, SslClientSocketFactory.getInstance(), SslServerSocketFactory.getInstance());
         notificationRepository = RepositoryServerFactory.createNotificationRepository();
     }
 
@@ -60,6 +61,7 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
     }
 
     private void notifyAll(Notification notification) throws RemoteException {
+        Vector<NotificationServiceCallback> unreachableSevices = new Vector<>();
         for (NotificationServiceCallback notificationServiceCallback : notificationServiceCallbackVector) {
             try {
 //                if (notification.getUserTo().getId() == notificationServiceCallback.getUserId()
@@ -71,7 +73,15 @@ public class ServerNotificationServiceImpl extends UnicastRemoteObject implement
                 }
             } catch (RemoteException e) {
                 e.printStackTrace();
+                unreachableSevices.add(notificationServiceCallback);
+            }
+        }
+        // remove if user terminated
+        if (unreachableSevices.size() > 0) {
+            for (NotificationServiceCallback notificationServiceCallback : unreachableSevices) {
                 notificationServiceCallbackVector.remove(notificationServiceCallback);
+                System.out.println("vector size" + notificationServiceCallbackVector.size()
+                );
             }
         }
     }
