@@ -128,6 +128,12 @@ public class ServerUserServiceImpl extends UnicastRemoteObject implements Server
     }
 
     @Override
+    public User uniquePhone(String phone) throws RemoteException {
+        UserValidation userValidation = new UserValidation();
+        return userValidation.uniquePhone(phone);
+    }
+
+    @Override
     public UserFriend getStatus(int currentUser, int friend) throws RemoteException {
         return userFriendRepository.getUserStatus(currentUser, friend);
     }

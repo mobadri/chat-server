@@ -16,6 +16,13 @@ public class UserValidation {
     User user = null;
     ServerUserService serverUserService;
 
+    public UserValidation() {
+        try {
+            serverUserService = ServiceFactory.createServerUserService();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
 
     public UserValidation(User user) {
 
@@ -55,19 +62,22 @@ public class UserValidation {
     }
 
 
-    public boolean uniquePhone(String phone) {
+    public User uniquePhone(String phone) {
         try {
-
+            System.out.println("************************");
+            System.out.println(serverUserService);
+            System.out.println(serverUserService.getAllUsers());
             List<User> listOfUser = serverUserService.getAllUsers();
             for (User user : listOfUser) {
                 if (user.getPhone().equals(phone)) {
-                    return false;
+                    System.out.println(user+" user in repo ");
+                    return user;
                 }
             }
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        return true;
+        return null;
     }
 
     public boolean validCountry(String country) {

@@ -38,6 +38,12 @@ public class Server {
     private ServerChatGroupService chatGroupService;
     private ServerFileTranseferService fileTranseferService;
 
+
+
+
+
+
+
     private Server() {
         configuration = NetworkDatabaseConfig.getInstance();
         int portNumber = configuration.getServerPortNumber();

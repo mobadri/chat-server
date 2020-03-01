@@ -46,30 +46,31 @@ public class ServerFileTranseferServiceImpl extends UnicastRemoteObject implemen
         System.out.println("currentChatGroup : " + currentChatGroup.getName());
         System.out.println("size of vector" + fileTransferServiceCallBackVector.size());
 
-        InputStream istream = null;
-
-        try {
-            istream = RemoteInputStreamClient.wrap(inFile);
-            System.out.println(istream);
-            System.out.println("the file Path is : " + nameFile);
-            FileOutputStream fileOutputStream = new FileOutputStream(new File(nameFile), true);
-            byte[] data = new byte[1024 * 1024];
-            int len = istream.read(data);
-            System.out.println(len);
-            while (len != -1) {
-                fileOutputStream.write(data);
-                len = istream.read(data);
-            }
-            System.out.println("file on server");
-
-            notify(nameFile, currentChatGroup, currentUser);
-           /* istream.close();
-            fileOutputStream.flush();
-            fileOutputStream.close();*/
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        InputStream istream = null;
+//
+//        try {
+//            istream = RemoteInputStreamClient.wrap(inFile);
+//            System.out.println(istream);
+//            System.out.println("the file Path is : " + nameFile);
+//            FileOutputStream fileOutputStream = new FileOutputStream(new File(nameFile), true);
+//            byte[] data = new byte[1024 * 1024];
+//            int len = istream.read(data);
+//            System.out.println(len);
+//            while (len != -1) {
+//                fileOutputStream.write(data);
+//                len = istream.read(data);
+//            }
+//            System.out.println("file on server");
+//
+//            notify(nameFile, currentChatGroup, currentUser);
+//           /* istream.close();
+//            fileOutputStream.flush();
+//            fileOutputStream.close();*/
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        clientAcceptFile(inFile, nameFile, currentChatGroup, currentUser);
     }
 
     public void notify(String fileName, ChatGroup currentChatGroup, User currentUser) {
@@ -99,17 +100,17 @@ public class ServerFileTranseferServiceImpl extends UnicastRemoteObject implemen
     }
 
     @Override
-    public void clientAcceptFile(String filename, int currentChatGroupId, User currentUser) {
+    public void clientAcceptFile(RemoteInputStream remoteInputStream, String filename, ChatGroup currentChatGroup, User currentUser) {
         for (FileTransferServiceCallBack fileTransferServiceCallBack : fileTransferServiceCallBackVector) {
-            try (BufferedInputStream bufferedInputStream = new BufferedInputStream
+            try /*(BufferedInputStream bufferedInputStream = new BufferedInputStream
                     (new FileInputStream(new File(filename)));
                  InputStream inputStream = new FileInputStream(new File(filename));
-                 RemoteInputStreamServer remoteInputStreamServer = new SimpleRemoteInputStream(inputStream)) {
+                 RemoteInputStreamServer remoteInputStreamServer = new SimpleRemoteInputStream(inputStream))*/ {
                 if (currentUser.getId() == fileTransferServiceCallBack.getCurrentUser().getId() && currentUser.isOnline()) {
 
                     new Thread(() -> {
                         try {
-                            fileTransferServiceCallBack.downLoad(filename, remoteInputStreamServer);
+                            fileTransferServiceCallBack.downLoad(filename, remoteInputStream);
                         } catch (RemoteException e) {
                             e.printStackTrace();
                         }
@@ -117,12 +118,15 @@ public class ServerFileTranseferServiceImpl extends UnicastRemoteObject implemen
                 }
                 unregister(fileTransferServiceCallBack);
                 new File(filename).delete();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void send(String nameFile, ChatGroup currentChatGroup, User currentUser) {
+        notify(nameFile, currentChatGroup, currentUser);
     }
 
     public synchronized static ServerFileTranseferService getInstance() {
