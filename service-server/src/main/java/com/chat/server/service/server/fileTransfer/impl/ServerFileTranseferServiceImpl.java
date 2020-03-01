@@ -9,11 +9,9 @@ import com.chat.server.service.server.factory.ServiceFactory;
 import com.chat.server.service.server.fileTransfer.ServerFileTranseferService;
 import com.chat.server.service.server.notification.ServerNotificationService;
 import com.healthmarketscience.rmiio.RemoteInputStream;
-import com.healthmarketscience.rmiio.RemoteInputStreamClient;
-import com.healthmarketscience.rmiio.RemoteInputStreamServer;
-import com.healthmarketscience.rmiio.SimpleRemoteInputStream;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Vector;
@@ -25,6 +23,9 @@ public class ServerFileTranseferServiceImpl extends UnicastRemoteObject implemen
     private Vector<FileTransferServiceCallBack> fileTransferServiceCallBackVector = new Vector<>();
 
     public ServerFileTranseferServiceImpl() throws RemoteException {
+
+        super(11223);
+
 //        super(11223, SslClientSocketFactory.getInstance(),
 //                SslServerSocketFactory.getInstance());
     }

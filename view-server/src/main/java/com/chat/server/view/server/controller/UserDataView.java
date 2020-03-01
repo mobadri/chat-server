@@ -33,6 +33,7 @@ public class UserDataView implements Initializable {
     public Label InvalidConfirmPassword;
     @FXML
     public Label InvalidDateOfBirth;
+    public JFXTextField bio1;
     @FXML
     private Label InvalidFirstName;
     @FXML
@@ -138,17 +139,17 @@ public class UserDataView implements Initializable {
             }
         });
 
-        country.getValidators().add(requiredFieldValidator);
-        country.focusedProperty().addListener((observableValue, aBoolean, t1) -> {
-            if (!t1) {
-                country.validate();
-            }
-        });
-
         dateOfBirthh.getValidators().add(requiredFieldValidator);
         dateOfBirthh.focusedProperty().addListener((observableValue, aBoolean, t1) -> {
             if (!t1) {
                 dateOfBirthh.validate();
+            }
+        });
+
+        bio1.getValidators().add(requiredFieldValidator);
+        bio1.focusedProperty().addListener((observableValue, aBoolean, t1) -> {
+            if (!t1) {
+                bio1.validate();
             }
         });
 
@@ -261,9 +262,7 @@ public class UserDataView implements Initializable {
             case "InvalidDateOfBirth":
                 InvalidDateOfBirth.setText("*Invalid DateOfBirth");
                 break;
-
         }
-
     }
 
     public void insertNewUser() {

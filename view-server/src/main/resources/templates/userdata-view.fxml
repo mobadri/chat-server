@@ -4,7 +4,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.Color?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <AnchorPane prefHeight="600.0" prefWidth="600.0" stylesheets="@../static/css/style.css"
             xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
@@ -13,7 +12,7 @@
         <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                     AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <top>
-                <AnchorPane prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: #0078D4;"
+                <AnchorPane prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: #F;"
                             BorderPane.alignment="CENTER">
                     <children>
                         <Label id="title" fx:id="title" layoutX="48.0" layoutY="25.0" text="Add new user"
@@ -22,8 +21,8 @@
                                 <Font size="42.0"/>
                             </font>
                         </Label>
-                        <Circle fill="#FFFFFF" layoutX="501.0" layoutY="54.0" radius="51.0" stroke="BLACK"
-                                strokeType="INSIDE"/>
+                        <!--                        <Circle fill="#FFFFFF" layoutX="501.0" layoutY="54.0" radius="51.0" stroke="BLACK"-->
+                        <!--                                strokeType="INSIDE"/>-->
                     </children>
                 </AnchorPane>
             </top>
@@ -78,7 +77,7 @@
                     <JFXRadioButton fx:id="female" layoutX="229.0" layoutY="389.0" mnemonicParsing="false"
                                     selected="true" text="Female" toggleGroup="$genderToggel">
                         <selectedColor>
-                            <Color red="0.05882352963089943" green="0.5803921818733215" blue="0.7411764860153198"/>
+                            <Color green="0.47058823704719543" blue="0.8313725590705872"/>
                         </selectedColor>
                     </JFXRadioButton>
                     <Label fx:id="InvalidLastName" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="129.0"
@@ -113,6 +112,9 @@
                                    prefHeight="28.0" prefWidth="211.0" promptText="Date Of Birth"/>
                     <Label fx:id="InvalidDateOfBirth" alignment="CENTER_RIGHT" layoutX="262.0" layoutY="207.0"
                            prefHeight="27.0" prefWidth="223.0" textAlignment="RIGHT" textFill="#fa0505"/>
+                    <JFXTextField fx:id="bio1" focusColor="#000713" layoutX="262.0" layoutY="306.0" prefHeight="25.0"
+                                  prefWidth="223.0" promptText="BIO" style="-fx-text-fill: #000;"
+                                  unFocusColor="#827373"/>
                     <!--                    <ChoiceBox fx:id="countryy" layoutX="268.0" layoutY="331.0" prefHeight="25.0" prefWidth="203.0"-->
                     <!--                               style="-fx-background-color: transparent;"/>-->
 

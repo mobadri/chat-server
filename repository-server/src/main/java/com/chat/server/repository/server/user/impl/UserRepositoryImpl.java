@@ -238,7 +238,6 @@ public class UserRepositoryImpl implements UserRepository {
             while (resultSet.next()) {
                 User user = ModelAdapter.mapResultSetToUser(resultSet);
                 System.out.println("ResultSet.next" + user.getPhone());
-                user.setPassword("");
                 users.add(user);
             }
             return users;
@@ -260,7 +259,6 @@ public class UserRepositoryImpl implements UserRepository {
             while (resultSet.next()) {
                 user = ModelAdapter.mapResultSetToUser(resultSet);
                 if (user.getPhone().equals(phone)) {
-                    user.setPassword("");
                     return user;
                 }
             }
@@ -290,6 +288,7 @@ public class UserRepositoryImpl implements UserRepository {
         }
         return user;
     }
+
     @Override
     public List<User> findIfOnline(boolean online) {
         List<User> users = new ArrayList<>();
@@ -321,7 +320,6 @@ public class UserRepositoryImpl implements UserRepository {
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 User user = ModelAdapter.mapResultSetToUser(resultSet);
-               // user.setPassword("");
                 users.add(user);
             }
             return users;

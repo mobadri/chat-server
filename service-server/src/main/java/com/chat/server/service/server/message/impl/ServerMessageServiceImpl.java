@@ -23,6 +23,8 @@ public class ServerMessageServiceImpl extends UnicastRemoteObject implements Ser
     private static ServerMessageServiceImpl instance;
 
     private ServerMessageServiceImpl() throws Exception {
+        super(11223);
+
 //        super(11223, new RMISSLClientSocketFactory(),
 //                new RMISSLServerSocketFactory());
 //        super(11223, SslClientSocketFactory.getInstance(),
