@@ -238,7 +238,6 @@ public class UserRepositoryImpl implements UserRepository {
             while (resultSet.next()) {
                 User user = ModelAdapter.mapResultSetToUser(resultSet);
                 System.out.println("ResultSet.next" + user.getPhone());
-                user.setPassword("");
                 users.add(user);
             }
             return users;
@@ -260,7 +259,6 @@ public class UserRepositoryImpl implements UserRepository {
             while (resultSet.next()) {
                 user = ModelAdapter.mapResultSetToUser(resultSet);
                 if (user.getPhone().equals(phone)) {
-//                    user.setPassword("");
                     return user;
                 }
             }
@@ -281,7 +279,6 @@ public class UserRepositoryImpl implements UserRepository {
             int res = preparedStatement.executeUpdate();
             if (res > 0) {
                 user.setMode(mode);
-                user.setPassword("");
             }
         } catch (SQLException e) {
             e.printStackTrace();
