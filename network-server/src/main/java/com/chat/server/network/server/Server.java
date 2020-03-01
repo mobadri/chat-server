@@ -49,11 +49,7 @@ public class Server {
 //            }
             System.setProperty("java.rmi.server.hostname", serverIP); // Uses the loopback address, 127.0.0.1, if yo
 
-            //todo encrypt password
-            SslClientSocketFactory csf = SslClientSocketFactory.getInstance();
-            SslServerSocketFactory ssf = SslServerSocketFactory.getInstance();
-
-            registry = LocateRegistry.createRegistry(portNumber, csf, ssf);
+            registry = LocateRegistry.createRegistry(portNumber);
 
         } catch (Exception e) {
             e.printStackTrace();
